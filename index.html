@@ -516,12 +516,14 @@
         <div class="meta">
           <div><strong>Last updated:</strong> <span id="global-updated">—</span></div>
           <div class="identity">You: <strong id="identity-display">—</strong> <button class="hbtn" id="change-identity" style="padding:2px 8px;font-size:11px;margin-left:4px">change</button></div>
+          <div id="save-status" style="font-size:12px;opacity:.85;margin-top:3px;min-height:16px;"></div>
         </div>
         <div class="header-actions">
           <button class="hbtn" id="mode-toggle" title="Toggle view/edit mode">Mode: Edit</button>
           <button class="hbtn" id="export-csv">Export CSV</button>
           <button class="hbtn" id="snapshot-btn">Take Snapshot</button>
           <button class="hbtn" id="history-btn">History</button>
+          <button class="hbtn" id="pat-btn" title="Configure GitHub token">&#128273; Token</button>
         </div>
       </div>
     </div>
@@ -572,11 +574,35 @@
     </section>
 
     <div class="foot">
-      Client-side tracker · Data stored in your browser's localStorage · Password-protected for TDRA/DDA viewing
+      Live tracker · Data synced to GitHub (<a href="https://github.com/fadicog/tasktracker/blob/main/data.json" target="_blank" style="color:inherit;opacity:.75">data.json</a>) · Password-protected for TDRA/DDA viewing
       <br/>
       <button class="reset-btn edit-only" id="reset-btn">Reset to defaults</button>
     </div>
   </main>
+</div>
+
+<!-- PAT Modal -->
+<div id="pat-modal" class="modal-backdrop">
+  <div class="modal">
+    <h3>&#128273; GitHub Access Token</h3>
+    <div class="modal-sub">Enter your GitHub Personal Access Token to enable saving changes back to the repository. The token is stored only in your browser (localStorage) and never sent anywhere except the GitHub API.</div>
+    <div class="field">
+      <label for="pat-input">Personal Access Token</label>
+      <input type="password" id="pat-input" placeholder="github_pat_..." autocomplete="off" style="font-family:monospace;font-size:13px"/>
+    </div>
+    <div id="pat-status" style="font-size:13px;margin-bottom:8px;min-height:18px;"></div>
+    <div class="actions" style="justify-content:space-between;flex-wrap:wrap;gap:8px">
+      <button class="btn-secondary" id="pat-clear" style="color:#c62828;border-color:#c62828">Remove token</button>
+      <div style="display:flex;gap:8px">
+        <button class="btn-secondary" id="pat-cancel">Cancel</button>
+        <button class="btn-primary" id="pat-save">Save token</button>
+      </div>
+    </div>
+    <div style="margin-top:14px;font-size:11px;color:#888;line-height:1.6">
+      Need a token? <a href="https://github.com/settings/tokens?type=beta" target="_blank">github.com/settings/tokens</a><br/>
+      Required permission: <strong>Contents → Read and write</strong> on repo <strong>fadicog/tasktracker</strong>
+    </div>
+  </div>
 </div>
 
 <!-- Modal host -->
@@ -599,8 +625,7 @@ async function sha256(msg) {
 function showApp() {
   document.getElementById('gate').style.display = 'none';
   document.getElementById('app').style.display  = 'block';
-  requireIdentity();
-  bootApp();
+  bootApp();   // async — fetches GitHub data then renders
 }
 function initGate() {
   if (sessionStorage.getItem('dv_tracker_auth') === '1') {
@@ -716,73 +741,57 @@ const STATIC_FEATURES = [
   { slide: 33, name: "Operation Automation", category: "Technical", quarter: "—", status: "Pending", dda: false, sprint: null, sub: [] }
 ];
 
-const OTHER_ACTIONS = [
-  { action: "Request visa - failure", desc: "Count of failure mapped to issues", owner: "Fadi, Shri" },
-  { action: "Multi language on app",
-    desc: "UAE PASS extending to Hindi, Urdu, Filipino, Chinese. Send communication to DDA, ask full scope/timeline/origin. Analysis needed.",
-    owner: "Malak, Sai" }
-];
-
 const CATEGORIES = ["Product", "Design", "Design (DDA)", "UX", "Technical", "SP"];
 const KNOWN_OWNERS = ["Fadi", "Najjar", "Malak", "Ahmad", "Shri", "Surbhi", "Sai"];
 const STATUS_CYCLE = ["Not started", "Pending", "Started", "In Progress", "Completed"];
 const DDA_WORKFLOW = ["Not Submitted", "Submitted", "In Review", "Approved", "Rejected"];
 
 /* =================================================================
-   Storage keys
+   GitHub API config
+   ================================================================= */
+const GH = {
+  owner:  'fadicog',
+  repo:   'tasktracker',
+  file:   'data.json',
+  branch: 'main',
+  get apiUrl() { return `https://api.github.com/repos/${this.owner}/${this.repo}/contents/${this.file}`; },
+  get rawUrl() { return `https://raw.githubusercontent.com/${this.owner}/${this.repo}/${this.branch}/${this.file}`; }
+};
+
+/* =================================================================
+   Storage helpers (localStorage for identity/mode/pat only)
    ================================================================= */
 const LS = {
-  data:       'dv_tracker_data',
-  notes:      'dv_tracker_notes',
-  snapshots:  'dv_tracker_snapshots',
-  identity:   'dv_tracker_identity',
-  overrides:  'dv_tracker_overrides',
-  updated:    'dv_tracker_updated',
-  mode:       'dv_tracker_mode'   // sessionStorage
+  identity:  'dv_tracker_identity',
+  mode:      'dv_tracker_mode',   // sessionStorage
+  pat:       'dv_tracker_pat',
+  snapshots: 'dv_tracker_snapshots'
 };
 
 function lsGet(key, fallback) {
-  try {
-    const v = localStorage.getItem(key);
-    return v === null ? fallback : JSON.parse(v);
-  } catch (e) { return fallback; }
+  try { const v = localStorage.getItem(key); return v === null ? fallback : JSON.parse(v); }
+  catch (e) { return fallback; }
 }
-function lsSet(key, val) {
-  localStorage.setItem(key, JSON.stringify(val));
-}
+function lsSet(key, val) { localStorage.setItem(key, JSON.stringify(val)); }
+function lsDel(key)      { localStorage.removeItem(key); }
 
 /* =================================================================
    Model
    ================================================================= */
-let FEATURES = [];
-let NOTES    = {};       // featureId => [{text, author, ts}]
-let OVERRIDES= {};       // featureId => pct
-let IDENTITY = '';
-let EDIT_MODE = true;    // sessionStorage
+let FEATURES     = [];
+let OTHER_ACTIONS = [];
+let NOTES        = {};
+let OVERRIDES    = {};
+let IDENTITY     = '';
+let EDIT_MODE    = true;
 let LAST_UPDATED = '';
-
-function loadModel() {
-  const stored = lsGet(LS.data, null);
-  FEATURES = stored ? stored : deepClone(STATIC_FEATURES).map(ensureFeatureId);
-  FEATURES.forEach(ensureFeatureId);
-  FEATURES.forEach(f => f.sub.forEach(ensureSubId));
-
-  NOTES     = lsGet(LS.notes, {});
-  OVERRIDES = lsGet(LS.overrides, {});
-  IDENTITY  = lsGet(LS.identity, '') || '';
-  LAST_UPDATED = lsGet(LS.updated, '') || '';
-
-  const mode = sessionStorage.getItem(LS.mode);
-  EDIT_MODE = mode === null ? true : (mode === 'edit');
-  applyModeClass();
-}
+let _ghFileSha   = null;   // current SHA of data.json on GitHub (needed for PUT)
+let _saveTimer   = null;   // debounce handle
 
 function deepClone(o) { return JSON.parse(JSON.stringify(o)); }
-
 let _idCounter = 1;
-function nextId(prefix) {
-  return `${prefix}-${Date.now().toString(36)}-${(_idCounter++).toString(36)}`;
-}
+function nextId(prefix) { return `${prefix}-${Date.now().toString(36)}-${(_idCounter++).toString(36)}`; }
+
 function ensureFeatureId(f) {
   if (!f.id) f.id = `f-${f.slide || nextId('x')}`;
   if (f.sprint === undefined) f.sprint = null;
@@ -798,14 +807,143 @@ function ensureSubId(s) {
   return s;
 }
 
+/* ------ Load from GitHub ------ */
+async function loadModel() {
+  IDENTITY     = lsGet(LS.identity, '') || '';
+  OVERRIDES    = {};
+  NOTES        = {};
+  const mode   = sessionStorage.getItem(LS.mode);
+  EDIT_MODE    = mode === null ? true : (mode === 'edit');
+  applyModeClass();
+
+  setSaveStatus('loading', '⏳ Loading data from GitHub…');
+  try {
+    // Use API endpoint (not raw) so we get the SHA for later writes
+    const pat = lsGet(LS.pat, '');
+    const headers = { 'Accept': 'application/vnd.github.v3+json' };
+    if (pat) headers['Authorization'] = `token ${pat}`;
+
+    const res  = await fetch(`${GH.apiUrl}?t=${Date.now()}`, { headers });
+    if (!res.ok) throw new Error(`GitHub responded ${res.status}`);
+    const meta = await res.json();
+    _ghFileSha = meta.sha;
+
+    const json = JSON.parse(atob(meta.content.replace(/\n/g, '')));
+    applyJsonToModel(json);
+    setSaveStatus('ok', '✓ Loaded from GitHub');
+  } catch (err) {
+    console.warn('GitHub load failed, falling back to STATIC_FEATURES:', err);
+    setSaveStatus('error', '⚠ Could not reach GitHub — showing default data');
+    applyJsonToModel({ features: STATIC_FEATURES, otherActions: [], notes: {}, overrides: {}, lastUpdated: '' });
+  }
+
+  document.getElementById('global-updated').textContent = LAST_UPDATED || '—';
+  if (IDENTITY) document.getElementById('identity-display').textContent = IDENTITY;
+}
+
+function applyJsonToModel(json) {
+  FEATURES      = (json.features      || []).map(ensureFeatureId);
+  FEATURES.forEach(f => f.sub.forEach(ensureSubId));
+  OTHER_ACTIONS = json.otherActions   || [];
+  NOTES         = json.notes          || {};
+  OVERRIDES     = json.overrides      || {};
+  LAST_UPDATED  = json.lastUpdated    || '';
+}
+
+/* ------ Save to GitHub (debounced 800ms) ------ */
 function persist() {
   LAST_UPDATED = formatTs(new Date());
-  lsSet(LS.data,      FEATURES);
-  lsSet(LS.notes,     NOTES);
-  lsSet(LS.overrides, OVERRIDES);
-  lsSet(LS.identity,  IDENTITY);
-  lsSet(LS.updated,   LAST_UPDATED);
-  document.getElementById('global-updated').textContent = LAST_UPDATED || '—';
+  document.getElementById('global-updated').textContent = LAST_UPDATED;
+  lsSet(LS.identity, IDENTITY);
+  clearTimeout(_saveTimer);
+  _saveTimer = setTimeout(commitToGitHub, 800);
+}
+
+async function commitToGitHub() {
+  const pat = lsGet(LS.pat, '');
+  if (!pat) {
+    setSaveStatus('warn', '⚠ No GitHub token — changes not saved. Click 🔑 Token to add one.');
+    return;
+  }
+  setSaveStatus('saving', '⏳ Saving…');
+  try {
+    const payload = {
+      features:      FEATURES,
+      otherActions:  OTHER_ACTIONS,
+      notes:         NOTES,
+      overrides:     OVERRIDES,
+      lastUpdated:   LAST_UPDATED,
+      version:       1
+    };
+    const content = btoa(unescape(encodeURIComponent(JSON.stringify(payload, null, 2))));
+    const body    = {
+      message: `Update tracker data — ${LAST_UPDATED} by ${IDENTITY || 'unknown'}`,
+      content,
+      branch: GH.branch
+    };
+    if (_ghFileSha) body.sha = _ghFileSha;
+
+    const res  = await fetch(GH.apiUrl, {
+      method:  'PUT',
+      headers: { 'Authorization': `token ${pat}`, 'Content-Type': 'application/json' },
+      body:    JSON.stringify(body)
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      throw new Error(err.message || `HTTP ${res.status}`);
+    }
+    const data = await res.json();
+    _ghFileSha = data.content.sha;
+    setSaveStatus('ok', `✓ Saved to GitHub · ${LAST_UPDATED}`);
+  } catch (err) {
+    setSaveStatus('error', `✗ Save failed: ${err.message}`);
+    console.error('GitHub save error:', err);
+  }
+}
+
+/* ------ Save status indicator ------ */
+function setSaveStatus(state, msg) {
+  const el = document.getElementById('save-status');
+  if (!el) return;
+  el.textContent = msg;
+  el.style.color = state === 'ok'     ? '#a5d6a7'
+                 : state === 'error'  ? '#ef9a9a'
+                 : state === 'warn'   ? '#ffe082'
+                 : state === 'saving' ? '#90caf9'
+                 : '#90caf9'; // loading
+}
+
+/* ------ PAT modal ------ */
+function openPatModal() {
+  const modal = document.getElementById('pat-modal');
+  const inp   = document.getElementById('pat-input');
+  const st    = document.getElementById('pat-status');
+  const existing = lsGet(LS.pat, '');
+  inp.value = existing || '';
+  st.textContent = existing ? '✓ Token is set' : 'No token stored yet';
+  st.style.color = existing ? 'green' : '#888';
+  modal.classList.add('active');
+  inp.focus();
+}
+function closePatModal() { document.getElementById('pat-modal').classList.remove('active'); }
+async function validateAndSavePat() {
+  const pat = document.getElementById('pat-input').value.trim();
+  const st  = document.getElementById('pat-status');
+  if (!pat) { st.textContent = 'Please enter a token'; st.style.color = 'red'; return; }
+  st.textContent = '⏳ Validating…'; st.style.color = '#555';
+  try {
+    const res = await fetch(GH.apiUrl, { headers: { 'Authorization': `token ${pat}` } });
+    if (res.status === 401) throw new Error('Token rejected by GitHub (401 Unauthorized)');
+    if (res.status === 404) throw new Error('Repo or file not found — check token permissions');
+    lsSet(LS.pat, pat);
+    const meta = await res.json();
+    _ghFileSha = meta.sha;
+    st.textContent = '✓ Token valid — saved!'; st.style.color = 'green';
+    setTimeout(closePatModal, 900);
+    setSaveStatus('ok', '✓ Token configured');
+  } catch (err) {
+    st.textContent = `✗ ${err.message}`; st.style.color = 'red';
+  }
 }
 
 function stamp(obj) {
@@ -1732,15 +1870,14 @@ function toggleMode() {
    Reset
    ================================================================= */
 function resetAll() {
-  confirmDelete('Reset all data to defaults? This clears statuses, notes, snapshots, overrides, and custom features. Cannot be undone.', () => {
-    localStorage.removeItem(LS.data);
-    localStorage.removeItem(LS.notes);
-    localStorage.removeItem(LS.overrides);
-    localStorage.removeItem(LS.updated);
-    localStorage.removeItem(LS.snapshots);
-    // keep identity intentionally
-    toast('Reset complete. Reloading…', 'success');
-    setTimeout(() => location.reload(), 600);
+  confirmDelete('Reset all data to defaults? This rewrites data.json on GitHub with the original dataset. Cannot be undone.', async () => {
+    lsDel(LS.snapshots);
+    applyJsonToModel({ features: STATIC_FEATURES, otherActions: [], notes: {}, overrides: {}, lastUpdated: formatTs(new Date()) });
+    FEATURES.forEach(ensureFeatureId);
+    FEATURES.forEach(f => f.sub.forEach(ensureSubId));
+    await commitToGitHub();
+    renderAll();
+    toast('Reset complete — defaults restored and saved to GitHub.', 'success');
   });
 }
 
@@ -1755,10 +1892,10 @@ function renderAll() {
   syncUrl();
 }
 
-function bootApp() {
-  loadModel();
+async function bootApp() {
   restoreFromUrl();
-  document.getElementById('global-updated').textContent = LAST_UPDATED || '—';
+  await loadModel();   // async: fetches data.json from GitHub before first render
+  requireIdentity();
 
   // Search
   document.getElementById('search').addEventListener('input', e => {
@@ -1802,6 +1939,28 @@ function bootApp() {
   });
   document.getElementById('history-btn').addEventListener('click', openHistoryPanel);
   document.getElementById('reset-btn').addEventListener('click', resetAll);
+
+  // PAT modal
+  document.getElementById('pat-btn').addEventListener('click', openPatModal);
+  document.getElementById('pat-save').addEventListener('click', validateAndSavePat);
+  document.getElementById('pat-cancel').addEventListener('click', closePatModal);
+  document.getElementById('pat-clear').addEventListener('click', () => {
+    lsDel(LS.pat);
+    document.getElementById('pat-status').textContent = 'Token removed.';
+    document.getElementById('pat-status').style.color = '#888';
+    document.getElementById('pat-input').value = '';
+    setSaveStatus('warn', '⚠ No token — changes will not be saved to GitHub');
+  });
+  document.getElementById('pat-modal').addEventListener('click', e => {
+    if (e.target === document.getElementById('pat-modal')) closePatModal();
+  });
+
+  // Prompt for token if not set and in edit mode
+  if (EDIT_MODE && !lsGet(LS.pat, '')) {
+    setTimeout(() => {
+      setSaveStatus('warn', '⚠ No GitHub token yet — click 🔑 Token to enable saving');
+    }, 1500);
+  }
 
   renderAll();
 }
