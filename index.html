@@ -602,7 +602,7 @@ function showApp() {
   requireIdentity();
   bootApp();
 }
-(function initGate() {
+function initGate() {
   if (sessionStorage.getItem('dv_tracker_auth') === '1') {
     showApp();
     return;
@@ -622,7 +622,8 @@ function showApp() {
       document.getElementById('pwd').focus();
     }
   });
-})();
+}
+/* initGate() called at end of script after all const declarations are initialized */
 
 /* =================================================================
    Static defaults (the v1 dataset — schema)
@@ -1804,6 +1805,8 @@ function bootApp() {
 
   renderAll();
 }
+
+initGate();
 </script>
 </body>
 </html>
