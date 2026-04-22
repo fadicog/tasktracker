@@ -294,6 +294,49 @@
   .subtasks td.updated { color: var(--muted); font-size: 11px; font-style: italic; }
   .subtasks td.row-ctrl { white-space: nowrap; }
 
+  /* ---------------- Date Picker (native, styled) ---------------- */
+  .date-picker {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-family: inherit;
+  }
+  .date-picker input[type="date"] {
+    border: 1px solid var(--border); border-radius: 6px;
+    padding: 6px 10px; font-family: inherit; font-size: 13px;
+    background: #fff; color: var(--text); outline: none;
+    transition: border-color .15s, box-shadow .15s;
+    min-width: 140px;
+  }
+  .date-picker input[type="date"]:focus {
+    border-color: var(--navy);
+    box-shadow: 0 0 0 3px rgba(26,35,126,.12);
+  }
+  .date-picker input[type="date"][hidden] { display: none; }
+  .date-picker .nodate-btn {
+    border: 1px solid var(--border); border-radius: 6px;
+    padding: 6px 10px; font-family: inherit; font-size: 12px;
+    background: #fff; color: var(--muted); cursor: pointer;
+    transition: all .15s; white-space: nowrap;
+  }
+  .date-picker .nodate-btn:hover { border-color: #b0b8c5; color: var(--text); }
+  .date-picker .nodate-btn.active {
+    border-color: var(--navy); color: var(--navy);
+    background: #eef1fb; font-weight: 600;
+  }
+  .date-picker .dp-save,
+  .date-picker .dp-cancel {
+    border: 1px solid var(--border); border-radius: 6px;
+    padding: 5px 10px; font-family: inherit; font-size: 12px;
+    cursor: pointer; font-weight: 600;
+  }
+  .date-picker .dp-save { background: var(--navy); color: #fff; border-color: var(--navy); }
+  .date-picker .dp-save:hover { background: var(--navy-dark); }
+  .date-picker .dp-cancel { background: #eceff1; color: var(--text); }
+  .date-picker .dp-cancel:hover { background: #cfd8dc; }
+  /* Modal variant: full width input row */
+  .modal .date-picker { width: 100%; display: flex; }
+  .modal .date-picker input[type="date"] { flex: 1; padding: 9px 12px; font-size: 14px; }
+  .modal .date-picker .nodate-btn { padding: 9px 12px; font-size: 13px; }
+
   .subtask-addbtn {
     margin-top: 8px; padding: 7px 12px; font-size: 12px;
     border: 1px dashed var(--border); background: #fff; color: var(--muted);
@@ -1178,6 +1221,115 @@ function isDueSoon(sub) {
   return diff >= 0 && diff <= 7;
 }
 
+/* ISO helpers for the date picker */
+function isIsoDate(val) {
+  return typeof val === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(val);
+}
+function formatDisplayDate(val) {
+  // Pass through sentinel values and ranges / unknown formats unchanged
+  if (!val) return '—';
+  if (val === '—' || val === 'TBC') return val;
+  if (!isIsoDate(val)) return val;
+  const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const [y, m, d] = val.split('-').map(Number);
+  return `${String(d).padStart(2, '0')} ${MONTHS[m - 1]} ${y}`;
+}
+
+/**
+ * createDatePicker(host, { value, onChange, showSaveCancel, onCancel })
+ * Renders a styled native <input type="date"> + "No date / TBC" toggle into host.
+ * - value: current value (ISO "YYYY-MM-DD", "—", "TBC", or other/empty)
+ * - If value is non-ISO (e.g. a range, or "—"/"TBC"), the toggle starts ON.
+ * - onChange(newValue) called whenever value changes (or on Save if showSaveCancel).
+ * - showSaveCancel: when true, renders Save/Cancel buttons; onChange fires only on Save.
+ * - Returns { getValue, destroy }.
+ */
+function createDatePicker(host, opts = {}) {
+  const {
+    value = '',
+    onChange = () => {},
+    showSaveCancel = false,
+    onCancel = () => {}
+  } = opts;
+
+  let current = value || '';
+  const startIsIso = isIsoDate(current);
+
+  host.innerHTML = '';
+  const wrap = document.createElement('span');
+  wrap.className = 'date-picker';
+
+  const input = document.createElement('input');
+  input.type = 'date';
+  if (startIsIso) input.value = current;
+
+  const toggle = document.createElement('button');
+  toggle.type = 'button';
+  toggle.className = 'nodate-btn';
+
+  let noDate = !startIsIso;
+
+  const refreshToggle = () => {
+    if (noDate) {
+      input.hidden = true;
+      toggle.classList.add('active');
+      toggle.textContent = '✓ No date';
+    } else {
+      input.hidden = false;
+      toggle.classList.remove('active');
+      toggle.textContent = '— No date';
+    }
+  };
+
+  const computeValue = () => noDate ? '—' : (input.value || '');
+
+  toggle.addEventListener('click', (e) => {
+    e.stopPropagation();
+    noDate = !noDate;
+    if (!noDate && !input.value) {
+      // Default to today if user turns off the "No date" toggle and had nothing set.
+      const today = new Date();
+      const iso = today.toISOString().slice(0, 10);
+      input.value = iso;
+    }
+    refreshToggle();
+    if (!showSaveCancel) onChange(computeValue());
+  });
+
+  input.addEventListener('change', () => {
+    if (!showSaveCancel) onChange(computeValue());
+  });
+  input.addEventListener('click', (e) => e.stopPropagation());
+
+  wrap.appendChild(input);
+  wrap.appendChild(toggle);
+
+  if (showSaveCancel) {
+    const save = document.createElement('button');
+    save.type = 'button';
+    save.className = 'dp-save';
+    save.textContent = 'Save';
+    save.addEventListener('click', (e) => { e.stopPropagation(); onChange(computeValue()); });
+
+    const cancel = document.createElement('button');
+    cancel.type = 'button';
+    cancel.className = 'dp-cancel';
+    cancel.textContent = 'Cancel';
+    cancel.addEventListener('click', (e) => { e.stopPropagation(); onCancel(); });
+
+    wrap.appendChild(save);
+    wrap.appendChild(cancel);
+  }
+
+  host.appendChild(wrap);
+  refreshToggle();
+
+  return {
+    getValue: computeValue,
+    destroy: () => { host.innerHTML = ''; }
+  };
+}
+
 /* =================================================================
    State (filters, UI)
    ================================================================= */
@@ -1682,7 +1834,7 @@ function renderSubtaskRow(f, s) {
   return `
     <tr data-sid="${escapeHtml(s.id)}">
       <td class="task"><span class="task-text" data-edit-sub-text="${escapeHtml(f.id)}|${escapeHtml(s.id)}" title="Click to edit">${escapeHtml(s.task)}</span></td>
-      <td class="${dateCls}"><span data-edit-sub-date="${escapeHtml(f.id)}|${escapeHtml(s.id)}">${escapeHtml(s.due || '—')}</span></td>
+      <td class="${dateCls}"><span data-edit-sub-date="${escapeHtml(f.id)}|${escapeHtml(s.id)}" title="Click to edit due date">${escapeHtml(formatDisplayDate(s.due))}</span></td>
       <td><span class="status-pill editable" data-sub-status="${escapeHtml(f.id)}|${escapeHtml(s.id)}" data-st="${escapeHtml(s.status)}">${escapeHtml(s.status)}</span></td>
       <td class="owner"><span data-edit-sub-owner="${escapeHtml(f.id)}|${escapeHtml(s.id)}" title="Click to edit owners">${escapeHtml(s.owner || '—')}</span></td>
       <td class="updated edit-only">${updatedLabel}</td>
@@ -1800,18 +1952,41 @@ function bindFeatureHandlers(f) {
     });
   });
   root.querySelectorAll('[data-edit-sub-date]').forEach(el => {
-    el.addEventListener('click', () => {
+    el.addEventListener('click', (e) => {
       if (!EDIT_MODE) return;
+      if (el.dataset.editing === '1') return;
+      e.stopPropagation();
       const [fid, sid] = el.dataset.editSubDate.split('|');
       const feat = FEATURES.find(x => x.id === fid);
       const sub  = feat?.sub.find(x => x.id === sid);
       if (!sub) return;
-      const val = prompt('Edit due date (YYYY-MM-DD, range, or "—"/"TBC"):', sub.due || '');
-      if (val !== null) {
-        sub.due = val.trim();
-        stamp(sub);
-        persist(); renderAll();
-      }
+
+      el.dataset.editing = '1';
+      const host = document.createElement('span');
+      host.className = 'inline-date-host';
+      host.style.display = 'inline-flex';
+      el.replaceWith(host);
+
+      const commit = (newVal) => {
+        const normalized = (newVal == null || newVal === '') ? '—' : newVal;
+        if (normalized !== (sub.due || '—')) {
+          sub.due = normalized;
+          stamp(sub);
+          persist();
+        }
+        renderAll();
+      };
+      const cancel = () => { renderAll(); };
+
+      createDatePicker(host, {
+        value: sub.due || '',
+        showSaveCancel: true,
+        onChange: commit,
+        onCancel: cancel
+      });
+      // Autofocus the input so users can interact immediately
+      const input = host.querySelector('input[type="date"]');
+      if (input && !input.hidden) input.focus();
     });
   });
   root.querySelectorAll('[data-edit-sub-owner]').forEach(el => {
@@ -2060,7 +2235,7 @@ function openAddSubtaskModal(fid) {
       </div>
       <div class="field">
         <label>Due date</label>
-        <input type="text" id="ns-due" placeholder="YYYY-MM-DD, range, or —"/>
+        <div id="ns-due-picker"></div>
       </div>
       <div class="field">
         <label>Owner(s)</label>
@@ -2087,11 +2262,18 @@ function openAddSubtaskModal(fid) {
     onChange: (vals) => { pickedOwners = vals; }
   });
 
+  // Date picker — defaults to "No date" (—); user can toggle and pick a calendar date.
+  const duePicker = createDatePicker(document.getElementById('ns-due-picker'), {
+    value: '—',
+    onChange: () => {} // value read on Save via getValue()
+  });
+
   document.getElementById('m-cancel').onclick = () => host.classList.remove('active');
   document.getElementById('m-save').onclick = () => {
     const task = document.getElementById('ns-task').value.trim();
     if (!task) { toast('Task text is required', 'error'); return; }
-    const due = document.getElementById('ns-due').value.trim() || '—';
+    const duRaw = duePicker.getValue();
+    const due = (duRaw && duRaw !== '') ? duRaw : '—';
     const owner = pickedOwners.length ? pickedOwners.join(', ') : '—';
     const status = document.getElementById('ns-status').value;
     const s = { id: nextId('s'), task, due, status, owner };
