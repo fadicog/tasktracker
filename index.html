@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>UAE PASS DV — 2026 Roadmap Tracker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  /* ---------------- Base ---------------- */
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --navy: #1a237e;
+    --navy-dark: #121858;
+    --bg: #f4f6fb;
+    --card: #ffffff;
+    --text: #1f2633;
+    --muted: #5b6476;
+    --border: #e3e7ef;
+    --shadow: 0 2px 6px rgba(20,30,60,.06);
+    --shadow-lg: 0 6px 20px rgba(20,30,60,.10);
+
+    --cat-product: #1565c0;
+    --cat-design:  #6a1b9a;
+    --cat-dda:     #7b1fa2;
+    --cat-ux:      #e65100;
+    --cat-tech:    #2e7d32;
+    --cat-sp:      #00695c;
+
+    --st-completed: #388e3c;
+    --st-progress:  #f57f17;
+    --st-pending:   #616161;
+    --st-notstart:  #9e9e9e;
+  }
+  html, body { height: 100%; }
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.45;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ---------------- Password Gate ---------------- */
+  #gate {
+    position: fixed; inset: 0;
+    background: linear-gradient(135deg, #0d1230 0%, #1a237e 100%);
+    display: flex; align-items: center; justify-content: center;
+    z-index: 1000;
+  }
+  #gate .box {
+    background: #fff; border-radius: 16px;
+    padding: 40px 36px; width: min(400px, 92%);
+    box-shadow: 0 30px 80px rgba(0,0,0,.35);
+    text-align: center;
+  }
+  #gate h1 { font-size: 22px; color: var(--navy); margin-bottom: 8px; font-weight: 700; }
+  #gate p  { color: var(--muted); font-size: 14px; margin-bottom: 22px; }
+  #gate input {
+    width: 100%; padding: 12px 14px;
+    border: 1px solid var(--border); border-radius: 8px;
+    font-size: 15px; font-family: inherit; margin-bottom: 12px;
+    transition: border .15s;
+  }
+  #gate input:focus { outline: none; border-color: var(--navy); box-shadow: 0 0 0 3px rgba(26,35,126,.15); }
+  #gate button {
+    width: 100%; padding: 12px; border: 0; border-radius: 8px;
+    background: var(--navy); color: #fff; font-size: 15px; font-weight: 600;
+    cursor: pointer; transition: background .15s;
+  }
+  #gate button:hover { background: var(--navy-dark); }
+  #gate .err { color: #c62828; font-size: 13px; margin-top: 10px; min-height: 16px; }
+  #gate .lock { font-size: 36px; margin-bottom: 12px; }
+
+  /* ---------------- App shell ---------------- */
+  #app { display: none; }
+  header.site {
+    background: linear-gradient(135deg, var(--navy) 0%, #2a3597 100%);
+    color: #fff;
+    padding: 24px 32px;
+    box-shadow: var(--shadow-lg);
+  }
+  header.site .row { max-width: 1400px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 16px; align-items: center; justify-content: space-between; }
+  header.site h1 { font-size: 22px; font-weight: 700; letter-spacing: .2px; }
+  header.site .sub { font-size: 13px; opacity: .85; margin-top: 2px; }
+  header.site .meta { font-size: 12px; opacity: .85; text-align: right; }
+
+  main { max-width: 1400px; margin: 0 auto; padding: 24px 32px 60px; }
+
+  /* ---------------- Stat cards ---------------- */
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 14px; margin-bottom: 22px; }
+  .stat {
+    background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+    padding: 16px 18px; box-shadow: var(--shadow);
+  }
+  .stat .k { font-size: 11px; text-transform: uppercase; letter-spacing: .6px; color: var(--muted); font-weight: 600; }
+  .stat .v { font-size: 26px; font-weight: 700; color: var(--navy); margin-top: 4px; }
+  .stat.total .v    { color: var(--navy); }
+  .stat.done .v     { color: var(--st-completed); }
+  .stat.prog .v     { color: var(--st-progress); }
+  .stat.pend .v     { color: var(--st-pending); }
+  .stat.pct  .v     { color: var(--cat-product); }
+
+  /* ---------------- Controls ---------------- */
+  .controls {
+    background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+    padding: 16px; box-shadow: var(--shadow); margin-bottom: 18px;
+  }
+  .controls .top { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+  .controls input.search, .controls select {
+    padding: 9px 12px; border: 1px solid var(--border); border-radius: 8px;
+    font-size: 14px; font-family: inherit; background: #fff; color: var(--text);
+  }
+  .controls input.search { flex: 1 1 260px; min-width: 220px; }
+  .controls select { min-width: 160px; }
+  .controls .row-label { font-size: 12px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: .5px; margin: 14px 0 8px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 6px 12px; border-radius: 999px; border: 1px solid var(--border);
+    background: #fff; cursor: pointer; font-size: 13px; font-weight: 500;
+    color: var(--text); transition: all .15s; user-select: none;
+  }
+  .chip .dot { width: 8px; height: 8px; border-radius: 50%; background: #888; }
+  .chip.active { color: #fff; border-color: transparent; }
+  .chip[data-cat="Product"].active     { background: var(--cat-product); }
+  .chip[data-cat="Design"].active      { background: var(--cat-design); }
+  .chip[data-cat="Design (DDA)"].active{ background: var(--cat-dda); }
+  .chip[data-cat="UX"].active          { background: var(--cat-ux); }
+  .chip[data-cat="Technical"].active   { background: var(--cat-tech); }
+  .chip[data-cat="SP"].active          { background: var(--cat-sp); }
+  .chip[data-cat="Product"]      .dot { background: var(--cat-product); }
+  .chip[data-cat="Design"]       .dot { background: var(--cat-design); }
+  .chip[data-cat="Design (DDA)"] .dot { background: var(--cat-dda); }
+  .chip[data-cat="UX"]           .dot { background: var(--cat-ux); }
+  .chip[data-cat="Technical"]    .dot { background: var(--cat-tech); }
+  .chip[data-cat="SP"]           .dot { background: var(--cat-sp); }
+  .chip.active .dot { background: #fff; }
+
+  .clear-btn {
+    padding: 7px 14px; font-size: 13px; border-radius: 6px;
+    border: 1px solid var(--border); background: #fff; cursor: pointer;
+    color: var(--muted); font-weight: 500;
+  }
+  .clear-btn:hover { background: #f6f8fc; color: var(--text); }
+
+  /* ---------------- Features list ---------------- */
+  .features { display: flex; flex-direction: column; gap: 10px; }
+  .feature {
+    background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+    box-shadow: var(--shadow); overflow: hidden; transition: box-shadow .15s;
+  }
+  .feature:hover { box-shadow: var(--shadow-lg); }
+  .feature .head {
+    display: grid;
+    grid-template-columns: 36px 50px 1fr auto auto auto auto;
+    gap: 14px; align-items: center;
+    padding: 14px 18px; cursor: pointer; user-select: none;
+    border-left: 4px solid var(--cat-product);
+  }
+  .feature[data-cat="Product"]      .head { border-left-color: var(--cat-product); }
+  .feature[data-cat="Design"]       .head { border-left-color: var(--cat-design); }
+  .feature[data-cat="Design (DDA)"] .head { border-left-color: var(--cat-dda); }
+  .feature[data-cat="UX"]           .head { border-left-color: var(--cat-ux); }
+  .feature[data-cat="Technical"]    .head { border-left-color: var(--cat-tech); }
+  .feature[data-cat="SP"]           .head { border-left-color: var(--cat-sp); }
+
+  .feature .caret {
+    width: 28px; height: 28px; border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center;
+    background: #eef1f8; color: var(--navy); font-size: 13px;
+    transition: transform .2s;
+  }
+  .feature.open .caret { transform: rotate(90deg); }
+  .feature.no-children .caret { opacity: .3; }
+
+  .slide-num {
+    font-size: 11px; font-weight: 700;
+    color: var(--muted); letter-spacing: .5px;
+    background: #eef1f8; padding: 4px 6px; border-radius: 4px;
+    text-align: center; min-width: 40px;
+  }
+  .feat-title { font-size: 15px; font-weight: 600; color: var(--text); }
+  .feat-title .badges { display: inline-flex; gap: 6px; margin-left: 8px; flex-wrap: wrap; vertical-align: middle; }
+  .badge {
+    display: inline-block; font-size: 10px; font-weight: 700;
+    padding: 2px 7px; border-radius: 4px; letter-spacing: .5px;
+    vertical-align: middle;
+  }
+  .badge.dda { background: #f3e5f5; color: var(--cat-dda); border: 1px solid #e1bee7; }
+  .badge.qtr { background: #e3f2fd; color: #1565c0; border: 1px solid #bbdefb; }
+
+  .cat-pill, .status-pill {
+    font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 999px;
+    white-space: nowrap;
+  }
+  .cat-pill { color: #fff; }
+  .cat-pill[data-cat="Product"]      { background: var(--cat-product); }
+  .cat-pill[data-cat="Design"]       { background: var(--cat-design); }
+  .cat-pill[data-cat="Design (DDA)"] { background: var(--cat-dda); }
+  .cat-pill[data-cat="UX"]           { background: var(--cat-ux); }
+  .cat-pill[data-cat="Technical"]    { background: var(--cat-tech); }
+  .cat-pill[data-cat="SP"]           { background: var(--cat-sp); }
+
+  .status-pill[data-st="Completed"]   { background: #e8f5e9; color: var(--st-completed); border: 1px solid #c8e6c9; }
+  .status-pill[data-st="In Progress"],
+  .status-pill[data-st="Started"]     { background: #fff8e1; color: var(--st-progress); border: 1px solid #ffecb3; }
+  .status-pill[data-st="Pending"]     { background: #eceff1; color: var(--st-pending); border: 1px solid #cfd8dc; }
+  .status-pill[data-st="Not started"] { background: #f5f5f5; color: var(--st-notstart); border: 1px solid #e0e0e0; }
+
+  .progress-wrap { min-width: 130px; }
+  .progress-wrap .pl { font-size: 11px; color: var(--muted); margin-bottom: 3px; display: flex; justify-content: space-between; }
+  .progress-bar { height: 6px; background: #eef1f8; border-radius: 3px; overflow: hidden; }
+  .progress-fill { height: 100%; background: var(--st-completed); border-radius: 3px; transition: width .3s; }
+
+  /* Subtasks */
+  .subtasks {
+    display: none; padding: 4px 18px 18px;
+    border-top: 1px solid var(--border); background: #fafbfe;
+  }
+  .feature.open .subtasks { display: block; }
+  .subtasks table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+  .subtasks th, .subtasks td {
+    text-align: left; padding: 10px 12px; font-size: 13px;
+    border-bottom: 1px solid var(--border);
+  }
+  .subtasks th {
+    font-size: 11px; text-transform: uppercase; letter-spacing: .5px;
+    color: var(--muted); font-weight: 600; background: #fff;
+  }
+  .subtasks tr:last-child td { border-bottom: 0; }
+  .subtasks td.task { font-weight: 500; }
+  .subtasks td.date { color: var(--muted); white-space: nowrap; }
+  .subtasks td.owner { color: var(--muted); }
+
+  /* Other actions */
+  .other-actions {
+    margin-top: 32px; background: var(--card); border: 1px solid var(--border);
+    border-radius: 10px; box-shadow: var(--shadow); padding: 20px;
+  }
+  .other-actions h2 {
+    font-size: 16px; color: var(--navy); margin-bottom: 14px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .other-actions h2::before {
+    content: ''; width: 4px; height: 16px; background: var(--navy); border-radius: 2px;
+  }
+  .other-actions table { width: 100%; border-collapse: collapse; }
+  .other-actions th, .other-actions td {
+    text-align: left; padding: 10px 12px; font-size: 13px; border-bottom: 1px solid var(--border);
+  }
+  .other-actions th {
+    font-size: 11px; text-transform: uppercase; letter-spacing: .5px;
+    color: var(--muted); font-weight: 600;
+  }
+  .other-actions tr:last-child td { border-bottom: 0; }
+
+  .empty {
+    background: var(--card); border: 1px dashed var(--border); border-radius: 10px;
+    padding: 40px; text-align: center; color: var(--muted);
+  }
+
+  /* ---------------- Mobile ---------------- */
+  @media (max-width: 800px) {
+    header.site { padding: 18px 16px; }
+    header.site .meta { text-align: left; }
+    main { padding: 16px; }
+    .feature .head {
+      grid-template-columns: 28px 40px 1fr auto;
+      grid-template-areas:
+        "caret slide title status"
+        "caret slide cats cats"
+        "progress progress progress progress";
+      gap: 10px 10px;
+    }
+    .feature .head .caret    { grid-area: caret; }
+    .feature .head .slide-num{ grid-area: slide; }
+    .feature .head .feat-title{ grid-area: title; }
+    .feature .head .status-pill{ grid-area: status; justify-self: end; }
+    .feature .head .cat-pill  { grid-area: cats; justify-self: start; }
+    .feature .head .qtr-badge { grid-area: cats; justify-self: end; }
+    .feature .head .progress-wrap { grid-area: progress; min-width: 0; }
+    .subtasks { padding: 0 10px 12px; overflow-x: auto; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ Password Gate ============ -->
+<div id="gate">
+  <div class="box">
+    <div class="lock">&#128274;</div>
+    <h1>UAE PASS DV — Roadmap Tracker</h1>
+    <p>Please enter the access password to continue</p>
+    <form id="gate-form" autocomplete="off">
+      <input type="password" id="pwd" placeholder="Password" autofocus autocomplete="off"/>
+      <button type="submit">Unlock</button>
+      <div class="err" id="gate-err"></div>
+    </form>
+  </div>
+</div>
+
+<!-- ============ App ============ -->
+<div id="app">
+  <header class="site">
+    <div class="row">
+      <div>
+        <h1>UAE PASS Digital Vault — 2026 Roadmap Tracker</h1>
+        <div class="sub">Feature progress and sub-task tracking across Product, Design, UX, Technical &amp; SP</div>
+      </div>
+      <div class="meta">
+        <div><strong>Last updated:</strong> 22 April 2026</div>
+        <div>Bi-weekly sprint cadence</div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <!-- KPIs -->
+    <section class="stats" id="stats"></section>
+
+    <!-- Controls -->
+    <section class="controls">
+      <div class="top">
+        <input type="search" class="search" id="search" placeholder="Search features…"/>
+        <select id="status-filter">
+          <option value="">All statuses</option>
+          <option value="Completed">Completed</option>
+          <option value="In Progress">In Progress</option>
+          <option value="Pending">Pending</option>
+        </select>
+        <button class="clear-btn" id="clear">Clear filters</button>
+        <button class="clear-btn" id="expand-all">Expand all</button>
+        <button class="clear-btn" id="collapse-all">Collapse all</button>
+      </div>
+      <div class="row-label">Filter by category</div>
+      <div class="chips" id="chips"></div>
+    </section>
+
+    <!-- Feature list -->
+    <section class="features" id="features"></section>
+
+    <!-- Other actions -->
+    <section class="other-actions">
+      <h2>Other Actions (Standalone Items)</h2>
+      <table>
+        <thead>
+          <tr><th>Action</th><th>Description</th><th>Owner</th></tr>
+        </thead>
+        <tbody id="other-tbody"></tbody>
+      </table>
+    </section>
+  </main>
+</div>
+
+<script>
+/* =================================================================
+   Password gate — SHA-256 of "TDRA2026"
+   ================================================================= */
+const PASSWORD_HASH = '9ba19f7bc294dca1ac7b621741441c63207445ac36e77ca90d58c6f2972f2d11';
+
+async function sha256(msg) {
+  const buf = new TextEncoder().encode(msg);
+  const hash = await crypto.subtle.digest('SHA-256', buf);
+  return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2,'0')).join('');
+}
+function showApp() {
+  document.getElementById('gate').style.display = 'none';
+  document.getElementById('app').style.display  = 'block';
+}
+(function initGate() {
+  if (sessionStorage.getItem('dv_tracker_auth') === '1') {
+    showApp();
+    return;
+  }
+  document.getElementById('gate-form').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const pwd = document.getElementById('pwd').value;
+    const errEl = document.getElementById('gate-err');
+    errEl.textContent = '';
+    const hash = await sha256(pwd);
+    if (hash === PASSWORD_HASH) {
+      sessionStorage.setItem('dv_tracker_auth', '1');
+      showApp();
+    } else {
+      errEl.textContent = 'Incorrect password. Please try again.';
+      document.getElementById('pwd').value = '';
+      document.getElementById('pwd').focus();
+    }
+  });
+})();
+
+/* =================================================================
+   Data
+   ================================================================= */
+const FEATURES = [
+  // slide 6
+  { slide: 6,  name: "Status-Based Reporting Implementation", category: "Product",       quarter: "Q1",    status: "In Progress", dda: false,
+    sub: [
+      { task: "Implementation (add completed)",                  due: "2026-01-28", status: "Completed",   owner: "—" },
+      { task: "Deep dive for the team",                          due: "TBC",        status: "Completed",   owner: "—" },
+      { task: "List of enhancements (part 1)",                   due: "2026-04-29", status: "Started",     owner: "—" },
+      { task: "UAT and feedback from the team",                  due: "2026-05-27", status: "Not started", owner: "—" },
+      { task: "Enhance weekly/monthly reports",                  due: "2026-06-24", status: "Not started", owner: "—" },
+      { task: "SP communication module (early warning)",         due: "2026-06-24", status: "Not started", owner: "—" },
+      { task: "TDRA demo to showcase achievement",               due: "2026-06-24", status: "Not started", owner: "—" },
+      { task: "List of enhancements (part 2) + plan",            due: "2026-06-08", status: "Not started", owner: "—" }
+    ]
+  },
+  // slide 7
+  { slide: 7,  name: "Dual Citizenship", category: "Product", quarter: "Q1-Q2", status: "In Progress", dda: false,
+    sub: [
+      { task: "Technical & business meetings / ICP alignment", due: "—",          status: "Completed", owner: "—" },
+      { task: "Internal development & design",                 due: "2026-01-28", status: "Completed", owner: "—" },
+      { task: "Final ICP confirmation / DDA alignment",        due: "—",          status: "Pending",   owner: "—" },
+      { task: "Sign off - feature enablement",                 due: "—",          status: "Pending",   owner: "—" }
+    ]
+  },
+  // slide 8
+  { slide: 8,  name: "SP Offboarding", category: "SP", quarter: "Q1", status: "Pending", dda: false,
+    sub: [
+      { task: "Fadi/Surbhi meeting",           due: "2026-04-27", status: "Pending", owner: "Fadi, Surbhi" },
+      { task: "Malak to discuss with TDRA",    due: "—",          status: "Pending", owner: "Malak" }
+    ]
+  },
+  // slide 9
+  { slide: 9,  name: "QR Code Simplification", category: "Technical", quarter: "Q1", status: "Pending", dda: false,
+    sub: [
+      { task: "Internal discussion",           due: "2026-04-06", status: "Pending", owner: "—" },
+      { task: "Link to OTC sharing review",    due: "—",          status: "Pending", owner: "—" }
+    ]
+  },
+  // slide 10
+  { slide: 10, name: "Design Audit", category: "Design", quarter: "—", status: "Pending", dda: false,
+    sub: [
+      { task: "DV review meeting", due: "2026-04-13", status: "Pending", owner: "Malak, Ahmad" }
+    ]
+  },
+  // slide 11
+  { slide: 11, name: "UX Enhancements Bundle 1", category: "UX", quarter: "—", status: "Pending", dda: false, sub: [] },
+  // slide 12
+  { slide: 12, name: "Form Filler", category: "Product", quarter: "—", status: "Pending", dda: false,
+    sub: [
+      { task: "Analysis (OCR / delivery address use cases)", due: "2026-04-29", status: "Pending", owner: "Fadi" }
+    ]
+  },
+  // slide 13
+  { slide: 13, name: "Auto-Add Documents / One-Time Consent", category: "Product", quarter: "Q3", status: "Pending", dda: false,
+    sub: [
+      { task: "Legal discussion with TDRA", due: "2026-05-01 to 2026-07-31", status: "Pending", owner: "Najjar" }
+    ]
+  },
+  // slide 14
+  { slide: 14, name: "Over the Counter Document Sharing", category: "Product", quarter: "—", status: "Pending", dda: false,
+    sub: [
+      { task: "Align with DDA; clarify in Shri/Najjar meeting", due: "—", status: "Pending", owner: "Najjar" }
+    ]
+  },
+  // slide 15
+  { slide: 15, name: "UX/UI Enhancements Bundle 2", category: "UX", quarter: "—", status: "Pending", dda: false, sub: [] },
+  // slide 16
+  { slide: 16, name: "Enable Download of All Issued Documents", category: "Product", quarter: "—", status: "Pending", dda: false,
+    sub: [
+      { task: "Scope 2 issuers; follow up", due: "—", status: "Pending", owner: "Najjar" }
+    ]
+  },
+  // slide 17
+  { slide: 17, name: "Home Page Revamp", category: "UX", quarter: "—", status: "Pending", dda: false,
+    sub: [
+      { task: "Plan enhancements to last year's designs", due: "—", status: "Pending", owner: "Ahmad" }
+    ]
+  },
+  // slide 18
+  { slide: 18, name: "Document Request Revision", category: "Design", quarter: "—", status: "Pending", dda: false, sub: [] },
+  // slide 19
+  { slide: 19, name: "Document Sharing Revision", category: "Design", quarter: "—", status: "Pending", dda: false, sub: [] },
+  // slide 20 — DDA
+  { slide: 20, name: "User Behavior Analytics Tool Selection", category: "Design (DDA)", quarter: "—", status: "Pending", dda: true,
+    sub: [
+      { task: "Benchmarking (Sprint 78)", due: "2026-05-07", status: "Pending", owner: "Fadi" }
+    ]
+  },
+  // slide 21
+  { slide: 21, name: "Consent Sharing (Third Party Data)", category: "Product", quarter: "—", status: "Pending", dda: false, sub: [] },
+  // slide 22 — DDA
+  { slide: 22, name: "Design System Update", category: "Design (DDA)", quarter: "—", status: "Pending", dda: true, sub: [] },
+  // slide 23 — DDA
+  { slide: 23, name: "Accessibility Enhancement", category: "Design (DDA)", quarter: "—", status: "Pending", dda: true, sub: [] },
+  // slide 24
+  { slide: 24, name: "UAEVerify SEO", category: "Technical", quarter: "—", status: "Pending", dda: false, sub: [] },
+  // slide 25
+  { slide: 25, name: "Error to Status Code Linking", category: "Technical", quarter: "—", status: "Pending", dda: false, sub: [] },
+  // slide 26
+  { slide: 26, name: "Infinite Loader Detection and Resolution", category: "Technical", quarter: "—", status: "Pending", dda: false, sub: [] },
+  // slide 27
+  { slide: 27, name: "Firebase Configuration and Optimization", category: "Technical", quarter: "—", status: "Pending", dda: false, sub: [] },
+  // slide 28
+  { slide: 28, name: "Service Providers SDK", category: "SP", quarter: "—", status: "Pending", dda: false, sub: [] },
+  // slide 29
+  { slide: 29, name: "DR Automation", category: "Technical", quarter: "—", status: "Pending", dda: false, sub: [] },
+  // slide 30
+  { slide: 30, name: "SP Automation Testing Suite", category: "SP", quarter: "—", status: "Pending", dda: false, sub: [] },
+  // slide 31
+  { slide: 31, name: "UAE Verify QR Code Scan vs Doc Upload", category: "Technical", quarter: "—", status: "Pending", dda: false, sub: [] },
+  // slide 32
+  { slide: 32, name: "CI/CD Pipeline Automation", category: "Technical", quarter: "—", status: "Pending", dda: false, sub: [] },
+  // slide 33
+  { slide: 33, name: "Operation Automation", category: "Technical", quarter: "—", status: "Pending", dda: false, sub: [] }
+];
+
+const OTHER_ACTIONS = [
+  { action: "Request visa - failure", desc: "Count of failure mapped to issues", owner: "Fadi, Shri" },
+  { action: "Multi language on app",
+    desc: "UAE PASS extending to Hindi, Urdu, Filipino, Chinese. Send communication to DDA, ask full scope/timeline/origin. Analysis needed.",
+    owner: "Malak, Sai" }
+];
+
+const CATEGORIES = ["Product", "Design", "Design (DDA)", "UX", "Technical", "SP"];
+
+/* =================================================================
+   State & rendering
+   ================================================================= */
+const state = {
+  selectedCats: new Set(),
+  status: "",
+  search: "",
+  openSlides: new Set()
+};
+
+function escapeHtml(s) {
+  return String(s).replace(/[&<>"']/g, c => ({
+    '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+  }[c]));
+}
+
+function featureProgress(f) {
+  if (!f.sub || !f.sub.length) return { pct: 0, done: 0, total: 0, hasSub: false };
+  const total = f.sub.length;
+  const done  = f.sub.filter(s => s.status === 'Completed').length;
+  return { pct: Math.round((done / total) * 100), done, total, hasSub: true };
+}
+
+function renderStats() {
+  const total = FEATURES.length;
+  const done  = FEATURES.filter(f => f.status === 'Completed').length;
+  const prog  = FEATURES.filter(f => f.status === 'In Progress' || f.status === 'Started').length;
+  const pend  = FEATURES.filter(f => f.status === 'Pending' || f.status === 'Not started').length;
+  // aggregate across all sub-tasks
+  let subDone = 0, subTot = 0;
+  FEATURES.forEach(f => f.sub.forEach(s => { subTot++; if (s.status === 'Completed') subDone++; }));
+  const pct = subTot ? Math.round((subDone / subTot) * 100) : 0;
+
+  document.getElementById('stats').innerHTML = `
+    <div class="stat total"><div class="k">Total Features</div><div class="v">${total}</div></div>
+    <div class="stat done"><div class="k">Completed</div><div class="v">${done}</div></div>
+    <div class="stat prog"><div class="k">In Progress</div><div class="v">${prog}</div></div>
+    <div class="stat pend"><div class="k">Pending</div><div class="v">${pend}</div></div>
+    <div class="stat pct"><div class="k">Sub-tasks Done</div><div class="v">${subDone}/${subTot} (${pct}%)</div></div>
+  `;
+}
+
+function renderChips() {
+  document.getElementById('chips').innerHTML = CATEGORIES.map(c => {
+    const active = state.selectedCats.has(c) ? 'active' : '';
+    return `<button class="chip ${active}" data-cat="${c}"><span class="dot"></span>${c}</button>`;
+  }).join('');
+  document.querySelectorAll('#chips .chip').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const c = btn.dataset.cat;
+      if (state.selectedCats.has(c)) state.selectedCats.delete(c);
+      else state.selectedCats.add(c);
+      renderChips();
+      renderFeatures();
+    });
+  });
+}
+
+function renderFeatures() {
+  const list = document.getElementById('features');
+  const q = state.search.trim().toLowerCase();
+  const filtered = FEATURES.filter(f => {
+    if (state.selectedCats.size && !state.selectedCats.has(f.category)) return false;
+    if (state.status) {
+      // group "Started" with "In Progress" for filter
+      const stNorm = (f.status === 'Started') ? 'In Progress' :
+                     (f.status === 'Not started') ? 'Pending' : f.status;
+      if (stNorm !== state.status) return false;
+    }
+    if (q && !f.name.toLowerCase().includes(q)) return false;
+    return true;
+  });
+
+  if (!filtered.length) {
+    list.innerHTML = `<div class="empty">No features match the current filters.</div>`;
+    return;
+  }
+
+  list.innerHTML = filtered.map(f => {
+    const p = featureProgress(f);
+    const isOpen = state.openSlides.has(f.slide);
+    const noSub = !p.hasSub;
+    const progressHtml = p.hasSub
+      ? `<div class="progress-wrap">
+           <div class="pl"><span>${p.done}/${p.total} done</span><span>${p.pct}%</span></div>
+           <div class="progress-bar"><div class="progress-fill" style="width:${p.pct}%"></div></div>
+         </div>`
+      : `<div class="progress-wrap" style="opacity:.45;">
+           <div class="pl"><span>No sub-tasks</span><span>—</span></div>
+           <div class="progress-bar"></div>
+         </div>`;
+    const qtrHtml = (f.quarter && f.quarter !== '—')
+      ? `<span class="badge qtr qtr-badge">${escapeHtml(f.quarter)}</span>`
+      : `<span style="display:inline-block;min-width:42px"></span>`;
+
+    const badges = [];
+    if (f.dda) badges.push('<span class="badge dda">DDA DEPENDENT</span>');
+
+    const subHtml = p.hasSub ? `
+      <div class="subtasks">
+        <table>
+          <thead>
+            <tr><th style="width:50%">Task</th><th>Due Date</th><th>Status</th><th>Owner</th></tr>
+          </thead>
+          <tbody>
+            ${f.sub.map(s => `
+              <tr>
+                <td class="task">${escapeHtml(s.task)}</td>
+                <td class="date">${escapeHtml(s.due)}</td>
+                <td><span class="status-pill" data-st="${escapeHtml(s.status)}">${escapeHtml(s.status)}</span></td>
+                <td class="owner">${escapeHtml(s.owner)}</td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      </div>` : '';
+
+    return `
+      <div class="feature ${isOpen ? 'open' : ''} ${noSub ? 'no-children' : ''}" data-cat="${escapeHtml(f.category)}" data-slide="${f.slide}">
+        <div class="head" role="button" tabindex="0">
+          <span class="caret">&#9654;</span>
+          <span class="slide-num">#${f.slide}</span>
+          <span class="feat-title">${escapeHtml(f.name)}<span class="badges">${badges.join('')}</span></span>
+          <span class="cat-pill" data-cat="${escapeHtml(f.category)}">${escapeHtml(f.category)}</span>
+          ${qtrHtml}
+          ${progressHtml}
+          <span class="status-pill" data-st="${escapeHtml(f.status)}">${escapeHtml(f.status)}</span>
+        </div>
+        ${subHtml}
+      </div>
+    `;
+  }).join('');
+
+  // Bind click to toggle
+  document.querySelectorAll('#features .feature').forEach(el => {
+    const slide = parseInt(el.dataset.slide, 10);
+    const head = el.querySelector('.head');
+    const hasSub = !el.classList.contains('no-children');
+    const toggle = () => {
+      if (!hasSub) return;
+      if (state.openSlides.has(slide)) state.openSlides.delete(slide);
+      else state.openSlides.add(slide);
+      el.classList.toggle('open');
+    };
+    head.addEventListener('click', toggle);
+    head.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }
+    });
+  });
+}
+
+function renderOther() {
+  document.getElementById('other-tbody').innerHTML = OTHER_ACTIONS.map(a => `
+    <tr>
+      <td style="font-weight:600">${escapeHtml(a.action)}</td>
+      <td>${escapeHtml(a.desc)}</td>
+      <td style="white-space:nowrap">${escapeHtml(a.owner)}</td>
+    </tr>
+  `).join('');
+}
+
+/* ---------------- Bindings ---------------- */
+document.getElementById('search').addEventListener('input', e => {
+  state.search = e.target.value;
+  renderFeatures();
+});
+document.getElementById('status-filter').addEventListener('change', e => {
+  state.status = e.target.value;
+  renderFeatures();
+});
+document.getElementById('clear').addEventListener('click', () => {
+  state.selectedCats.clear();
+  state.status = '';
+  state.search = '';
+  document.getElementById('search').value = '';
+  document.getElementById('status-filter').value = '';
+  renderChips();
+  renderFeatures();
+});
+document.getElementById('expand-all').addEventListener('click', () => {
+  FEATURES.forEach(f => { if (f.sub && f.sub.length) state.openSlides.add(f.slide); });
+  renderFeatures();
+});
+document.getElementById('collapse-all').addEventListener('click', () => {
+  state.openSlides.clear();
+  renderFeatures();
+});
+
+/* ---------------- Init ---------------- */
+renderStats();
+renderChips();
+renderFeatures();
+renderOther();
+</script>
+</body>
+</html>
