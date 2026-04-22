@@ -412,6 +412,130 @@
   .modal .actions .btn-cancel  { background: #eceff1; color: var(--text); }
   .modal .actions .btn-cancel:hover  { background: #cfd8dc; }
 
+  /* ---------------- Owner Picker ---------------- */
+  .owner-picker { position: relative; width: 100%; font-family: inherit; }
+  .owner-picker .op-trigger {
+    width: 100%; min-height: 38px; padding: 6px 34px 6px 10px;
+    border: 1px solid var(--border); border-radius: 6px; background: #fff;
+    display: flex; align-items: center; flex-wrap: wrap; gap: 4px;
+    cursor: pointer; font-size: 14px; position: relative; transition: border .15s, box-shadow .15s;
+    min-width: 0;
+  }
+  .owner-picker .op-trigger:hover { border-color: #c5ccda; }
+  .owner-picker.open .op-trigger,
+  .owner-picker .op-trigger:focus {
+    outline: none; border-color: var(--navy); box-shadow: 0 0 0 3px rgba(26,35,126,.12);
+  }
+  .owner-picker .op-trigger::after {
+    content: ""; position: absolute; right: 12px; top: 50%;
+    width: 8px; height: 8px; border-right: 2px solid var(--muted); border-bottom: 2px solid var(--muted);
+    transform: translateY(-70%) rotate(45deg); transition: transform .15s;
+  }
+  .owner-picker.open .op-trigger::after { transform: translateY(-30%) rotate(-135deg); }
+  .owner-picker .op-placeholder { color: #9aa2b3; font-size: 14px; padding: 2px 0; }
+  .owner-picker .op-chip {
+    display: inline-flex; align-items: center; gap: 4px;
+    background: var(--navy); color: #fff;
+    padding: 3px 8px 3px 9px; border-radius: 999px;
+    font-size: 12px; font-weight: 500; line-height: 1;
+  }
+  .owner-picker .op-chip .op-x {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 14px; height: 14px; border-radius: 50%;
+    background: rgba(255,255,255,.25); font-size: 10px; font-weight: 700;
+    cursor: pointer; line-height: 1;
+  }
+  .owner-picker .op-chip .op-x:hover { background: rgba(255,255,255,.45); }
+  .owner-picker .op-chip.single {
+    background: #eef1fb; color: var(--navy); border: 1px solid rgba(26,35,126,.18);
+  }
+  .owner-picker .op-panel {
+    position: absolute; top: calc(100% + 4px); left: 0; right: 0;
+    background: #fff; border: 1px solid var(--border); border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(15,20,40,.15);
+    z-index: 1200; display: none; overflow: hidden;
+  }
+  .owner-picker.open .op-panel { display: block; }
+  .owner-picker .op-list {
+    max-height: 220px; overflow-y: auto; padding: 4px;
+  }
+  .owner-picker .op-item {
+    display: flex; align-items: center; gap: 8px;
+    padding: 7px 10px; border-radius: 6px; cursor: pointer;
+    font-size: 13px; color: var(--text); user-select: none;
+    border: 0; background: transparent; width: 100%; text-align: left; font-family: inherit;
+  }
+  .owner-picker .op-item:hover { background: #f4f6fb; }
+  .owner-picker .op-item .op-check {
+    width: 16px; height: 16px; border: 1.5px solid #c5ccda; border-radius: 4px;
+    display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
+    background: #fff;
+  }
+  .owner-picker .op-item.selected .op-check {
+    background: var(--navy); border-color: var(--navy); color: #fff;
+  }
+  .owner-picker .op-item.selected .op-check::after {
+    content: ""; width: 4px; height: 8px; border-right: 2px solid #fff; border-bottom: 2px solid #fff;
+    transform: rotate(45deg) translate(-1px,-1px);
+  }
+  .owner-picker .op-item.selected { color: var(--navy); font-weight: 600; }
+  .owner-picker .op-radio {
+    width: 16px; height: 16px; border: 1.5px solid #c5ccda; border-radius: 50%;
+    display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0;
+    background: #fff;
+  }
+  .owner-picker .op-item.selected .op-radio {
+    border-color: var(--navy);
+  }
+  .owner-picker .op-item.selected .op-radio::after {
+    content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--navy);
+  }
+  .owner-picker .op-divider { height: 1px; background: var(--border); margin: 4px 0; }
+  .owner-picker .op-add-row {
+    padding: 6px 8px; display: flex; align-items: center; gap: 6px;
+    background: #fafbfe; border-top: 1px solid var(--border);
+  }
+  .owner-picker .op-add-btn {
+    width: 100%; display: flex; align-items: center; gap: 8px;
+    padding: 8px 10px; border: 0; background: transparent; cursor: pointer;
+    color: var(--navy); font-size: 13px; font-weight: 600; font-family: inherit;
+    border-radius: 6px; text-align: left;
+  }
+  .owner-picker .op-add-btn:hover { background: #eef1fb; }
+  .owner-picker .op-add-btn .op-plus {
+    width: 18px; height: 18px; border-radius: 50%;
+    background: var(--navy); color: #fff;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 600; line-height: 1;
+  }
+  .owner-picker .op-add-input {
+    flex: 1; padding: 7px 10px; font-size: 13px; font-family: inherit;
+    border: 1px solid var(--border); border-radius: 6px; background: #fff;
+    min-width: 0;
+  }
+  .owner-picker .op-add-input:focus {
+    outline: none; border-color: var(--navy); box-shadow: 0 0 0 2px rgba(26,35,126,.12);
+  }
+  .owner-picker .op-add-confirm {
+    padding: 7px 12px; font-size: 13px; font-weight: 600;
+    border: 0; border-radius: 6px; background: var(--navy); color: #fff;
+    cursor: pointer; font-family: inherit; white-space: nowrap;
+  }
+  .owner-picker .op-add-confirm:hover { background: var(--navy-dark); }
+  .owner-picker .op-empty {
+    padding: 10px; color: var(--muted); font-size: 12px; text-align: center; font-style: italic;
+  }
+
+  /* Inline editor in sub-task table */
+  .subtasks td.owner { position: relative; }
+  .subtasks td.owner .inline-owner-host { display: inline-block; min-width: 160px; }
+  .subtasks td.owner .owner-picker .op-trigger {
+    min-height: 30px; padding: 3px 28px 3px 6px; font-size: 12px;
+  }
+  .subtasks td.owner .owner-picker .op-trigger::after { right: 8px; }
+  .subtasks td.owner .owner-picker .op-chip { font-size: 11px; padding: 2px 7px 2px 8px; }
+  .subtasks td.owner .owner-picker .op-panel { min-width: 200px; }
+
   /* ---------------- Edit mode ---------------- */
   body.view-mode .edit-only { display: none !important; }
 
@@ -481,22 +605,8 @@
     <h3>Who are you?</h3>
     <div class="modal-sub">Your name will be stamped on every edit you make. You can change this later.</div>
     <div class="field">
-      <label for="identity-select">Select your name</label>
-      <select id="identity-select">
-        <option value="">— Please choose —</option>
-        <option value="Fadi">Fadi</option>
-        <option value="Najjar">Najjar</option>
-        <option value="Malak">Malak</option>
-        <option value="Ahmad">Ahmad</option>
-        <option value="Shri">Shri</option>
-        <option value="Surbhi">Surbhi</option>
-        <option value="Sai">Sai</option>
-        <option value="__other__">Other...</option>
-      </select>
-    </div>
-    <div class="field" id="identity-other-wrap" style="display:none">
-      <label for="identity-other">Enter your name</label>
-      <input type="text" id="identity-other" placeholder="Your name"/>
+      <label>Select your name</label>
+      <div id="identity-picker"></div>
     </div>
     <div class="actions">
       <button class="btn-primary" id="identity-save">Save</button>
@@ -762,10 +872,11 @@ const GH = {
    Storage helpers (localStorage for identity/mode/pat only)
    ================================================================= */
 const LS = {
-  identity:  'dv_tracker_identity',
-  mode:      'dv_tracker_mode',   // sessionStorage
-  pat:       'dv_tracker_pat',
-  snapshots: 'dv_tracker_snapshots'
+  identity:    'dv_tracker_identity',
+  mode:        'dv_tracker_mode',   // sessionStorage
+  pat:         'dv_tracker_pat',
+  snapshots:   'dv_tracker_snapshots',
+  customOwners:'dv_tracker_owners'
 };
 
 function lsGet(key, fallback) {
@@ -970,22 +1081,25 @@ function requireIdentity() {
 function showIdentityModal() {
   const gate = document.getElementById('identity-gate');
   gate.classList.add('active');
-  const sel = document.getElementById('identity-select');
-  const otherWrap = document.getElementById('identity-other-wrap');
-  const otherInp = document.getElementById('identity-other');
-  sel.value = '';
-  otherInp.value = '';
-  otherWrap.style.display = 'none';
-  if (IDENTITY && KNOWN_OWNERS.includes(IDENTITY)) sel.value = IDENTITY;
-  else if (IDENTITY) { sel.value = '__other__'; otherWrap.style.display = ''; otherInp.value = IDENTITY; }
 
-  sel.onchange = () => {
-    otherWrap.style.display = (sel.value === '__other__') ? '' : 'none';
-  };
+  // If current IDENTITY isn't in roster yet (e.g. previously typed "Other..." name),
+  // add it silently so the picker shows it selected.
+  if (IDENTITY && !getRosterOwners().includes(IDENTITY)) {
+    addCustomOwner(IDENTITY);
+  }
+
+  let pickedName = IDENTITY || '';
+  const pickerHost = document.getElementById('identity-picker');
+  createOwnerPicker(pickerHost, {
+    multi: false,
+    value: IDENTITY ? [IDENTITY] : [],
+    placeholder: '— Please choose —',
+    onChange: (vals) => { pickedName = vals[0] || ''; }
+  });
+
   document.getElementById('identity-save').onclick = () => {
-    let name = sel.value;
-    if (name === '__other__') name = otherInp.value.trim();
-    if (!name) { sel.focus(); return; }
+    const name = (pickedName || '').trim();
+    if (!name) { toast('Please select or add your name', 'error'); return; }
     IDENTITY = name;
     lsSet(LS.identity, IDENTITY);
     document.getElementById('identity-display').textContent = IDENTITY;
@@ -1103,19 +1217,241 @@ function syncUrl() {
 /* =================================================================
    Aggregators
    ================================================================= */
-function allOwners() {
+/* Roster = KNOWN_OWNERS (hardcoded) + custom owners stored in localStorage */
+function getCustomOwners() {
+  const raw = lsGet(LS.customOwners, []);
+  return Array.isArray(raw) ? raw.filter(x => typeof x === 'string' && x.trim()) : [];
+}
+function setCustomOwners(arr) {
+  lsSet(LS.customOwners, arr);
+}
+/* Full owner roster used by the owner picker (baseline + persistent extras). */
+function getRosterOwners() {
   const set = new Set(KNOWN_OWNERS);
+  getCustomOwners().forEach(o => set.add(o));
+  return [...set].sort((a, b) => a.localeCompare(b));
+}
+/* Add a new owner to the persistent roster. Returns canonical name or null if rejected. */
+function addCustomOwner(name) {
+  const clean = (name || '').trim();
+  if (!clean) return null;
+  // Case-insensitive dedupe against the full roster
+  const lower = clean.toLowerCase();
+  const existing = getRosterOwners().find(o => o.toLowerCase() === lower);
+  if (existing) return existing;
+  const customs = getCustomOwners();
+  customs.push(clean);
+  setCustomOwners(customs);
+  return clean;
+}
+
+function allOwners() {
+  const set = new Set(getRosterOwners());
   FEATURES.forEach(f => f.sub.forEach(s => {
     if (s.owner && s.owner !== '—') {
       s.owner.split(/[,/]/).map(x => x.trim()).filter(Boolean).forEach(o => set.add(o));
     }
   }));
-  return [...set].sort();
+  return [...set].sort((a, b) => a.localeCompare(b));
 }
 function allSprints() {
   const set = new Set();
   FEATURES.forEach(f => { if (f.sprint) set.add(String(f.sprint)); });
   return [...set].sort((a,b) => Number(a) - Number(b));
+}
+
+/* =================================================================
+   Owner Picker — reusable dropdown component
+   options = {
+     multi:       bool         // true = multi-select (chips), false = single-select
+     value:       string[]     // initial selected owner names (or single-item array for single-select)
+     placeholder: string       // shown when no selection
+     onChange:    (string[]) => void   // called on any selection change
+     compact:     bool         // optional, reserved for styling hooks
+   }
+   Returns: { getValue(), setValue(arr), destroy() }
+   ================================================================= */
+function createOwnerPicker(container, options = {}) {
+  const multi = !!options.multi;
+  const placeholder = options.placeholder || (multi ? 'Select owner(s)…' : 'Select owner…');
+  const onChange = typeof options.onChange === 'function' ? options.onChange : () => {};
+
+  // Normalize initial value to an array
+  let selected = [];
+  if (Array.isArray(options.value)) selected = options.value.slice();
+  else if (typeof options.value === 'string' && options.value.trim()) selected = [options.value.trim()];
+  selected = selected.filter(x => x && x !== '—');
+  if (!multi && selected.length > 1) selected = [selected[0]];
+
+  // Root element
+  const root = document.createElement('div');
+  root.className = 'owner-picker';
+  root.innerHTML = `
+    <button type="button" class="op-trigger" aria-haspopup="listbox" aria-expanded="false"></button>
+    <div class="op-panel" role="listbox">
+      <div class="op-list"></div>
+      <div class="op-add-wrap"></div>
+    </div>
+  `;
+  container.innerHTML = '';
+  container.appendChild(root);
+
+  const triggerEl = root.querySelector('.op-trigger');
+  const panelEl   = root.querySelector('.op-panel');
+  const listEl    = root.querySelector('.op-list');
+  const addWrapEl = root.querySelector('.op-add-wrap');
+
+  let isOpen = false;
+  let addMode = false;   // when true, inline input is shown
+
+  function renderTrigger() {
+    if (!selected.length) {
+      triggerEl.innerHTML = `<span class="op-placeholder">${escapeHtml(placeholder)}</span>`;
+      return;
+    }
+    if (multi) {
+      triggerEl.innerHTML = selected.map(name =>
+        `<span class="op-chip" data-name="${escapeHtml(name)}">${escapeHtml(name)}<span class="op-x" data-remove="${escapeHtml(name)}" title="Remove">&times;</span></span>`
+      ).join('');
+    } else {
+      triggerEl.innerHTML = `<span class="op-chip single">${escapeHtml(selected[0])}</span>`;
+    }
+  }
+
+  function renderList() {
+    const roster = getRosterOwners();
+    if (!roster.length) {
+      listEl.innerHTML = `<div class="op-empty">No owners yet. Click "Add new owner" below.</div>`;
+    } else {
+      listEl.innerHTML = roster.map(name => {
+        const isSel = selected.includes(name);
+        const marker = multi
+          ? `<span class="op-check"></span>`
+          : `<span class="op-radio"></span>`;
+        return `<button type="button" class="op-item ${isSel ? 'selected' : ''}" data-pick="${escapeHtml(name)}">${marker}<span class="op-name">${escapeHtml(name)}</span></button>`;
+      }).join('');
+    }
+    renderAddRow();
+  }
+
+  function renderAddRow() {
+    if (addMode) {
+      addWrapEl.innerHTML = `
+        <div class="op-add-row">
+          <input type="text" class="op-add-input" placeholder="New owner name" maxlength="40" />
+          <button type="button" class="op-add-confirm">Add</button>
+        </div>`;
+      const inp = addWrapEl.querySelector('.op-add-input');
+      const btn = addWrapEl.querySelector('.op-add-confirm');
+      setTimeout(() => inp && inp.focus(), 0);
+      inp.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') { e.preventDefault(); confirmAdd(inp.value); }
+        else if (e.key === 'Escape') { e.preventDefault(); e.stopPropagation(); addMode = false; renderAddRow(); }
+      });
+      btn.addEventListener('click', (e) => { e.preventDefault(); e.stopPropagation(); confirmAdd(inp.value); });
+    } else {
+      addWrapEl.innerHTML = `
+        <div class="op-divider"></div>
+        <button type="button" class="op-add-btn"><span class="op-plus">+</span>Add new owner</button>`;
+      addWrapEl.querySelector('.op-add-btn').addEventListener('click', (e) => {
+        e.preventDefault(); e.stopPropagation();
+        addMode = true;
+        renderAddRow();
+      });
+    }
+  }
+
+  function confirmAdd(raw) {
+    const name = addCustomOwner(raw);
+    if (!name) return;
+    // Auto-select the new owner
+    if (multi) {
+      if (!selected.includes(name)) selected.push(name);
+    } else {
+      selected = [name];
+    }
+    addMode = false;
+    renderList();
+    renderTrigger();
+    onChange(selected.slice());
+    // keep panel open so the user sees the update; for single-select, close for cleanliness
+    if (!multi) close();
+  }
+
+  function open() {
+    if (isOpen) return;
+    isOpen = true;
+    root.classList.add('open');
+    triggerEl.setAttribute('aria-expanded', 'true');
+    renderList();
+    document.addEventListener('mousedown', onDocDown, true);
+    document.addEventListener('keydown', onDocKey, true);
+  }
+  function close() {
+    if (!isOpen) return;
+    isOpen = false;
+    addMode = false;
+    root.classList.remove('open');
+    triggerEl.setAttribute('aria-expanded', 'false');
+    document.removeEventListener('mousedown', onDocDown, true);
+    document.removeEventListener('keydown', onDocKey, true);
+  }
+  function onDocDown(e) {
+    if (!root.contains(e.target)) close();
+  }
+  function onDocKey(e) {
+    if (e.key === 'Escape') { e.preventDefault(); close(); }
+  }
+
+  // Trigger click — toggle panel, but handle chip-remove clicks separately
+  triggerEl.addEventListener('click', (e) => {
+    const x = e.target.closest('.op-x');
+    if (x) {
+      e.preventDefault(); e.stopPropagation();
+      const name = x.dataset.remove;
+      selected = selected.filter(n => n !== name);
+      renderTrigger();
+      if (isOpen) renderList();
+      onChange(selected.slice());
+      return;
+    }
+    if (isOpen) close(); else open();
+  });
+
+  // Clicks inside the list: toggle selection
+  listEl.addEventListener('click', (e) => {
+    const btn = e.target.closest('.op-item');
+    if (!btn) return;
+    e.preventDefault();
+    const name = btn.dataset.pick;
+    if (multi) {
+      if (selected.includes(name)) selected = selected.filter(n => n !== name);
+      else selected.push(name);
+    } else {
+      selected = [name];
+    }
+    renderList();
+    renderTrigger();
+    onChange(selected.slice());
+    if (!multi) close();
+  });
+
+  renderTrigger();
+
+  return {
+    getValue: () => selected.slice(),
+    setValue: (arr) => {
+      selected = (Array.isArray(arr) ? arr : []).filter(x => x && x !== '—');
+      if (!multi && selected.length > 1) selected = [selected[0]];
+      renderTrigger();
+      if (isOpen) renderList();
+    },
+    destroy: () => {
+      close();
+      container.innerHTML = '';
+    },
+    rootEl: root
+  };
 }
 function featureMatchesOwner(f, owner) {
   // match if any sub-task owner contains this name
@@ -1348,7 +1684,7 @@ function renderSubtaskRow(f, s) {
       <td class="task"><span class="task-text" data-edit-sub-text="${escapeHtml(f.id)}|${escapeHtml(s.id)}" title="Click to edit">${escapeHtml(s.task)}</span></td>
       <td class="${dateCls}"><span data-edit-sub-date="${escapeHtml(f.id)}|${escapeHtml(s.id)}">${escapeHtml(s.due || '—')}</span></td>
       <td><span class="status-pill editable" data-sub-status="${escapeHtml(f.id)}|${escapeHtml(s.id)}" data-st="${escapeHtml(s.status)}">${escapeHtml(s.status)}</span></td>
-      <td class="owner"><span data-edit-sub-owner="${escapeHtml(f.id)}|${escapeHtml(s.id)}">${escapeHtml(s.owner || '—')}</span></td>
+      <td class="owner"><span data-edit-sub-owner="${escapeHtml(f.id)}|${escapeHtml(s.id)}" title="Click to edit owners">${escapeHtml(s.owner || '—')}</span></td>
       <td class="updated edit-only">${updatedLabel}</td>
       <td class="row-ctrl edit-only">
         <button class="icon-btn danger" data-del-sub="${escapeHtml(f.id)}|${escapeHtml(s.id)}" title="Delete sub-task">&#10005;</button>
@@ -1479,18 +1815,60 @@ function bindFeatureHandlers(f) {
     });
   });
   root.querySelectorAll('[data-edit-sub-owner]').forEach(el => {
-    el.addEventListener('click', () => {
+    el.addEventListener('click', (e) => {
       if (!EDIT_MODE) return;
+      if (el.dataset.editing === '1') return; // picker already live here
+      e.stopPropagation();
       const [fid, sid] = el.dataset.editSubOwner.split('|');
       const feat = FEATURES.find(x => x.id === fid);
       const sub  = feat?.sub.find(x => x.id === sid);
       if (!sub) return;
-      const val = prompt('Edit owner (comma-separated for multiple):', sub.owner || '');
-      if (val !== null) {
-        sub.owner = val.trim() || '—';
-        stamp(sub);
-        persist(); renderAll();
-      }
+
+      // Parse current owner string into array
+      const currentOwners = (sub.owner && sub.owner !== '—')
+        ? sub.owner.split(/[,/]/).map(x => x.trim()).filter(Boolean)
+        : [];
+
+      // Replace the span with a container hosting the picker
+      el.dataset.editing = '1';
+      const host = document.createElement('span');
+      host.className = 'inline-owner-host';
+      host.style.display = 'inline-block';
+      host.style.minWidth = '140px';
+      el.replaceWith(host);
+
+      let savedOnClose = false;
+      const saveAndRestore = (vals) => {
+        if (savedOnClose) return;
+        savedOnClose = true;
+        const newOwner = (vals && vals.length) ? vals.join(', ') : '—';
+        if (newOwner !== (sub.owner || '—')) {
+          sub.owner = newOwner;
+          stamp(sub);
+          persist();
+        }
+        renderAll();
+      };
+
+      const picker = createOwnerPicker(host, {
+        multi: true,
+        value: currentOwners,
+        placeholder: 'Pick owner(s)…',
+        onChange: () => { /* wait until picker closes to commit */ }
+      });
+
+      // Commit on outside click / Escape by observing when the picker closes.
+      // The picker removes its own listeners on close; we detect close via the 'open' class.
+      const observer = new MutationObserver(() => {
+        if (!picker.rootEl.classList.contains('open')) {
+          observer.disconnect();
+          saveAndRestore(picker.getValue());
+        }
+      });
+      observer.observe(picker.rootEl, { attributes: true, attributeFilter: ['class'] });
+
+      // Open the picker immediately
+      picker.rootEl.querySelector('.op-trigger').click();
     });
   });
 
@@ -1672,7 +2050,6 @@ function openAddSubtaskModal(fid) {
   const feat = FEATURES.find(x => x.id === fid);
   if (!feat) return;
   const host = document.getElementById('modal-host');
-  const ownerOpts = KNOWN_OWNERS.map(o => `<option value="${escapeHtml(o)}">${escapeHtml(o)}</option>`).join('');
   host.innerHTML = `
     <div class="modal">
       <h3>Add Sub-task</h3>
@@ -1686,16 +2063,8 @@ function openAddSubtaskModal(fid) {
         <input type="text" id="ns-due" placeholder="YYYY-MM-DD, range, or —"/>
       </div>
       <div class="field">
-        <label>Owner</label>
-        <select id="ns-owner">
-          <option value="—">—</option>
-          ${ownerOpts}
-          <option value="__custom__">Custom…</option>
-        </select>
-      </div>
-      <div class="field" id="ns-custom-wrap" style="display:none">
-        <label>Custom owner(s)</label>
-        <input type="text" id="ns-custom" placeholder="e.g. Najjar, Ahmad"/>
+        <label>Owner(s)</label>
+        <div id="ns-owner-picker"></div>
       </div>
       <div class="field">
         <label>Status</label>
@@ -1709,16 +2078,21 @@ function openAddSubtaskModal(fid) {
       </div>
     </div>`;
   host.classList.add('active');
-  const ownSel = document.getElementById('ns-owner');
-  const cusWrap = document.getElementById('ns-custom-wrap');
-  ownSel.onchange = () => { cusWrap.style.display = (ownSel.value === '__custom__') ? '' : 'none'; };
+
+  let pickedOwners = [];
+  createOwnerPicker(document.getElementById('ns-owner-picker'), {
+    multi: true,
+    value: [],
+    placeholder: 'Select owner(s)…',
+    onChange: (vals) => { pickedOwners = vals; }
+  });
+
   document.getElementById('m-cancel').onclick = () => host.classList.remove('active');
   document.getElementById('m-save').onclick = () => {
     const task = document.getElementById('ns-task').value.trim();
     if (!task) { toast('Task text is required', 'error'); return; }
     const due = document.getElementById('ns-due').value.trim() || '—';
-    let owner = ownSel.value;
-    if (owner === '__custom__') owner = document.getElementById('ns-custom').value.trim() || '—';
+    const owner = pickedOwners.length ? pickedOwners.join(', ') : '—';
     const status = document.getElementById('ns-status').value;
     const s = { id: nextId('s'), task, due, status, owner };
     stamp(s);
