@@ -1,96 +1,604 @@
 {
   "features": [
-    { "slide": 6,  "id": "f-6",  "name": "Status-Based Reporting Implementation", "category": "Product", "quarter": "Q1", "status": "In Progress", "dda": false, "sprint": 70, "blocked": false, "ddaStatus": "Not Submitted",
+    {
+      "slide": 6,
+      "id": "f-6",
+      "name": "Status-Based Reporting Implementation",
+      "category": "Product",
+      "quarter": "Q1",
+      "status": "In Progress",
+      "dda": false,
+      "sprint": 70,
+      "blocked": false,
+      "ddaStatus": "Not Submitted",
       "sub": [
-        { "id": "s-6-1", "task": "Implementation (add completed)",           "due": "2026-01-28", "status": "Completed",   "owner": "—", "updatedBy": "", "updatedAt": "" },
-        { "id": "s-6-2", "task": "Deep dive for the team",                   "due": "TBC",        "status": "Completed",   "owner": "—", "updatedBy": "", "updatedAt": "" },
-        { "id": "s-6-3", "task": "List of enhancements (part 1)",            "due": "2026-04-29", "status": "Started",     "owner": "—", "updatedBy": "", "updatedAt": "" },
-        { "id": "s-6-4", "task": "UAT and feedback from the team",           "due": "2026-05-27", "status": "Not started", "owner": "—", "updatedBy": "", "updatedAt": "" },
-        { "id": "s-6-5", "task": "Enhance weekly/monthly reports",           "due": "2026-06-24", "status": "Not started", "owner": "—", "updatedBy": "", "updatedAt": "" },
-        { "id": "s-6-6", "task": "SP communication module (early warning)",  "due": "2026-06-24", "status": "Not started", "owner": "—", "updatedBy": "", "updatedAt": "" },
-        { "id": "s-6-7", "task": "TDRA demo to showcase achievement",        "due": "2026-06-24", "status": "Not started", "owner": "—", "updatedBy": "", "updatedAt": "" },
-        { "id": "s-6-8", "task": "List of enhancements (part 2) + plan",    "due": "2026-06-08", "status": "Not started", "owner": "—", "updatedBy": "", "updatedAt": "" }
+        {
+          "id": "s-6-1",
+          "task": "Implementation (add completed)",
+          "due": "2026-01-28",
+          "status": "Completed",
+          "owner": "â",
+          "updatedBy": "",
+          "updatedAt": ""
+        },
+        {
+          "id": "s-6-2",
+          "task": "Deep dive for the team",
+          "due": "TBC",
+          "status": "Completed",
+          "owner": "â",
+          "updatedBy": "",
+          "updatedAt": ""
+        },
+        {
+          "id": "s-6-3",
+          "task": "List of enhancements (part 1)",
+          "due": "2026-04-29",
+          "status": "Started",
+          "owner": "â",
+          "updatedBy": "",
+          "updatedAt": ""
+        },
+        {
+          "id": "s-6-4",
+          "task": "UAT and feedback from the team",
+          "due": "2026-05-27",
+          "status": "Pending",
+          "owner": "â",
+          "updatedBy": "Fadi",
+          "updatedAt": "22 Apr 2026 17:03"
+        },
+        {
+          "id": "s-6-5",
+          "task": "Enhance weekly/monthly reports",
+          "due": "2026-06-24",
+          "status": "Not started",
+          "owner": "â",
+          "updatedBy": "",
+          "updatedAt": ""
+        },
+        {
+          "id": "s-6-6",
+          "task": "SP communication module (early warning)",
+          "due": "2026-06-24",
+          "status": "Not started",
+          "owner": "â",
+          "updatedBy": "",
+          "updatedAt": ""
+        },
+        {
+          "id": "s-6-7",
+          "task": "TDRA demo to showcase achievement",
+          "due": "2026-06-24",
+          "status": "Not started",
+          "owner": "â",
+          "updatedBy": "",
+          "updatedAt": ""
+        },
+        {
+          "id": "s-6-8",
+          "task": "List of enhancements (part 2) + plan",
+          "due": "2026-06-08",
+          "status": "Not started",
+          "owner": "â",
+          "updatedBy": "",
+          "updatedAt": ""
+        }
       ]
     },
-    { "slide": 7,  "id": "f-7",  "name": "Dual Citizenship", "category": "Product", "quarter": "Q1-Q2", "status": "In Progress", "dda": false, "sprint": 72, "blocked": false, "ddaStatus": "Not Submitted",
+    {
+      "slide": 7,
+      "id": "f-7",
+      "name": "Dual Citizenship",
+      "category": "Product",
+      "quarter": "Q1-Q2",
+      "status": "In Progress",
+      "dda": false,
+      "sprint": 72,
+      "blocked": false,
+      "ddaStatus": "Not Submitted",
       "sub": [
-        { "id": "s-7-1", "task": "Technical & business meetings / ICP alignment", "due": "—",          "status": "Completed", "owner": "—", "updatedBy": "", "updatedAt": "" },
-        { "id": "s-7-2", "task": "Internal development & design",                 "due": "2026-01-28", "status": "Completed", "owner": "—", "updatedBy": "", "updatedAt": "" },
-        { "id": "s-7-3", "task": "Final ICP confirmation / DDA alignment",        "due": "—",          "status": "Pending",   "owner": "—", "updatedBy": "", "updatedAt": "" },
-        { "id": "s-7-4", "task": "Sign off - feature enablement",                 "due": "—",          "status": "Pending",   "owner": "—", "updatedBy": "", "updatedAt": "" }
+        {
+          "id": "s-7-1",
+          "task": "Technical & business meetings / ICP alignment",
+          "due": "â",
+          "status": "Completed",
+          "owner": "â",
+          "updatedBy": "",
+          "updatedAt": ""
+        },
+        {
+          "id": "s-7-2",
+          "task": "Internal development & design",
+          "due": "2026-01-28",
+          "status": "Completed",
+          "owner": "â",
+          "updatedBy": "",
+          "updatedAt": ""
+        },
+        {
+          "id": "s-7-3",
+          "task": "Final ICP confirmation / DDA alignment",
+          "due": "â",
+          "status": "Pending",
+          "owner": "â",
+          "updatedBy": "",
+          "updatedAt": ""
+        },
+        {
+          "id": "s-7-4",
+          "task": "Sign off - feature enablement",
+          "due": "â",
+          "status": "Pending",
+          "owner": "â",
+          "updatedBy": "",
+          "updatedAt": ""
+        }
       ]
     },
-    { "slide": 8,  "id": "f-8",  "name": "SP Offboarding", "category": "SP", "quarter": "Q1", "status": "Pending", "dda": false, "sprint": null, "blocked": false, "ddaStatus": "Not Submitted",
+    {
+      "slide": 8,
+      "id": "f-8",
+      "name": "SP Offboarding",
+      "category": "SP",
+      "quarter": "Q1",
+      "status": "Pending",
+      "dda": false,
+      "sprint": null,
+      "blocked": false,
+      "ddaStatus": "Not Submitted",
       "sub": [
-        { "id": "s-8-1", "task": "Fadi/Surbhi meeting",        "due": "2026-04-27", "status": "Pending", "owner": "Fadi, Surbhi", "updatedBy": "", "updatedAt": "" },
-        { "id": "s-8-2", "task": "Malak to discuss with TDRA", "due": "—",          "status": "Pending", "owner": "Malak",        "updatedBy": "", "updatedAt": "" }
+        {
+          "id": "s-8-1",
+          "task": "Fadi/Surbhi meeting",
+          "due": "2026-04-27",
+          "status": "Pending",
+          "owner": "Fadi, Surbhi",
+          "updatedBy": "",
+          "updatedAt": ""
+        },
+        {
+          "id": "s-8-2",
+          "task": "Malak to discuss with TDRA",
+          "due": "â",
+          "status": "Pending",
+          "owner": "Malak",
+          "updatedBy": "",
+          "updatedAt": ""
+        }
       ]
     },
-    { "slide": 9,  "id": "f-9",  "name": "QR Code Simplification", "category": "Technical", "quarter": "Q1", "status": "Pending", "dda": false, "sprint": null, "blocked": false, "ddaStatus": "Not Submitted",
+    {
+      "slide": 9,
+      "id": "f-9",
+      "name": "QR Code Simplification",
+      "category": "Technical",
+      "quarter": "Q1",
+      "status": "Pending",
+      "dda": false,
+      "sprint": null,
+      "blocked": false,
+      "ddaStatus": "Not Submitted",
       "sub": [
-        { "id": "s-9-1", "task": "Internal discussion",        "due": "2026-04-06", "status": "Pending", "owner": "—", "updatedBy": "", "updatedAt": "" },
-        { "id": "s-9-2", "task": "Link to OTC sharing review", "due": "—",          "status": "Pending", "owner": "—", "updatedBy": "", "updatedAt": "" }
+        {
+          "id": "s-9-1",
+          "task": "Internal discussion",
+          "due": "2026-04-06",
+          "status": "Pending",
+          "owner": "â",
+          "updatedBy": "",
+          "updatedAt": ""
+        },
+        {
+          "id": "s-9-2",
+          "task": "Link to OTC sharing review",
+          "due": "â",
+          "status": "Pending",
+          "owner": "â",
+          "updatedBy": "",
+          "updatedAt": ""
+        }
       ]
     },
-    { "slide": 10, "id": "f-10", "name": "Design Audit", "category": "Design", "quarter": "—", "status": "Pending", "dda": false, "sprint": null, "blocked": false, "ddaStatus": "Not Submitted",
+    {
+      "slide": 10,
+      "id": "f-10",
+      "name": "Design Audit",
+      "category": "Design",
+      "quarter": "â",
+      "status": "Pending",
+      "dda": false,
+      "sprint": null,
+      "blocked": false,
+      "ddaStatus": "Not Submitted",
       "sub": [
-        { "id": "s-10-1", "task": "DV review meeting", "due": "2026-04-13", "status": "Pending", "owner": "Malak, Ahmad", "updatedBy": "", "updatedAt": "" }
+        {
+          "id": "s-10-1",
+          "task": "DV review meeting",
+          "due": "2026-04-13",
+          "status": "Pending",
+          "owner": "Malak, Ahmad",
+          "updatedBy": "",
+          "updatedAt": ""
+        }
       ]
     },
-    { "slide": 11, "id": "f-11", "name": "UX Enhancements Bundle 1",              "category": "UX",           "quarter": "—", "status": "Pending", "dda": false, "sprint": null, "blocked": false, "ddaStatus": "Not Submitted", "sub": [] },
-    { "slide": 12, "id": "f-12", "name": "Form Filler",                            "category": "Product",      "quarter": "—", "status": "Pending", "dda": false, "sprint": null, "blocked": false, "ddaStatus": "Not Submitted",
+    {
+      "slide": 11,
+      "id": "f-11",
+      "name": "UX Enhancements Bundle 1",
+      "category": "UX",
+      "quarter": "â",
+      "status": "Pending",
+      "dda": false,
+      "sprint": null,
+      "blocked": false,
+      "ddaStatus": "Not Submitted",
+      "sub": []
+    },
+    {
+      "slide": 12,
+      "id": "f-12",
+      "name": "Form Filler",
+      "category": "Product",
+      "quarter": "â",
+      "status": "Pending",
+      "dda": false,
+      "sprint": null,
+      "blocked": false,
+      "ddaStatus": "Not Submitted",
       "sub": [
-        { "id": "s-12-1", "task": "Analysis (OCR / delivery address use cases)", "due": "2026-04-29", "status": "Pending", "owner": "Fadi", "updatedBy": "", "updatedAt": "" }
+        {
+          "id": "s-12-1",
+          "task": "Analysis (OCR / delivery address use cases)",
+          "due": "2026-04-29",
+          "status": "Pending",
+          "owner": "Fadi",
+          "updatedBy": "",
+          "updatedAt": ""
+        }
       ]
     },
-    { "slide": 13, "id": "f-13", "name": "Auto-Add Documents / One-Time Consent", "category": "Product",      "quarter": "Q3", "status": "Pending", "dda": false, "sprint": null, "blocked": false, "ddaStatus": "Not Submitted",
+    {
+      "slide": 13,
+      "id": "f-13",
+      "name": "Auto-Add Documents / One-Time Consent",
+      "category": "Product",
+      "quarter": "Q3",
+      "status": "Pending",
+      "dda": false,
+      "sprint": null,
+      "blocked": false,
+      "ddaStatus": "Not Submitted",
       "sub": [
-        { "id": "s-13-1", "task": "Legal discussion with TDRA", "due": "2026-05-01 to 2026-07-31", "status": "Pending", "owner": "Najjar", "updatedBy": "", "updatedAt": "" }
+        {
+          "id": "s-13-1",
+          "task": "Legal discussion with TDRA",
+          "due": "2026-05-01 to 2026-07-31",
+          "status": "Pending",
+          "owner": "Najjar",
+          "updatedBy": "",
+          "updatedAt": ""
+        }
       ]
     },
-    { "slide": 14, "id": "f-14", "name": "Over the Counter Document Sharing",     "category": "Product",      "quarter": "—", "status": "Pending", "dda": false, "sprint": null, "blocked": false, "ddaStatus": "Not Submitted",
+    {
+      "slide": 14,
+      "id": "f-14",
+      "name": "Over the Counter Document Sharing",
+      "category": "Product",
+      "quarter": "â",
+      "status": "Pending",
+      "dda": false,
+      "sprint": null,
+      "blocked": false,
+      "ddaStatus": "Not Submitted",
       "sub": [
-        { "id": "s-14-1", "task": "Align with DDA; clarify in Shri/Najjar meeting", "due": "—", "status": "Pending", "owner": "Najjar", "updatedBy": "", "updatedAt": "" }
+        {
+          "id": "s-14-1",
+          "task": "Align with DDA; clarify in Shri/Najjar meeting",
+          "due": "â",
+          "status": "Pending",
+          "owner": "Najjar",
+          "updatedBy": "",
+          "updatedAt": ""
+        }
       ]
     },
-    { "slide": 15, "id": "f-15", "name": "UX/UI Enhancements Bundle 2",           "category": "UX",           "quarter": "—", "status": "Pending", "dda": false, "sprint": null, "blocked": false, "ddaStatus": "Not Submitted", "sub": [] },
-    { "slide": 16, "id": "f-16", "name": "Enable Download of All Issued Documents","category": "Product",      "quarter": "—", "status": "Pending", "dda": false, "sprint": null, "blocked": false, "ddaStatus": "Not Submitted",
+    {
+      "slide": 15,
+      "id": "f-15",
+      "name": "UX/UI Enhancements Bundle 2",
+      "category": "UX",
+      "quarter": "â",
+      "status": "Pending",
+      "dda": false,
+      "sprint": null,
+      "blocked": false,
+      "ddaStatus": "Not Submitted",
+      "sub": []
+    },
+    {
+      "slide": 16,
+      "id": "f-16",
+      "name": "Enable Download of All Issued Documents",
+      "category": "Product",
+      "quarter": "â",
+      "status": "Pending",
+      "dda": false,
+      "sprint": null,
+      "blocked": false,
+      "ddaStatus": "Not Submitted",
       "sub": [
-        { "id": "s-16-1", "task": "Scope 2 issuers; follow up", "due": "—", "status": "Pending", "owner": "Najjar", "updatedBy": "", "updatedAt": "" }
+        {
+          "id": "s-16-1",
+          "task": "Scope 2 issuers; follow up",
+          "due": "â",
+          "status": "Pending",
+          "owner": "Najjar",
+          "updatedBy": "",
+          "updatedAt": ""
+        }
       ]
     },
-    { "slide": 17, "id": "f-17", "name": "Home Page Revamp",                      "category": "UX",           "quarter": "—", "status": "Pending", "dda": false, "sprint": null, "blocked": false, "ddaStatus": "Not Submitted",
+    {
+      "slide": 17,
+      "id": "f-17",
+      "name": "Home Page Revamp",
+      "category": "UX",
+      "quarter": "â",
+      "status": "Pending",
+      "dda": false,
+      "sprint": null,
+      "blocked": false,
+      "ddaStatus": "Not Submitted",
       "sub": [
-        { "id": "s-17-1", "task": "Plan enhancements to last year's designs", "due": "—", "status": "Pending", "owner": "Ahmad", "updatedBy": "", "updatedAt": "" }
+        {
+          "id": "s-17-1",
+          "task": "Plan enhancements to last year's designs",
+          "due": "â",
+          "status": "Pending",
+          "owner": "Ahmad",
+          "updatedBy": "",
+          "updatedAt": ""
+        }
       ]
     },
-    { "slide": 18, "id": "f-18", "name": "Document Request Revision",             "category": "Design",       "quarter": "—", "status": "Pending", "dda": false, "sprint": null, "blocked": false, "ddaStatus": "Not Submitted", "sub": [] },
-    { "slide": 19, "id": "f-19", "name": "Document Sharing Revision",             "category": "Design",       "quarter": "—", "status": "Pending", "dda": false, "sprint": null, "blocked": false, "ddaStatus": "Not Submitted", "sub": [] },
-    { "slide": 20, "id": "f-20", "name": "User Behavior Analytics Tool Selection","category": "Design (DDA)", "quarter": "—", "status": "Pending", "dda": true,  "sprint": 78,   "blocked": false, "ddaStatus": "Not Submitted",
+    {
+      "slide": 18,
+      "id": "f-18",
+      "name": "Document Request Revision",
+      "category": "Design",
+      "quarter": "â",
+      "status": "Pending",
+      "dda": false,
+      "sprint": null,
+      "blocked": false,
+      "ddaStatus": "Not Submitted",
+      "sub": []
+    },
+    {
+      "slide": 19,
+      "id": "f-19",
+      "name": "Document Sharing Revision",
+      "category": "Design",
+      "quarter": "â",
+      "status": "Pending",
+      "dda": false,
+      "sprint": null,
+      "blocked": false,
+      "ddaStatus": "Not Submitted",
+      "sub": []
+    },
+    {
+      "slide": 20,
+      "id": "f-20",
+      "name": "User Behavior Analytics Tool Selection",
+      "category": "Design (DDA)",
+      "quarter": "â",
+      "status": "Pending",
+      "dda": true,
+      "sprint": 78,
+      "blocked": false,
+      "ddaStatus": "Not Submitted",
       "sub": [
-        { "id": "s-20-1", "task": "Benchmarking (Sprint 78)", "due": "2026-05-07", "status": "Pending", "owner": "Fadi", "updatedBy": "", "updatedAt": "" }
+        {
+          "id": "s-20-1",
+          "task": "Benchmarking (Sprint 78)",
+          "due": "2026-05-07",
+          "status": "Pending",
+          "owner": "Fadi",
+          "updatedBy": "",
+          "updatedAt": ""
+        }
       ]
     },
-    { "slide": 21, "id": "f-21", "name": "Consent Sharing (Third Party Data)",    "category": "Product",      "quarter": "—", "status": "Pending", "dda": false, "sprint": null, "blocked": false, "ddaStatus": "Not Submitted", "sub": [] },
-    { "slide": 22, "id": "f-22", "name": "Design System Update",                  "category": "Design (DDA)", "quarter": "—", "status": "Pending", "dda": true,  "sprint": null, "blocked": false, "ddaStatus": "Not Submitted", "sub": [] },
-    { "slide": 23, "id": "f-23", "name": "Accessibility Enhancement",             "category": "Design (DDA)", "quarter": "—", "status": "Pending", "dda": true,  "sprint": null, "blocked": false, "ddaStatus": "Not Submitted", "sub": [] },
-    { "slide": 24, "id": "f-24", "name": "UAEVerify SEO",                         "category": "Technical",    "quarter": "—", "status": "Pending", "dda": false, "sprint": null, "blocked": false, "ddaStatus": "Not Submitted", "sub": [] },
-    { "slide": 25, "id": "f-25", "name": "Error to Status Code Linking",          "category": "Technical",    "quarter": "—", "status": "Pending", "dda": false, "sprint": null, "blocked": false, "ddaStatus": "Not Submitted", "sub": [] },
-    { "slide": 26, "id": "f-26", "name": "Infinite Loader Detection and Resolution","category": "Technical",  "quarter": "—", "status": "Pending", "dda": false, "sprint": 70,   "blocked": false, "ddaStatus": "Not Submitted", "sub": [] },
-    { "slide": 27, "id": "f-27", "name": "Firebase Configuration and Optimization","category": "Technical",   "quarter": "—", "status": "Pending", "dda": false, "sprint": null, "blocked": false, "ddaStatus": "Not Submitted", "sub": [] },
-    { "slide": 28, "id": "f-28", "name": "Service Providers SDK",                 "category": "SP",           "quarter": "—", "status": "Pending", "dda": false, "sprint": null, "blocked": false, "ddaStatus": "Not Submitted", "sub": [] },
-    { "slide": 29, "id": "f-29", "name": "DR Automation",                         "category": "Technical",    "quarter": "—", "status": "Pending", "dda": false, "sprint": null, "blocked": false, "ddaStatus": "Not Submitted", "sub": [] },
-    { "slide": 30, "id": "f-30", "name": "SP Automation Testing Suite",           "category": "SP",           "quarter": "—", "status": "Pending", "dda": false, "sprint": null, "blocked": false, "ddaStatus": "Not Submitted", "sub": [] },
-    { "slide": 31, "id": "f-31", "name": "UAE Verify QR Code Scan vs Doc Upload", "category": "Technical",   "quarter": "—", "status": "Pending", "dda": false, "sprint": null, "blocked": false, "ddaStatus": "Not Submitted", "sub": [] },
-    { "slide": 32, "id": "f-32", "name": "CI/CD Pipeline Automation",             "category": "Technical",    "quarter": "—", "status": "Pending", "dda": false, "sprint": null, "blocked": false, "ddaStatus": "Not Submitted", "sub": [] },
-    { "slide": 33, "id": "f-33", "name": "Operation Automation",                  "category": "Technical",    "quarter": "—", "status": "Pending", "dda": false, "sprint": null, "blocked": false, "ddaStatus": "Not Submitted", "sub": [] }
+    {
+      "slide": 21,
+      "id": "f-21",
+      "name": "Consent Sharing (Third Party Data)",
+      "category": "Product",
+      "quarter": "â",
+      "status": "Pending",
+      "dda": false,
+      "sprint": null,
+      "blocked": false,
+      "ddaStatus": "Not Submitted",
+      "sub": []
+    },
+    {
+      "slide": 22,
+      "id": "f-22",
+      "name": "Design System Update",
+      "category": "Design (DDA)",
+      "quarter": "â",
+      "status": "Pending",
+      "dda": true,
+      "sprint": null,
+      "blocked": false,
+      "ddaStatus": "Not Submitted",
+      "sub": []
+    },
+    {
+      "slide": 23,
+      "id": "f-23",
+      "name": "Accessibility Enhancement",
+      "category": "Design (DDA)",
+      "quarter": "â",
+      "status": "Pending",
+      "dda": true,
+      "sprint": null,
+      "blocked": false,
+      "ddaStatus": "Not Submitted",
+      "sub": []
+    },
+    {
+      "slide": 24,
+      "id": "f-24",
+      "name": "UAEVerify SEO",
+      "category": "Technical",
+      "quarter": "â",
+      "status": "Pending",
+      "dda": false,
+      "sprint": null,
+      "blocked": false,
+      "ddaStatus": "Not Submitted",
+      "sub": []
+    },
+    {
+      "slide": 25,
+      "id": "f-25",
+      "name": "Error to Status Code Linking",
+      "category": "Technical",
+      "quarter": "â",
+      "status": "Pending",
+      "dda": false,
+      "sprint": null,
+      "blocked": false,
+      "ddaStatus": "Not Submitted",
+      "sub": []
+    },
+    {
+      "slide": 26,
+      "id": "f-26",
+      "name": "Infinite Loader Detection and Resolution",
+      "category": "Technical",
+      "quarter": "â",
+      "status": "Pending",
+      "dda": false,
+      "sprint": 70,
+      "blocked": false,
+      "ddaStatus": "Not Submitted",
+      "sub": []
+    },
+    {
+      "slide": 27,
+      "id": "f-27",
+      "name": "Firebase Configuration and Optimization",
+      "category": "Technical",
+      "quarter": "â",
+      "status": "Pending",
+      "dda": false,
+      "sprint": null,
+      "blocked": false,
+      "ddaStatus": "Not Submitted",
+      "sub": []
+    },
+    {
+      "slide": 28,
+      "id": "f-28",
+      "name": "Service Providers SDK",
+      "category": "SP",
+      "quarter": "â",
+      "status": "Pending",
+      "dda": false,
+      "sprint": null,
+      "blocked": false,
+      "ddaStatus": "Not Submitted",
+      "sub": []
+    },
+    {
+      "slide": 29,
+      "id": "f-29",
+      "name": "DR Automation",
+      "category": "Technical",
+      "quarter": "â",
+      "status": "Pending",
+      "dda": false,
+      "sprint": null,
+      "blocked": false,
+      "ddaStatus": "Not Submitted",
+      "sub": []
+    },
+    {
+      "slide": 30,
+      "id": "f-30",
+      "name": "SP Automation Testing Suite",
+      "category": "SP",
+      "quarter": "â",
+      "status": "Pending",
+      "dda": false,
+      "sprint": null,
+      "blocked": false,
+      "ddaStatus": "Not Submitted",
+      "sub": []
+    },
+    {
+      "slide": 31,
+      "id": "f-31",
+      "name": "UAE Verify QR Code Scan vs Doc Upload",
+      "category": "Technical",
+      "quarter": "â",
+      "status": "Pending",
+      "dda": false,
+      "sprint": null,
+      "blocked": false,
+      "ddaStatus": "Not Submitted",
+      "sub": []
+    },
+    {
+      "slide": 32,
+      "id": "f-32",
+      "name": "CI/CD Pipeline Automation",
+      "category": "Technical",
+      "quarter": "â",
+      "status": "Pending",
+      "dda": false,
+      "sprint": null,
+      "blocked": false,
+      "ddaStatus": "Not Submitted",
+      "sub": []
+    },
+    {
+      "slide": 33,
+      "id": "f-33",
+      "name": "Operation Automation",
+      "category": "Technical",
+      "quarter": "â",
+      "status": "Pending",
+      "dda": false,
+      "sprint": null,
+      "blocked": false,
+      "ddaStatus": "Not Submitted",
+      "sub": []
+    }
   ],
   "otherActions": [
-    { "id": "oa-1", "action": "Request visa - failure", "desc": "Count of failure mapped to issues", "owner": "Fadi, Shri" },
-    { "id": "oa-2", "action": "Multi language on app",  "desc": "UAE PASS extending to Hindi, Urdu, Filipino, Chinese. Send communication to DDA, ask full scope/timeline/origin. Analysis needed.", "owner": "Malak, Sai" }
+    {
+      "id": "oa-1",
+      "action": "Request visa - failure",
+      "desc": "Count of failure mapped to issues",
+      "owner": "Fadi, Shri"
+    },
+    {
+      "id": "oa-2",
+      "action": "Multi language on app",
+      "desc": "UAE PASS extending to Hindi, Urdu, Filipino, Chinese. Send communication to DDA, ask full scope/timeline/origin. Analysis needed.",
+      "owner": "Malak, Sai"
+    }
   ],
   "notes": {},
   "overrides": {},
-  "lastUpdated": "2026-04-22",
+  "lastUpdated": "22 Apr 2026 17:03",
   "version": 1
 }
