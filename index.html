@@ -32,6 +32,11 @@
     --st-progress:  #f57f17;
     --st-pending:   #616161;
     --st-notstart:  #9e9e9e;
+
+    --danger: #c62828;
+    --danger-dark: #a31d1d;
+    --warn-bg: #fff3e0;
+    --warn-fg: #e65100;
   }
   html, body { height: 100%; }
   body {
@@ -57,13 +62,13 @@
   }
   #gate h1 { font-size: 22px; color: var(--navy); margin-bottom: 8px; font-weight: 700; }
   #gate p  { color: var(--muted); font-size: 14px; margin-bottom: 22px; }
-  #gate input {
+  #gate input, #gate select {
     width: 100%; padding: 12px 14px;
     border: 1px solid var(--border); border-radius: 8px;
     font-size: 15px; font-family: inherit; margin-bottom: 12px;
-    transition: border .15s;
+    transition: border .15s; background: #fff;
   }
-  #gate input:focus { outline: none; border-color: var(--navy); box-shadow: 0 0 0 3px rgba(26,35,126,.15); }
+  #gate input:focus, #gate select:focus { outline: none; border-color: var(--navy); box-shadow: 0 0 0 3px rgba(26,35,126,.15); }
   #gate button {
     width: 100%; padding: 12px; border: 0; border-radius: 8px;
     background: var(--navy); color: #fff; font-size: 15px; font-weight: 600;
@@ -78,48 +83,61 @@
   header.site {
     background: linear-gradient(135deg, var(--navy) 0%, #2a3597 100%);
     color: #fff;
-    padding: 24px 32px;
+    padding: 20px 32px;
     box-shadow: var(--shadow-lg);
   }
   header.site .row { max-width: 1400px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 16px; align-items: center; justify-content: space-between; }
   header.site h1 { font-size: 22px; font-weight: 700; letter-spacing: .2px; }
   header.site .sub { font-size: 13px; opacity: .85; margin-top: 2px; }
   header.site .meta { font-size: 12px; opacity: .85; text-align: right; }
+  header.site .header-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 10px; justify-content: flex-end; }
+  header.site .hbtn {
+    background: rgba(255,255,255,0.12); color: #fff; border: 1px solid rgba(255,255,255,0.25);
+    padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 500;
+    cursor: pointer; transition: background .15s; font-family: inherit;
+  }
+  header.site .hbtn:hover { background: rgba(255,255,255,0.22); }
+  header.site .hbtn.primary { background: #fff; color: var(--navy); border-color: #fff; font-weight: 600; }
+  header.site .hbtn.primary:hover { background: #e8eaf6; }
+  header.site .identity { font-size: 12px; opacity: .9; }
+  header.site .identity strong { color: #fff; font-weight: 600; }
 
-  main { max-width: 1400px; margin: 0 auto; padding: 24px 32px 60px; }
+  main { max-width: 1400px; margin: 0 auto; padding: 20px 32px 60px; }
 
   /* ---------------- Stat cards ---------------- */
-  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 14px; margin-bottom: 22px; }
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 18px; }
   .stat {
     background: var(--card); border: 1px solid var(--border); border-radius: 10px;
-    padding: 16px 18px; box-shadow: var(--shadow);
+    padding: 14px 16px; box-shadow: var(--shadow);
   }
-  .stat .k { font-size: 11px; text-transform: uppercase; letter-spacing: .6px; color: var(--muted); font-weight: 600; }
-  .stat .v { font-size: 26px; font-weight: 700; color: var(--navy); margin-top: 4px; }
+  .stat .k { font-size: 10px; text-transform: uppercase; letter-spacing: .6px; color: var(--muted); font-weight: 600; }
+  .stat .v { font-size: 24px; font-weight: 700; color: var(--navy); margin-top: 4px; }
   .stat.total .v    { color: var(--navy); }
   .stat.done .v     { color: var(--st-completed); }
   .stat.prog .v     { color: var(--st-progress); }
   .stat.pend .v     { color: var(--st-pending); }
   .stat.pct  .v     { color: var(--cat-product); }
+  .stat.overdue .v  { color: var(--danger); }
+  .stat.blocked .v  { color: var(--danger); }
 
   /* ---------------- Controls ---------------- */
   .controls {
     background: var(--card); border: 1px solid var(--border); border-radius: 10px;
-    padding: 16px; box-shadow: var(--shadow); margin-bottom: 18px;
+    padding: 16px; box-shadow: var(--shadow); margin-bottom: 14px;
   }
-  .controls .top { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+  .controls .top { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
   .controls input.search, .controls select {
     padding: 9px 12px; border: 1px solid var(--border); border-radius: 8px;
     font-size: 14px; font-family: inherit; background: #fff; color: var(--text);
   }
   .controls input.search { flex: 1 1 260px; min-width: 220px; }
   .controls select { min-width: 160px; }
-  .controls .row-label { font-size: 12px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: .5px; margin: 14px 0 8px; }
-  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .controls .row-label { font-size: 11px; color: var(--muted); font-weight: 600; text-transform: uppercase; letter-spacing: .5px; margin: 12px 0 8px; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
   .chip {
     display: inline-flex; align-items: center; gap: 6px;
-    padding: 6px 12px; border-radius: 999px; border: 1px solid var(--border);
-    background: #fff; cursor: pointer; font-size: 13px; font-weight: 500;
+    padding: 5px 11px; border-radius: 999px; border: 1px solid var(--border);
+    background: #fff; cursor: pointer; font-size: 12px; font-weight: 500;
     color: var(--text); transition: all .15s; user-select: none;
   }
   .chip .dot { width: 8px; height: 8px; border-radius: 50%; background: #888; }
@@ -138,12 +156,23 @@
   .chip[data-cat="SP"]           .dot { background: var(--cat-sp); }
   .chip.active .dot { background: #fff; }
 
+  .chip.owner.active { background: var(--navy); }
+  .chip.sprint.active { background: #455a64; }
+  .chip.sprint .dot  { background: #607d8b; }
+  .chip.owner .dot   { background: var(--navy); }
+
   .clear-btn {
-    padding: 7px 14px; font-size: 13px; border-radius: 6px;
+    padding: 7px 12px; font-size: 12px; border-radius: 6px;
     border: 1px solid var(--border); background: #fff; cursor: pointer;
-    color: var(--muted); font-weight: 500;
+    color: var(--muted); font-weight: 500; font-family: inherit;
   }
   .clear-btn:hover { background: #f6f8fc; color: var(--text); }
+  .clear-btn.primary {
+    background: var(--navy); color: #fff; border-color: var(--navy); font-weight: 600;
+  }
+  .clear-btn.primary:hover { background: var(--navy-dark); color: #fff; }
+  .clear-btn.danger { color: var(--danger); border-color: #ffcdd2; }
+  .clear-btn.danger:hover { background: #ffebee; color: var(--danger-dark); }
 
   /* ---------------- Features list ---------------- */
   .features { display: flex; flex-direction: column; gap: 10px; }
@@ -152,11 +181,14 @@
     box-shadow: var(--shadow); overflow: hidden; transition: box-shadow .15s;
   }
   .feature:hover { box-shadow: var(--shadow-lg); }
+  .feature.blocked { border-color: var(--danger); }
+  .feature.blocked .head { background: #ffebee; }
+
   .feature .head {
     display: grid;
-    grid-template-columns: 36px 50px 1fr auto auto auto auto;
-    gap: 14px; align-items: center;
-    padding: 14px 18px; cursor: pointer; user-select: none;
+    grid-template-columns: 30px 46px 1fr auto auto auto auto auto auto;
+    gap: 12px; align-items: center;
+    padding: 12px 16px; user-select: none;
     border-left: 4px solid var(--cat-product);
   }
   .feature[data-cat="Product"]      .head { border-left-color: var(--cat-product); }
@@ -167,13 +199,12 @@
   .feature[data-cat="SP"]           .head { border-left-color: var(--cat-sp); }
 
   .feature .caret {
-    width: 28px; height: 28px; border-radius: 50%;
+    width: 26px; height: 26px; border-radius: 50%;
     display: inline-flex; align-items: center; justify-content: center;
-    background: #eef1f8; color: var(--navy); font-size: 13px;
-    transition: transform .2s;
+    background: #eef1f8; color: var(--navy); font-size: 12px;
+    transition: transform .2s; cursor: pointer;
   }
   .feature.open .caret { transform: rotate(90deg); }
-  .feature.no-children .caret { opacity: .3; }
 
   .slide-num {
     font-size: 11px; font-weight: 700;
@@ -181,7 +212,7 @@
     background: #eef1f8; padding: 4px 6px; border-radius: 4px;
     text-align: center; min-width: 40px;
   }
-  .feat-title { font-size: 15px; font-weight: 600; color: var(--text); }
+  .feat-title { font-size: 15px; font-weight: 600; color: var(--text); cursor: pointer; }
   .feat-title .badges { display: inline-flex; gap: 6px; margin-left: 8px; flex-wrap: wrap; vertical-align: middle; }
   .badge {
     display: inline-block; font-size: 10px; font-weight: 700;
@@ -190,10 +221,13 @@
   }
   .badge.dda { background: #f3e5f5; color: var(--cat-dda); border: 1px solid #e1bee7; }
   .badge.qtr { background: #e3f2fd; color: #1565c0; border: 1px solid #bbdefb; }
+  .badge.sprint { background: #eceff1; color: #455a64; border: 1px solid #cfd8dc; }
+  .badge.blocked { background: #ffebee; color: var(--danger); border: 1px solid #ffcdd2; }
+  .badge.dda-wf { background: #fff3e0; color: var(--warn-fg); border: 1px solid #ffe0b2; }
 
   .cat-pill, .status-pill {
     font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 999px;
-    white-space: nowrap;
+    white-space: nowrap; cursor: default;
   }
   .cat-pill { color: #fff; }
   .cat-pill[data-cat="Product"]      { background: var(--cat-product); }
@@ -203,6 +237,9 @@
   .cat-pill[data-cat="Technical"]    { background: var(--cat-tech); }
   .cat-pill[data-cat="SP"]           { background: var(--cat-sp); }
 
+  .status-pill { cursor: pointer; transition: transform .1s; }
+  .status-pill.editable:hover { transform: scale(1.05); filter: brightness(.95); }
+  .status-pill.readonly       { cursor: default; }
   .status-pill[data-st="Completed"]   { background: #e8f5e9; color: var(--st-completed); border: 1px solid #c8e6c9; }
   .status-pill[data-st="In Progress"],
   .status-pill[data-st="Started"]     { background: #fff8e1; color: var(--st-progress); border: 1px solid #ffecb3; }
@@ -210,9 +247,28 @@
   .status-pill[data-st="Not started"] { background: #f5f5f5; color: var(--st-notstart); border: 1px solid #e0e0e0; }
 
   .progress-wrap { min-width: 130px; }
-  .progress-wrap .pl { font-size: 11px; color: var(--muted); margin-bottom: 3px; display: flex; justify-content: space-between; }
+  .progress-wrap .pl { font-size: 11px; color: var(--muted); margin-bottom: 3px; display: flex; justify-content: space-between; gap: 8px; }
+  .progress-wrap .pct-num { cursor: pointer; font-weight: 600; color: var(--navy); }
+  .progress-wrap .pct-num.overridden { color: var(--warn-fg); }
+  .progress-wrap .pct-num.overridden::after { content: ' 🔒'; font-size: 10px; }
+  .progress-wrap .pct-num.editable:hover { text-decoration: underline; }
   .progress-bar { height: 6px; background: #eef1f8; border-radius: 3px; overflow: hidden; }
   .progress-fill { height: 100%; background: var(--st-completed); border-radius: 3px; transition: width .3s; }
+
+  .row-meta {
+    padding: 2px 16px 10px 62px; font-size: 11px; color: var(--muted);
+  }
+  .row-actions {
+    display: inline-flex; gap: 6px; align-items: center;
+  }
+  .icon-btn {
+    width: 26px; height: 26px; border-radius: 6px; border: 1px solid var(--border);
+    background: #fff; cursor: pointer; display: inline-flex; align-items: center; justify-content: center;
+    color: var(--muted); font-size: 14px; font-family: inherit; padding: 0;
+    transition: all .15s;
+  }
+  .icon-btn:hover { background: #f6f8fc; color: var(--text); }
+  .icon-btn.danger:hover { background: #ffebee; color: var(--danger); border-color: #ffcdd2; }
 
   /* Subtasks */
   .subtasks {
@@ -222,21 +278,61 @@
   .feature.open .subtasks { display: block; }
   .subtasks table { width: 100%; border-collapse: collapse; margin-top: 10px; }
   .subtasks th, .subtasks td {
-    text-align: left; padding: 10px 12px; font-size: 13px;
-    border-bottom: 1px solid var(--border);
+    text-align: left; padding: 9px 10px; font-size: 13px;
+    border-bottom: 1px solid var(--border); vertical-align: middle;
   }
   .subtasks th {
-    font-size: 11px; text-transform: uppercase; letter-spacing: .5px;
+    font-size: 10px; text-transform: uppercase; letter-spacing: .5px;
     color: var(--muted); font-weight: 600; background: #fff;
   }
   .subtasks tr:last-child td { border-bottom: 0; }
-  .subtasks td.task { font-weight: 500; }
-  .subtasks td.date { color: var(--muted); white-space: nowrap; }
-  .subtasks td.owner { color: var(--muted); }
+  .subtasks td.task { font-weight: 500; max-width: 360px; }
+  .subtasks td.date { color: var(--muted); white-space: nowrap; font-size: 12px; }
+  .subtasks td.date.overdue { color: var(--danger); font-weight: 600; background: #ffebee; border-radius: 4px; }
+  .subtasks td.date.soon { color: var(--warn-fg); font-weight: 600; }
+  .subtasks td.owner { color: var(--muted); font-size: 12px; }
+  .subtasks td.updated { color: var(--muted); font-size: 11px; font-style: italic; }
+  .subtasks td.row-ctrl { white-space: nowrap; }
+
+  .subtask-addbtn {
+    margin-top: 8px; padding: 7px 12px; font-size: 12px;
+    border: 1px dashed var(--border); background: #fff; color: var(--muted);
+    border-radius: 6px; cursor: pointer; font-family: inherit; font-weight: 500;
+  }
+  .subtask-addbtn:hover { border-color: var(--navy); color: var(--navy); background: #f5f7fe; }
+
+  /* Notes */
+  .notes-block {
+    margin-top: 12px; background: #fffde7; border: 1px solid #fff59d;
+    border-radius: 6px; padding: 10px 12px;
+  }
+  .notes-block h4 { font-size: 11px; color: #8d6e00; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 8px; }
+  .notes-block .note { font-size: 12px; color: #5d4e00; margin-bottom: 6px; font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace; padding-bottom: 6px; border-bottom: 1px dashed #fff59d; }
+  .notes-block .note:last-of-type { border-bottom: 0; }
+  .notes-block .note .meta { color: #8d6e00; font-style: italic; margin-left: 6px; font-size: 10px; }
+  .notes-block .note-input { display: flex; gap: 6px; margin-top: 6px; }
+  .notes-block textarea {
+    flex: 1; padding: 6px 8px; font-size: 12px; border: 1px solid #fff59d;
+    border-radius: 4px; font-family: inherit; background: #fff; resize: vertical; min-height: 40px;
+  }
+  .notes-block button {
+    padding: 6px 12px; font-size: 12px; border: 0; border-radius: 4px;
+    background: var(--navy); color: #fff; cursor: pointer; font-weight: 600; align-self: flex-end;
+  }
+
+  /* Add feature button */
+  .add-feature-btn {
+    width: 100%; margin-top: 12px;
+    padding: 14px; font-size: 14px; font-weight: 600;
+    border: 2px dashed var(--border); background: #fff;
+    color: var(--muted); border-radius: 10px; cursor: pointer;
+    transition: all .15s; font-family: inherit;
+  }
+  .add-feature-btn:hover { border-color: var(--navy); color: var(--navy); background: #f5f7fe; }
 
   /* Other actions */
   .other-actions {
-    margin-top: 32px; background: var(--card); border: 1px solid var(--border);
+    margin-top: 28px; background: var(--card); border: 1px solid var(--border);
     border-radius: 10px; box-shadow: var(--shadow); padding: 20px;
   }
   .other-actions h2 {
@@ -261,27 +357,105 @@
     padding: 40px; text-align: center; color: var(--muted);
   }
 
+  /* Footer */
+  .foot {
+    text-align: center; margin-top: 30px; color: var(--muted); font-size: 12px;
+  }
+  .foot .reset-btn {
+    background: transparent; border: 0; color: var(--muted);
+    font-size: 11px; cursor: pointer; text-decoration: underline; margin-top: 6px;
+    font-family: inherit;
+  }
+  .foot .reset-btn:hover { color: var(--danger); }
+
+  /* ---------------- Modal ---------------- */
+  .modal-backdrop {
+    position: fixed; inset: 0; background: rgba(15,20,40,.5);
+    backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+    display: none; align-items: center; justify-content: center;
+    z-index: 900; padding: 20px;
+  }
+  .modal-backdrop.active { display: flex; }
+  .modal {
+    background: #fff; border-radius: 12px; width: min(520px, 100%);
+    max-height: 90vh; overflow-y: auto; box-shadow: 0 30px 80px rgba(0,0,0,.30);
+    padding: 24px;
+  }
+  .modal h3 { font-size: 18px; color: var(--navy); margin-bottom: 4px; }
+  .modal .modal-sub { font-size: 13px; color: var(--muted); margin-bottom: 16px; }
+  .modal .field { margin-bottom: 12px; }
+  .modal label {
+    display: block; font-size: 11px; color: var(--muted); font-weight: 600;
+    text-transform: uppercase; letter-spacing: .5px; margin-bottom: 4px;
+  }
+  .modal input, .modal select, .modal textarea {
+    width: 100%; padding: 9px 12px; font-size: 14px; font-family: inherit;
+    border: 1px solid var(--border); border-radius: 6px; background: #fff;
+  }
+  .modal input:focus, .modal select:focus, .modal textarea:focus {
+    outline: none; border-color: var(--navy); box-shadow: 0 0 0 3px rgba(26,35,126,.12);
+  }
+  .modal textarea { resize: vertical; min-height: 70px; }
+  .modal .toggle-row { display: flex; align-items: center; gap: 8px; margin-top: 2px; }
+  .modal .toggle-row input[type="checkbox"] { width: auto; }
+  .modal .actions {
+    display: flex; gap: 10px; justify-content: flex-end; margin-top: 20px;
+  }
+  .modal .actions button {
+    padding: 9px 18px; font-size: 14px; font-weight: 600;
+    border: 0; border-radius: 6px; cursor: pointer; font-family: inherit;
+  }
+  .modal .actions .btn-primary { background: var(--navy); color: #fff; }
+  .modal .actions .btn-primary:hover { background: var(--navy-dark); }
+  .modal .actions .btn-danger  { background: var(--danger); color: #fff; }
+  .modal .actions .btn-danger:hover  { background: var(--danger-dark); }
+  .modal .actions .btn-cancel  { background: #eceff1; color: var(--text); }
+  .modal .actions .btn-cancel:hover  { background: #cfd8dc; }
+
+  /* ---------------- Edit mode ---------------- */
+  body.view-mode .edit-only { display: none !important; }
+
+  /* ---------------- Toast ---------------- */
+  .toast-container {
+    position: fixed; bottom: 20px; right: 20px; z-index: 950;
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .toast {
+    background: #263238; color: #fff; padding: 10px 16px; border-radius: 6px;
+    font-size: 13px; box-shadow: 0 6px 20px rgba(0,0,0,.20);
+    animation: slideIn .2s ease-out;
+  }
+  .toast.success { background: #388e3c; }
+  .toast.error   { background: var(--danger); }
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateX(20px); }
+    to   { opacity: 1; transform: translateX(0); }
+  }
+
   /* ---------------- Mobile ---------------- */
   @media (max-width: 800px) {
-    header.site { padding: 18px 16px; }
+    header.site { padding: 14px 16px; }
     header.site .meta { text-align: left; }
-    main { padding: 16px; }
+    main { padding: 14px; }
     .feature .head {
-      grid-template-columns: 28px 40px 1fr auto;
+      grid-template-columns: 26px 40px 1fr auto;
       grid-template-areas:
-        "caret slide title status"
+        "caret slide title actions"
         "caret slide cats cats"
-        "progress progress progress progress";
-      gap: 10px 10px;
+        "progress progress progress progress"
+        "status  status  status  status";
+      gap: 8px 10px;
     }
     .feature .head .caret    { grid-area: caret; }
     .feature .head .slide-num{ grid-area: slide; }
     .feature .head .feat-title{ grid-area: title; }
-    .feature .head .status-pill{ grid-area: status; justify-self: end; }
+    .feature .head .row-actions{ grid-area: actions; justify-self: end; }
+    .feature .head .status-pill{ grid-area: status; justify-self: start; }
     .feature .head .cat-pill  { grid-area: cats; justify-self: start; }
-    .feature .head .qtr-badge { grid-area: cats; justify-self: end; }
+    .feature .head .qtr-badge, .feature .head .sprint-badge { grid-area: cats; justify-self: end; }
     .feature .head .progress-wrap { grid-area: progress; min-width: 0; }
     .subtasks { padding: 0 10px 12px; overflow-x: auto; }
+    .subtasks table { min-width: 640px; }
   }
 </style>
 </head>
@@ -301,6 +475,35 @@
   </div>
 </div>
 
+<!-- ============ Identity Gate ============ -->
+<div id="identity-gate" class="modal-backdrop">
+  <div class="modal">
+    <h3>Who are you?</h3>
+    <div class="modal-sub">Your name will be stamped on every edit you make. You can change this later.</div>
+    <div class="field">
+      <label for="identity-select">Select your name</label>
+      <select id="identity-select">
+        <option value="">— Please choose —</option>
+        <option value="Fadi">Fadi</option>
+        <option value="Najjar">Najjar</option>
+        <option value="Malak">Malak</option>
+        <option value="Ahmad">Ahmad</option>
+        <option value="Shri">Shri</option>
+        <option value="Surbhi">Surbhi</option>
+        <option value="Sai">Sai</option>
+        <option value="__other__">Other...</option>
+      </select>
+    </div>
+    <div class="field" id="identity-other-wrap" style="display:none">
+      <label for="identity-other">Enter your name</label>
+      <input type="text" id="identity-other" placeholder="Your name"/>
+    </div>
+    <div class="actions">
+      <button class="btn-primary" id="identity-save">Save</button>
+    </div>
+  </div>
+</div>
+
 <!-- ============ App ============ -->
 <div id="app">
   <header class="site">
@@ -309,9 +512,17 @@
         <h1>UAE PASS Digital Vault — 2026 Roadmap Tracker</h1>
         <div class="sub">Feature progress and sub-task tracking across Product, Design, UX, Technical &amp; SP</div>
       </div>
-      <div class="meta">
-        <div><strong>Last updated:</strong> 22 April 2026</div>
-        <div>Bi-weekly sprint cadence</div>
+      <div>
+        <div class="meta">
+          <div><strong>Last updated:</strong> <span id="global-updated">—</span></div>
+          <div class="identity">You: <strong id="identity-display">—</strong> <button class="hbtn" id="change-identity" style="padding:2px 8px;font-size:11px;margin-left:4px">change</button></div>
+        </div>
+        <div class="header-actions">
+          <button class="hbtn" id="mode-toggle" title="Toggle view/edit mode">Mode: Edit</button>
+          <button class="hbtn" id="export-csv">Export CSV</button>
+          <button class="hbtn" id="snapshot-btn">Take Snapshot</button>
+          <button class="hbtn" id="history-btn">History</button>
+        </div>
       </div>
     </div>
   </header>
@@ -329,6 +540,7 @@
           <option value="Completed">Completed</option>
           <option value="In Progress">In Progress</option>
           <option value="Pending">Pending</option>
+          <option value="Not started">Not started</option>
         </select>
         <button class="clear-btn" id="clear">Clear filters</button>
         <button class="clear-btn" id="expand-all">Expand all</button>
@@ -336,10 +548,17 @@
       </div>
       <div class="row-label">Filter by category</div>
       <div class="chips" id="chips"></div>
+      <div class="row-label">Filter by owner</div>
+      <div class="chips" id="owner-chips"></div>
+      <div class="row-label">Filter by sprint</div>
+      <div class="chips" id="sprint-chips"></div>
     </section>
 
     <!-- Feature list -->
     <section class="features" id="features"></section>
+
+    <!-- Add feature button -->
+    <button class="add-feature-btn edit-only" id="add-feature-btn">+ Add Feature</button>
 
     <!-- Other actions -->
     <section class="other-actions">
@@ -351,8 +570,20 @@
         <tbody id="other-tbody"></tbody>
       </table>
     </section>
+
+    <div class="foot">
+      Client-side tracker · Data stored in your browser's localStorage · Password-protected for TDRA/DDA viewing
+      <br/>
+      <button class="reset-btn edit-only" id="reset-btn">Reset to defaults</button>
+    </div>
   </main>
 </div>
+
+<!-- Modal host -->
+<div id="modal-host" class="modal-backdrop"></div>
+
+<!-- Toast host -->
+<div class="toast-container" id="toast-host"></div>
 
 <script>
 /* =================================================================
@@ -368,6 +599,8 @@ async function sha256(msg) {
 function showApp() {
   document.getElementById('gate').style.display = 'none';
   document.getElementById('app').style.display  = 'block';
+  requireIdentity();
+  bootApp();
 }
 (function initGate() {
   if (sessionStorage.getItem('dv_tracker_auth') === '1') {
@@ -392,11 +625,11 @@ function showApp() {
 })();
 
 /* =================================================================
-   Data
+   Static defaults (the v1 dataset — schema)
+   These provide the initial seed; localStorage overrides thereafter.
    ================================================================= */
-const FEATURES = [
-  // slide 6
-  { slide: 6,  name: "Status-Based Reporting Implementation", category: "Product",       quarter: "Q1",    status: "In Progress", dda: false,
+const STATIC_FEATURES = [
+  { slide: 6,  name: "Status-Based Reporting Implementation", category: "Product", quarter: "Q1", status: "In Progress", dda: false, sprint: 70,
     sub: [
       { task: "Implementation (add completed)",                  due: "2026-01-28", status: "Completed",   owner: "—" },
       { task: "Deep dive for the team",                          due: "TBC",        status: "Completed",   owner: "—" },
@@ -408,8 +641,7 @@ const FEATURES = [
       { task: "List of enhancements (part 2) + plan",            due: "2026-06-08", status: "Not started", owner: "—" }
     ]
   },
-  // slide 7
-  { slide: 7,  name: "Dual Citizenship", category: "Product", quarter: "Q1-Q2", status: "In Progress", dda: false,
+  { slide: 7,  name: "Dual Citizenship", category: "Product", quarter: "Q1-Q2", status: "In Progress", dda: false, sprint: 72,
     sub: [
       { task: "Technical & business meetings / ICP alignment", due: "—",          status: "Completed", owner: "—" },
       { task: "Internal development & design",                 due: "2026-01-28", status: "Completed", owner: "—" },
@@ -417,96 +649,70 @@ const FEATURES = [
       { task: "Sign off - feature enablement",                 due: "—",          status: "Pending",   owner: "—" }
     ]
   },
-  // slide 8
-  { slide: 8,  name: "SP Offboarding", category: "SP", quarter: "Q1", status: "Pending", dda: false,
+  { slide: 8,  name: "SP Offboarding", category: "SP", quarter: "Q1", status: "Pending", dda: false, sprint: null,
     sub: [
       { task: "Fadi/Surbhi meeting",           due: "2026-04-27", status: "Pending", owner: "Fadi, Surbhi" },
       { task: "Malak to discuss with TDRA",    due: "—",          status: "Pending", owner: "Malak" }
     ]
   },
-  // slide 9
-  { slide: 9,  name: "QR Code Simplification", category: "Technical", quarter: "Q1", status: "Pending", dda: false,
+  { slide: 9,  name: "QR Code Simplification", category: "Technical", quarter: "Q1", status: "Pending", dda: false, sprint: null,
     sub: [
       { task: "Internal discussion",           due: "2026-04-06", status: "Pending", owner: "—" },
       { task: "Link to OTC sharing review",    due: "—",          status: "Pending", owner: "—" }
     ]
   },
-  // slide 10
-  { slide: 10, name: "Design Audit", category: "Design", quarter: "—", status: "Pending", dda: false,
+  { slide: 10, name: "Design Audit", category: "Design", quarter: "—", status: "Pending", dda: false, sprint: null,
     sub: [
       { task: "DV review meeting", due: "2026-04-13", status: "Pending", owner: "Malak, Ahmad" }
     ]
   },
-  // slide 11
-  { slide: 11, name: "UX Enhancements Bundle 1", category: "UX", quarter: "—", status: "Pending", dda: false, sub: [] },
-  // slide 12
-  { slide: 12, name: "Form Filler", category: "Product", quarter: "—", status: "Pending", dda: false,
+  { slide: 11, name: "UX Enhancements Bundle 1", category: "UX", quarter: "—", status: "Pending", dda: false, sprint: null, sub: [] },
+  { slide: 12, name: "Form Filler", category: "Product", quarter: "—", status: "Pending", dda: false, sprint: null,
     sub: [
       { task: "Analysis (OCR / delivery address use cases)", due: "2026-04-29", status: "Pending", owner: "Fadi" }
     ]
   },
-  // slide 13
-  { slide: 13, name: "Auto-Add Documents / One-Time Consent", category: "Product", quarter: "Q3", status: "Pending", dda: false,
+  { slide: 13, name: "Auto-Add Documents / One-Time Consent", category: "Product", quarter: "Q3", status: "Pending", dda: false, sprint: null,
     sub: [
       { task: "Legal discussion with TDRA", due: "2026-05-01 to 2026-07-31", status: "Pending", owner: "Najjar" }
     ]
   },
-  // slide 14
-  { slide: 14, name: "Over the Counter Document Sharing", category: "Product", quarter: "—", status: "Pending", dda: false,
+  { slide: 14, name: "Over the Counter Document Sharing", category: "Product", quarter: "—", status: "Pending", dda: false, sprint: null,
     sub: [
       { task: "Align with DDA; clarify in Shri/Najjar meeting", due: "—", status: "Pending", owner: "Najjar" }
     ]
   },
-  // slide 15
-  { slide: 15, name: "UX/UI Enhancements Bundle 2", category: "UX", quarter: "—", status: "Pending", dda: false, sub: [] },
-  // slide 16
-  { slide: 16, name: "Enable Download of All Issued Documents", category: "Product", quarter: "—", status: "Pending", dda: false,
+  { slide: 15, name: "UX/UI Enhancements Bundle 2", category: "UX", quarter: "—", status: "Pending", dda: false, sprint: null, sub: [] },
+  { slide: 16, name: "Enable Download of All Issued Documents", category: "Product", quarter: "—", status: "Pending", dda: false, sprint: null,
     sub: [
       { task: "Scope 2 issuers; follow up", due: "—", status: "Pending", owner: "Najjar" }
     ]
   },
-  // slide 17
-  { slide: 17, name: "Home Page Revamp", category: "UX", quarter: "—", status: "Pending", dda: false,
+  { slide: 17, name: "Home Page Revamp", category: "UX", quarter: "—", status: "Pending", dda: false, sprint: null,
     sub: [
       { task: "Plan enhancements to last year's designs", due: "—", status: "Pending", owner: "Ahmad" }
     ]
   },
-  // slide 18
-  { slide: 18, name: "Document Request Revision", category: "Design", quarter: "—", status: "Pending", dda: false, sub: [] },
-  // slide 19
-  { slide: 19, name: "Document Sharing Revision", category: "Design", quarter: "—", status: "Pending", dda: false, sub: [] },
-  // slide 20 — DDA
-  { slide: 20, name: "User Behavior Analytics Tool Selection", category: "Design (DDA)", quarter: "—", status: "Pending", dda: true,
+  { slide: 18, name: "Document Request Revision", category: "Design", quarter: "—", status: "Pending", dda: false, sprint: null, sub: [] },
+  { slide: 19, name: "Document Sharing Revision", category: "Design", quarter: "—", status: "Pending", dda: false, sprint: null, sub: [] },
+  { slide: 20, name: "User Behavior Analytics Tool Selection", category: "Design (DDA)", quarter: "—", status: "Pending", dda: true, sprint: 78,
     sub: [
       { task: "Benchmarking (Sprint 78)", due: "2026-05-07", status: "Pending", owner: "Fadi" }
     ]
   },
-  // slide 21
-  { slide: 21, name: "Consent Sharing (Third Party Data)", category: "Product", quarter: "—", status: "Pending", dda: false, sub: [] },
-  // slide 22 — DDA
-  { slide: 22, name: "Design System Update", category: "Design (DDA)", quarter: "—", status: "Pending", dda: true, sub: [] },
-  // slide 23 — DDA
-  { slide: 23, name: "Accessibility Enhancement", category: "Design (DDA)", quarter: "—", status: "Pending", dda: true, sub: [] },
-  // slide 24
-  { slide: 24, name: "UAEVerify SEO", category: "Technical", quarter: "—", status: "Pending", dda: false, sub: [] },
-  // slide 25
-  { slide: 25, name: "Error to Status Code Linking", category: "Technical", quarter: "—", status: "Pending", dda: false, sub: [] },
-  // slide 26
-  { slide: 26, name: "Infinite Loader Detection and Resolution", category: "Technical", quarter: "—", status: "Pending", dda: false, sub: [] },
-  // slide 27
-  { slide: 27, name: "Firebase Configuration and Optimization", category: "Technical", quarter: "—", status: "Pending", dda: false, sub: [] },
-  // slide 28
-  { slide: 28, name: "Service Providers SDK", category: "SP", quarter: "—", status: "Pending", dda: false, sub: [] },
-  // slide 29
-  { slide: 29, name: "DR Automation", category: "Technical", quarter: "—", status: "Pending", dda: false, sub: [] },
-  // slide 30
-  { slide: 30, name: "SP Automation Testing Suite", category: "SP", quarter: "—", status: "Pending", dda: false, sub: [] },
-  // slide 31
-  { slide: 31, name: "UAE Verify QR Code Scan vs Doc Upload", category: "Technical", quarter: "—", status: "Pending", dda: false, sub: [] },
-  // slide 32
-  { slide: 32, name: "CI/CD Pipeline Automation", category: "Technical", quarter: "—", status: "Pending", dda: false, sub: [] },
-  // slide 33
-  { slide: 33, name: "Operation Automation", category: "Technical", quarter: "—", status: "Pending", dda: false, sub: [] }
+  { slide: 21, name: "Consent Sharing (Third Party Data)", category: "Product", quarter: "—", status: "Pending", dda: false, sprint: null, sub: [] },
+  { slide: 22, name: "Design System Update", category: "Design (DDA)", quarter: "—", status: "Pending", dda: true, sprint: null, sub: [] },
+  { slide: 23, name: "Accessibility Enhancement", category: "Design (DDA)", quarter: "—", status: "Pending", dda: true, sprint: null, sub: [] },
+  { slide: 24, name: "UAEVerify SEO", category: "Technical", quarter: "—", status: "Pending", dda: false, sprint: null, sub: [] },
+  { slide: 25, name: "Error to Status Code Linking", category: "Technical", quarter: "—", status: "Pending", dda: false, sprint: null, sub: [] },
+  { slide: 26, name: "Infinite Loader Detection and Resolution", category: "Technical", quarter: "—", status: "Pending", dda: false, sprint: 70, sub: [] },
+  { slide: 27, name: "Firebase Configuration and Optimization", category: "Technical", quarter: "—", status: "Pending", dda: false, sprint: null, sub: [] },
+  { slide: 28, name: "Service Providers SDK", category: "SP", quarter: "—", status: "Pending", dda: false, sprint: null, sub: [] },
+  { slide: 29, name: "DR Automation", category: "Technical", quarter: "—", status: "Pending", dda: false, sprint: null, sub: [] },
+  { slide: 30, name: "SP Automation Testing Suite", category: "SP", quarter: "—", status: "Pending", dda: false, sprint: null, sub: [] },
+  { slide: 31, name: "UAE Verify QR Code Scan vs Doc Upload", category: "Technical", quarter: "—", status: "Pending", dda: false, sprint: null, sub: [] },
+  { slide: 32, name: "CI/CD Pipeline Automation", category: "Technical", quarter: "—", status: "Pending", dda: false, sprint: null, sub: [] },
+  { slide: 33, name: "Operation Automation", category: "Technical", quarter: "—", status: "Pending", dda: false, sprint: null, sub: [] }
 ];
 
 const OTHER_ACTIONS = [
@@ -517,38 +723,312 @@ const OTHER_ACTIONS = [
 ];
 
 const CATEGORIES = ["Product", "Design", "Design (DDA)", "UX", "Technical", "SP"];
+const KNOWN_OWNERS = ["Fadi", "Najjar", "Malak", "Ahmad", "Shri", "Surbhi", "Sai"];
+const STATUS_CYCLE = ["Not started", "Pending", "Started", "In Progress", "Completed"];
+const DDA_WORKFLOW = ["Not Submitted", "Submitted", "In Review", "Approved", "Rejected"];
 
 /* =================================================================
-   State & rendering
+   Storage keys
    ================================================================= */
-const state = {
-  selectedCats: new Set(),
-  status: "",
-  search: "",
-  openSlides: new Set()
+const LS = {
+  data:       'dv_tracker_data',
+  notes:      'dv_tracker_notes',
+  snapshots:  'dv_tracker_snapshots',
+  identity:   'dv_tracker_identity',
+  overrides:  'dv_tracker_overrides',
+  updated:    'dv_tracker_updated',
+  mode:       'dv_tracker_mode'   // sessionStorage
 };
 
+function lsGet(key, fallback) {
+  try {
+    const v = localStorage.getItem(key);
+    return v === null ? fallback : JSON.parse(v);
+  } catch (e) { return fallback; }
+}
+function lsSet(key, val) {
+  localStorage.setItem(key, JSON.stringify(val));
+}
+
+/* =================================================================
+   Model
+   ================================================================= */
+let FEATURES = [];
+let NOTES    = {};       // featureId => [{text, author, ts}]
+let OVERRIDES= {};       // featureId => pct
+let IDENTITY = '';
+let EDIT_MODE = true;    // sessionStorage
+let LAST_UPDATED = '';
+
+function loadModel() {
+  const stored = lsGet(LS.data, null);
+  FEATURES = stored ? stored : deepClone(STATIC_FEATURES).map(ensureFeatureId);
+  FEATURES.forEach(ensureFeatureId);
+  FEATURES.forEach(f => f.sub.forEach(ensureSubId));
+
+  NOTES     = lsGet(LS.notes, {});
+  OVERRIDES = lsGet(LS.overrides, {});
+  IDENTITY  = lsGet(LS.identity, '') || '';
+  LAST_UPDATED = lsGet(LS.updated, '') || '';
+
+  const mode = sessionStorage.getItem(LS.mode);
+  EDIT_MODE = mode === null ? true : (mode === 'edit');
+  applyModeClass();
+}
+
+function deepClone(o) { return JSON.parse(JSON.stringify(o)); }
+
+let _idCounter = 1;
+function nextId(prefix) {
+  return `${prefix}-${Date.now().toString(36)}-${(_idCounter++).toString(36)}`;
+}
+function ensureFeatureId(f) {
+  if (!f.id) f.id = `f-${f.slide || nextId('x')}`;
+  if (f.sprint === undefined) f.sprint = null;
+  if (f.ddaStatus === undefined) f.ddaStatus = 'Not Submitted';
+  if (f.blocked === undefined) f.blocked = false;
+  if (!Array.isArray(f.sub)) f.sub = [];
+  return f;
+}
+function ensureSubId(s) {
+  if (!s.id) s.id = nextId('s');
+  if (!s.updatedBy) s.updatedBy = '';
+  if (!s.updatedAt) s.updatedAt = '';
+  return s;
+}
+
+function persist() {
+  LAST_UPDATED = formatTs(new Date());
+  lsSet(LS.data,      FEATURES);
+  lsSet(LS.notes,     NOTES);
+  lsSet(LS.overrides, OVERRIDES);
+  lsSet(LS.identity,  IDENTITY);
+  lsSet(LS.updated,   LAST_UPDATED);
+  document.getElementById('global-updated').textContent = LAST_UPDATED || '—';
+}
+
+function stamp(obj) {
+  obj.updatedBy = IDENTITY || '—';
+  obj.updatedAt = formatTs(new Date());
+}
+function formatTs(d) {
+  const mo = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const pad = n => String(n).padStart(2,'0');
+  return `${d.getDate()} ${mo[d.getMonth()]} ${d.getFullYear()} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+}
+
+/* =================================================================
+   Identity gate
+   ================================================================= */
+function requireIdentity() {
+  IDENTITY = lsGet(LS.identity, '') || '';
+  if (IDENTITY) {
+    document.getElementById('identity-display').textContent = IDENTITY;
+    return;
+  }
+  showIdentityModal();
+}
+function showIdentityModal() {
+  const gate = document.getElementById('identity-gate');
+  gate.classList.add('active');
+  const sel = document.getElementById('identity-select');
+  const otherWrap = document.getElementById('identity-other-wrap');
+  const otherInp = document.getElementById('identity-other');
+  sel.value = '';
+  otherInp.value = '';
+  otherWrap.style.display = 'none';
+  if (IDENTITY && KNOWN_OWNERS.includes(IDENTITY)) sel.value = IDENTITY;
+  else if (IDENTITY) { sel.value = '__other__'; otherWrap.style.display = ''; otherInp.value = IDENTITY; }
+
+  sel.onchange = () => {
+    otherWrap.style.display = (sel.value === '__other__') ? '' : 'none';
+  };
+  document.getElementById('identity-save').onclick = () => {
+    let name = sel.value;
+    if (name === '__other__') name = otherInp.value.trim();
+    if (!name) { sel.focus(); return; }
+    IDENTITY = name;
+    lsSet(LS.identity, IDENTITY);
+    document.getElementById('identity-display').textContent = IDENTITY;
+    gate.classList.remove('active');
+    toast('Identity saved as ' + IDENTITY, 'success');
+  };
+}
+document.getElementById('change-identity').addEventListener('click', showIdentityModal);
+
+/* =================================================================
+   Toast
+   ================================================================= */
+function toast(msg, kind) {
+  const host = document.getElementById('toast-host');
+  const t = document.createElement('div');
+  t.className = 'toast ' + (kind || '');
+  t.textContent = msg;
+  host.appendChild(t);
+  setTimeout(() => { t.style.opacity = '0'; t.style.transition = 'opacity .25s'; setTimeout(() => t.remove(), 280); }, 2200);
+}
+
+/* =================================================================
+   Utility
+   ================================================================= */
 function escapeHtml(s) {
-  return String(s).replace(/[&<>"']/g, c => ({
+  return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({
     '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
   }[c]));
 }
 
-function featureProgress(f) {
-  if (!f.sub || !f.sub.length) return { pct: 0, done: 0, total: 0, hasSub: false };
-  const total = f.sub.length;
-  const done  = f.sub.filter(s => s.status === 'Completed').length;
-  return { pct: Math.round((done / total) * 100), done, total, hasSub: true };
+function computeProgress(f) {
+  if (OVERRIDES[f.id] !== undefined) {
+    return { pct: OVERRIDES[f.id], overridden: true, hasSub: f.sub.length > 0, done: 0, total: f.sub.length };
+  }
+  if (!f.sub.length) return { pct: 0, hasSub: false, done: 0, total: 0, overridden: false };
+  let sum = 0;
+  f.sub.forEach(s => {
+    if (s.status === 'Completed') sum += 100;
+    else if (s.status === 'In Progress' || s.status === 'Started') sum += 50;
+  });
+  const done = f.sub.filter(s => s.status === 'Completed').length;
+  return { pct: Math.round(sum / f.sub.length), hasSub: true, done, total: f.sub.length, overridden: false };
 }
 
+function deriveFeatureStatus(f) {
+  if (f.status && f.status !== '__auto__') return f.status;
+  const p = computeProgress(f);
+  if (!p.hasSub) return 'Not started';
+  if (p.pct >= 100) return 'Completed';
+  if (p.pct > 0)    return 'In Progress';
+  return 'Not started';
+}
+
+function parseDate(s) {
+  if (!s || s === '—' || s === 'TBC') return null;
+  // accept YYYY-MM-DD or YYYY-MM-DD to YYYY-MM-DD
+  const m = String(s).match(/\d{4}-\d{2}-\d{2}/);
+  if (!m) return null;
+  const d = new Date(m[0] + 'T00:00:00');
+  return isNaN(d.getTime()) ? null : d;
+}
+
+function isOverdue(sub) {
+  if (sub.status === 'Completed') return false;
+  const d = parseDate(sub.due);
+  if (!d) return false;
+  const today = new Date(); today.setHours(0,0,0,0);
+  return d < today;
+}
+function isDueSoon(sub) {
+  if (sub.status === 'Completed') return false;
+  const d = parseDate(sub.due);
+  if (!d) return false;
+  const today = new Date(); today.setHours(0,0,0,0);
+  const diff = (d - today) / 86400000;
+  return diff >= 0 && diff <= 7;
+}
+
+/* =================================================================
+   State (filters, UI)
+   ================================================================= */
+const state = {
+  selectedCats: new Set(),
+  selectedOwners: new Set(),
+  selectedSprints: new Set(),
+  status: "",
+  search: "",
+  openIds: new Set()
+};
+
+/* Restore filter state from URL */
+function restoreFromUrl() {
+  const p = new URLSearchParams(location.search);
+  const cats = p.get('cat');
+  if (cats) cats.split(',').forEach(c => state.selectedCats.add(c));
+  const owners = p.get('owner');
+  if (owners) owners.split(',').forEach(o => state.selectedOwners.add(o));
+  const sprints = p.get('sprint');
+  if (sprints) sprints.split(',').forEach(s => state.selectedSprints.add(s));
+  const st = p.get('status'); if (st) state.status = st;
+  const sq = p.get('q'); if (sq) state.search = sq;
+}
+function syncUrl() {
+  const p = new URLSearchParams();
+  if (state.selectedCats.size)    p.set('cat',    [...state.selectedCats].join(','));
+  if (state.selectedOwners.size)  p.set('owner',  [...state.selectedOwners].join(','));
+  if (state.selectedSprints.size) p.set('sprint', [...state.selectedSprints].join(','));
+  if (state.status) p.set('status', state.status);
+  if (state.search) p.set('q', state.search);
+  const qs = p.toString();
+  const url = location.pathname + (qs ? '?' + qs : '');
+  history.replaceState(null, '', url);
+}
+
+/* =================================================================
+   Aggregators
+   ================================================================= */
+function allOwners() {
+  const set = new Set(KNOWN_OWNERS);
+  FEATURES.forEach(f => f.sub.forEach(s => {
+    if (s.owner && s.owner !== '—') {
+      s.owner.split(/[,/]/).map(x => x.trim()).filter(Boolean).forEach(o => set.add(o));
+    }
+  }));
+  return [...set].sort();
+}
+function allSprints() {
+  const set = new Set();
+  FEATURES.forEach(f => { if (f.sprint) set.add(String(f.sprint)); });
+  return [...set].sort((a,b) => Number(a) - Number(b));
+}
+function featureMatchesOwner(f, owner) {
+  // match if any sub-task owner contains this name
+  return f.sub.some(s => (s.owner || '').split(/[,/]/).map(x=>x.trim()).includes(owner));
+}
+
+function filteredFeatures() {
+  const q = state.search.trim().toLowerCase();
+  return FEATURES.filter(f => {
+    if (state.selectedCats.size && !state.selectedCats.has(f.category)) return false;
+    if (state.selectedSprints.size) {
+      const key = f.sprint ? String(f.sprint) : 'unscheduled';
+      if (!state.selectedSprints.has(key)) return false;
+    }
+    if (state.selectedOwners.size) {
+      const ok = [...state.selectedOwners].some(o => featureMatchesOwner(f, o));
+      if (!ok) return false;
+    }
+    if (state.status) {
+      const s = deriveFeatureStatus(f);
+      const stNorm = (s === 'Started') ? 'In Progress' :
+                     (s === 'Not started' && state.status === 'Not started') ? 'Not started' :
+                     (s === 'Not started') ? 'Pending' : s;
+      if (stNorm !== state.status) return false;
+    }
+    if (q && !f.name.toLowerCase().includes(q)) return false;
+    return true;
+  });
+}
+
+/* =================================================================
+   Rendering — KPIs
+   ================================================================= */
 function renderStats() {
   const total = FEATURES.length;
-  const done  = FEATURES.filter(f => f.status === 'Completed').length;
-  const prog  = FEATURES.filter(f => f.status === 'In Progress' || f.status === 'Started').length;
-  const pend  = FEATURES.filter(f => f.status === 'Pending' || f.status === 'Not started').length;
-  // aggregate across all sub-tasks
-  let subDone = 0, subTot = 0;
-  FEATURES.forEach(f => f.sub.forEach(s => { subTot++; if (s.status === 'Completed') subDone++; }));
+  const done  = FEATURES.filter(f => deriveFeatureStatus(f) === 'Completed').length;
+  const prog  = FEATURES.filter(f => {
+    const s = deriveFeatureStatus(f); return s === 'In Progress' || s === 'Started';
+  }).length;
+  const pend  = FEATURES.filter(f => {
+    const s = deriveFeatureStatus(f); return s === 'Pending' || s === 'Not started';
+  }).length;
+
+  let subDone = 0, subTot = 0, overdue = 0, blocked = 0;
+  FEATURES.forEach(f => {
+    if (f.blocked) blocked++;
+    f.sub.forEach(s => {
+      subTot++;
+      if (s.status === 'Completed') subDone++;
+      if (isOverdue(s)) overdue++;
+    });
+  });
   const pct = subTot ? Math.round((subDone / subTot) * 100) : 0;
 
   document.getElementById('stats').innerHTML = `
@@ -557,118 +1037,563 @@ function renderStats() {
     <div class="stat prog"><div class="k">In Progress</div><div class="v">${prog}</div></div>
     <div class="stat pend"><div class="k">Pending</div><div class="v">${pend}</div></div>
     <div class="stat pct"><div class="k">Sub-tasks Done</div><div class="v">${subDone}/${subTot} (${pct}%)</div></div>
+    <div class="stat overdue"><div class="k">Overdue</div><div class="v">${overdue}</div></div>
+    <div class="stat blocked"><div class="k">Blocked</div><div class="v">${blocked}</div></div>
   `;
 }
 
+/* =================================================================
+   Rendering — Chips
+   ================================================================= */
 function renderChips() {
   document.getElementById('chips').innerHTML = CATEGORIES.map(c => {
     const active = state.selectedCats.has(c) ? 'active' : '';
-    return `<button class="chip ${active}" data-cat="${c}"><span class="dot"></span>${c}</button>`;
+    return `<button class="chip ${active}" data-cat="${escapeHtml(c)}"><span class="dot"></span>${escapeHtml(c)}</button>`;
   }).join('');
   document.querySelectorAll('#chips .chip').forEach(btn => {
     btn.addEventListener('click', () => {
       const c = btn.dataset.cat;
       if (state.selectedCats.has(c)) state.selectedCats.delete(c);
       else state.selectedCats.add(c);
-      renderChips();
-      renderFeatures();
+      renderChips(); renderFeatures(); syncUrl();
+    });
+  });
+
+  // Owners
+  const owners = allOwners();
+  document.getElementById('owner-chips').innerHTML =
+    `<button class="chip owner ${state.selectedOwners.size===0?'active':''}" data-owner="">All</button>` +
+    owners.map(o => {
+      const active = state.selectedOwners.has(o) ? 'active' : '';
+      return `<button class="chip owner ${active}" data-owner="${escapeHtml(o)}"><span class="dot"></span>${escapeHtml(o)}</button>`;
+    }).join('');
+  document.querySelectorAll('#owner-chips .chip').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const o = btn.dataset.owner;
+      if (!o) { state.selectedOwners.clear(); }
+      else if (state.selectedOwners.has(o)) state.selectedOwners.delete(o);
+      else state.selectedOwners.add(o);
+      renderChips(); renderFeatures(); syncUrl();
+    });
+  });
+
+  // Sprints
+  const sprints = allSprints();
+  const sprintOptions = [...sprints.map(s => ({ key: s, label: 'Sprint ' + s })), { key: 'unscheduled', label: 'Unscheduled' }];
+  document.getElementById('sprint-chips').innerHTML =
+    `<button class="chip sprint ${state.selectedSprints.size===0?'active':''}" data-sprint="">All</button>` +
+    sprintOptions.map(s => {
+      const active = state.selectedSprints.has(s.key) ? 'active' : '';
+      return `<button class="chip sprint ${active}" data-sprint="${escapeHtml(s.key)}"><span class="dot"></span>${escapeHtml(s.label)}</button>`;
+    }).join('');
+  document.querySelectorAll('#sprint-chips .chip').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const s = btn.dataset.sprint;
+      if (!s) { state.selectedSprints.clear(); }
+      else if (state.selectedSprints.has(s)) state.selectedSprints.delete(s);
+      else state.selectedSprints.add(s);
+      renderChips(); renderFeatures(); syncUrl();
     });
   });
 }
 
+/* =================================================================
+   Rendering — Features
+   ================================================================= */
 function renderFeatures() {
   const list = document.getElementById('features');
-  const q = state.search.trim().toLowerCase();
-  const filtered = FEATURES.filter(f => {
-    if (state.selectedCats.size && !state.selectedCats.has(f.category)) return false;
-    if (state.status) {
-      // group "Started" with "In Progress" for filter
-      const stNorm = (f.status === 'Started') ? 'In Progress' :
-                     (f.status === 'Not started') ? 'Pending' : f.status;
-      if (stNorm !== state.status) return false;
-    }
-    if (q && !f.name.toLowerCase().includes(q)) return false;
-    return true;
-  });
+  const filtered = filteredFeatures();
 
   if (!filtered.length) {
     list.innerHTML = `<div class="empty">No features match the current filters.</div>`;
     return;
   }
 
-  list.innerHTML = filtered.map(f => {
-    const p = featureProgress(f);
-    const isOpen = state.openSlides.has(f.slide);
-    const noSub = !p.hasSub;
-    const progressHtml = p.hasSub
-      ? `<div class="progress-wrap">
-           <div class="pl"><span>${p.done}/${p.total} done</span><span>${p.pct}%</span></div>
-           <div class="progress-bar"><div class="progress-fill" style="width:${p.pct}%"></div></div>
-         </div>`
-      : `<div class="progress-wrap" style="opacity:.45;">
-           <div class="pl"><span>No sub-tasks</span><span>—</span></div>
-           <div class="progress-bar"></div>
-         </div>`;
-    const qtrHtml = (f.quarter && f.quarter !== '—')
-      ? `<span class="badge qtr qtr-badge">${escapeHtml(f.quarter)}</span>`
-      : `<span style="display:inline-block;min-width:42px"></span>`;
+  list.innerHTML = filtered.map(renderFeature).join('');
 
-    const badges = [];
-    if (f.dda) badges.push('<span class="badge dda">DDA DEPENDENT</span>');
-
-    const subHtml = p.hasSub ? `
-      <div class="subtasks">
-        <table>
-          <thead>
-            <tr><th style="width:50%">Task</th><th>Due Date</th><th>Status</th><th>Owner</th></tr>
-          </thead>
-          <tbody>
-            ${f.sub.map(s => `
-              <tr>
-                <td class="task">${escapeHtml(s.task)}</td>
-                <td class="date">${escapeHtml(s.due)}</td>
-                <td><span class="status-pill" data-st="${escapeHtml(s.status)}">${escapeHtml(s.status)}</span></td>
-                <td class="owner">${escapeHtml(s.owner)}</td>
-              </tr>
-            `).join('')}
-          </tbody>
-        </table>
-      </div>` : '';
-
-    return `
-      <div class="feature ${isOpen ? 'open' : ''} ${noSub ? 'no-children' : ''}" data-cat="${escapeHtml(f.category)}" data-slide="${f.slide}">
-        <div class="head" role="button" tabindex="0">
-          <span class="caret">&#9654;</span>
-          <span class="slide-num">#${f.slide}</span>
-          <span class="feat-title">${escapeHtml(f.name)}<span class="badges">${badges.join('')}</span></span>
-          <span class="cat-pill" data-cat="${escapeHtml(f.category)}">${escapeHtml(f.category)}</span>
-          ${qtrHtml}
-          ${progressHtml}
-          <span class="status-pill" data-st="${escapeHtml(f.status)}">${escapeHtml(f.status)}</span>
-        </div>
-        ${subHtml}
-      </div>
-    `;
-  }).join('');
-
-  // Bind click to toggle
-  document.querySelectorAll('#features .feature').forEach(el => {
-    const slide = parseInt(el.dataset.slide, 10);
-    const head = el.querySelector('.head');
-    const hasSub = !el.classList.contains('no-children');
-    const toggle = () => {
-      if (!hasSub) return;
-      if (state.openSlides.has(slide)) state.openSlides.delete(slide);
-      else state.openSlides.add(slide);
-      el.classList.toggle('open');
-    };
-    head.addEventListener('click', toggle);
-    head.addEventListener('keydown', e => {
-      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }
-    });
-  });
+  // Bind feature-level handlers
+  filtered.forEach(f => bindFeatureHandlers(f));
 }
 
+function renderFeature(f) {
+  const p = computeProgress(f);
+  const isOpen = state.openIds.has(f.id);
+  const fStatus = deriveFeatureStatus(f);
+
+  const progressHtml = p.hasSub || p.overridden
+    ? `<div class="progress-wrap">
+         <div class="pl">
+           ${p.hasSub ? `<span>${p.done}/${p.total} done</span>` : `<span>Manual</span>`}
+           <span class="pct-num ${p.overridden?'overridden':''} edit-only editable" data-fid="${escapeHtml(f.id)}">${p.pct}%</span>
+         </div>
+         <div class="progress-bar"><div class="progress-fill" style="width:${p.pct}%"></div></div>
+       </div>`
+    : `<div class="progress-wrap" style="opacity:.45;">
+         <div class="pl"><span>No sub-tasks</span><span class="pct-num edit-only editable" data-fid="${escapeHtml(f.id)}">—</span></div>
+         <div class="progress-bar"></div>
+       </div>`;
+
+  const qtrHtml = (f.quarter && f.quarter !== '—')
+    ? `<span class="badge qtr qtr-badge">${escapeHtml(f.quarter)}</span>`
+    : `<span style="display:inline-block;min-width:42px"></span>`;
+  const sprintHtml = f.sprint
+    ? `<span class="badge sprint sprint-badge">Sprint ${escapeHtml(String(f.sprint))}</span>`
+    : '';
+
+  const badges = [];
+  if (f.dda) badges.push('<span class="badge dda">DDA DEPENDENT</span>');
+  if (f.blocked) badges.push('<span class="badge blocked">BLOCKED</span>');
+  if (f.dda) badges.push(`<span class="badge dda-wf" data-fid="${escapeHtml(f.id)}" data-dda-wf="1" title="Click to edit DDA workflow status">DDA: ${escapeHtml(f.ddaStatus || 'Not Submitted')}</span>`);
+
+  const notesArr = NOTES[f.id] || [];
+
+  const subHtml = `
+    <div class="subtasks">
+      ${f.sub.length ? `
+        <table>
+          <thead>
+            <tr>
+              <th style="width:40%">Task</th>
+              <th>Due Date</th>
+              <th>Status</th>
+              <th>Owner</th>
+              <th class="edit-only">Last Update</th>
+              <th class="edit-only"></th>
+            </tr>
+          </thead>
+          <tbody>
+            ${f.sub.map(s => renderSubtaskRow(f, s)).join('')}
+          </tbody>
+        </table>
+      ` : `<div style="color:var(--muted);font-size:13px;padding:8px 2px;font-style:italic">No sub-tasks yet.</div>`}
+      <button class="subtask-addbtn edit-only" data-add-sub="${escapeHtml(f.id)}">+ Add Sub-task</button>
+      ${renderNotesBlock(f.id, notesArr)}
+      <div style="display:flex;gap:16px;margin-top:10px;font-size:11px;color:var(--muted);flex-wrap:wrap;align-items:center">
+        <label class="edit-only" style="display:inline-flex;align-items:center;gap:6px;cursor:pointer">
+          <input type="checkbox" data-blocked-fid="${escapeHtml(f.id)}" ${f.blocked?'checked':''}/> Mark as Blocked
+        </label>
+        <span class="edit-only">Sprint:
+          <input type="number" min="1" max="999" data-sprint-fid="${escapeHtml(f.id)}" value="${f.sprint != null ? f.sprint : ''}" placeholder="—" style="width:70px;padding:2px 6px;font-size:12px;border:1px solid var(--border);border-radius:4px"/>
+        </span>
+      </div>
+    </div>
+  `;
+
+  return `
+    <div class="feature ${isOpen ? 'open' : ''} ${f.blocked ? 'blocked' : ''}" data-cat="${escapeHtml(f.category)}" data-fid="${escapeHtml(f.id)}">
+      <div class="head">
+        <span class="caret" data-toggle="${escapeHtml(f.id)}">&#9654;</span>
+        <span class="slide-num">#${escapeHtml(String(f.slide || '—'))}</span>
+        <span class="feat-title" data-toggle="${escapeHtml(f.id)}">${escapeHtml(f.name)}<span class="badges">${badges.join('')}</span></span>
+        <span class="cat-pill" data-cat="${escapeHtml(f.category)}">${escapeHtml(f.category)}</span>
+        ${sprintHtml}
+        ${qtrHtml}
+        ${progressHtml}
+        <span class="status-pill editable" data-feat-status="${escapeHtml(f.id)}" data-st="${escapeHtml(fStatus)}">${escapeHtml(fStatus)}</span>
+        <span class="row-actions edit-only">
+          <button class="icon-btn danger" data-del-feat="${escapeHtml(f.id)}" title="Delete feature">&#10005;</button>
+        </span>
+      </div>
+      ${subHtml}
+    </div>
+  `;
+}
+
+function renderSubtaskRow(f, s) {
+  const overdue = isOverdue(s);
+  const soon = isDueSoon(s);
+  const dateCls = 'date' + (overdue ? ' overdue' : (soon ? ' soon' : ''));
+  const updatedLabel = s.updatedAt ? `Updated by ${escapeHtml(s.updatedBy||'—')} · ${escapeHtml(s.updatedAt)}` : '';
+  return `
+    <tr data-sid="${escapeHtml(s.id)}">
+      <td class="task"><span class="task-text" data-edit-sub-text="${escapeHtml(f.id)}|${escapeHtml(s.id)}" title="Click to edit">${escapeHtml(s.task)}</span></td>
+      <td class="${dateCls}"><span data-edit-sub-date="${escapeHtml(f.id)}|${escapeHtml(s.id)}">${escapeHtml(s.due || '—')}</span></td>
+      <td><span class="status-pill editable" data-sub-status="${escapeHtml(f.id)}|${escapeHtml(s.id)}" data-st="${escapeHtml(s.status)}">${escapeHtml(s.status)}</span></td>
+      <td class="owner"><span data-edit-sub-owner="${escapeHtml(f.id)}|${escapeHtml(s.id)}">${escapeHtml(s.owner || '—')}</span></td>
+      <td class="updated edit-only">${updatedLabel}</td>
+      <td class="row-ctrl edit-only">
+        <button class="icon-btn danger" data-del-sub="${escapeHtml(f.id)}|${escapeHtml(s.id)}" title="Delete sub-task">&#10005;</button>
+      </td>
+    </tr>
+  `;
+}
+
+function renderNotesBlock(fid, arr) {
+  return `
+    <div class="notes-block">
+      <h4>Notes</h4>
+      ${arr.length ? arr.map(n => `<div class="note">${escapeHtml(n.text)}<span class="meta">— ${escapeHtml(n.author)} · ${escapeHtml(n.ts)}</span></div>`).join('') : '<div style="color:#8d6e00;font-size:12px;font-style:italic">No notes yet.</div>'}
+      <div class="note-input edit-only">
+        <textarea maxlength="500" placeholder="Add a note (max 500 chars)…" data-note-input="${escapeHtml(fid)}"></textarea>
+        <button data-note-save="${escapeHtml(fid)}">Add</button>
+      </div>
+    </div>
+  `;
+}
+
+/* =================================================================
+   Event handlers
+   ================================================================= */
+function bindFeatureHandlers(f) {
+  const root = document.querySelector(`.feature[data-fid="${CSS.escape(f.id)}"]`);
+  if (!root) return;
+
+  // Toggle open/close
+  root.querySelectorAll('[data-toggle]').forEach(el => {
+    el.addEventListener('click', () => {
+      if (state.openIds.has(f.id)) state.openIds.delete(f.id);
+      else state.openIds.add(f.id);
+      root.classList.toggle('open');
+    });
+  });
+
+  // Feature-level status
+  const featStatus = root.querySelector(`[data-feat-status]`);
+  if (featStatus) {
+    featStatus.addEventListener('click', (e) => {
+      if (!EDIT_MODE) return;
+      cycleFeatureStatus(f.id);
+    });
+  }
+
+  // Feature delete
+  const delBtn = root.querySelector(`[data-del-feat]`);
+  if (delBtn) {
+    delBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      confirmDelete(`Delete "${f.name}"? This will also remove its sub-tasks and notes. This cannot be undone.`, () => {
+        FEATURES = FEATURES.filter(x => x.id !== f.id);
+        delete NOTES[f.id];
+        delete OVERRIDES[f.id];
+        persist();
+        renderAll();
+        toast('Feature deleted', 'success');
+      });
+    });
+  }
+
+  // Sub-task status cycles
+  root.querySelectorAll('[data-sub-status]').forEach(el => {
+    el.addEventListener('click', (e) => {
+      if (!EDIT_MODE) return;
+      e.stopPropagation();
+      const [fid, sid] = el.dataset.subStatus.split('|');
+      cycleSubtaskStatus(fid, sid);
+    });
+  });
+
+  // Sub-task delete
+  root.querySelectorAll('[data-del-sub]').forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const [fid, sid] = el.dataset.delSub.split('|');
+      const feat = FEATURES.find(x => x.id === fid);
+      const sub = feat?.sub.find(x => x.id === sid);
+      if (!sub) return;
+      confirmDelete(`Delete sub-task "${sub.task}"? This cannot be undone.`, () => {
+        feat.sub = feat.sub.filter(x => x.id !== sid);
+        persist();
+        renderAll();
+        toast('Sub-task deleted', 'success');
+      });
+    });
+  });
+
+  // Add sub-task
+  const addSubBtn = root.querySelector(`[data-add-sub]`);
+  if (addSubBtn) {
+    addSubBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      openAddSubtaskModal(f.id);
+    });
+  }
+
+  // Inline edit: sub-task text / date / owner (simple prompt-based)
+  root.querySelectorAll('[data-edit-sub-text]').forEach(el => {
+    el.addEventListener('click', () => {
+      if (!EDIT_MODE) return;
+      const [fid, sid] = el.dataset.editSubText.split('|');
+      const feat = FEATURES.find(x => x.id === fid);
+      const sub  = feat?.sub.find(x => x.id === sid);
+      if (!sub) return;
+      const val = prompt('Edit task text:', sub.task);
+      if (val !== null && val.trim()) {
+        sub.task = val.trim();
+        stamp(sub);
+        persist(); renderAll();
+      }
+    });
+  });
+  root.querySelectorAll('[data-edit-sub-date]').forEach(el => {
+    el.addEventListener('click', () => {
+      if (!EDIT_MODE) return;
+      const [fid, sid] = el.dataset.editSubDate.split('|');
+      const feat = FEATURES.find(x => x.id === fid);
+      const sub  = feat?.sub.find(x => x.id === sid);
+      if (!sub) return;
+      const val = prompt('Edit due date (YYYY-MM-DD, range, or "—"/"TBC"):', sub.due || '');
+      if (val !== null) {
+        sub.due = val.trim();
+        stamp(sub);
+        persist(); renderAll();
+      }
+    });
+  });
+  root.querySelectorAll('[data-edit-sub-owner]').forEach(el => {
+    el.addEventListener('click', () => {
+      if (!EDIT_MODE) return;
+      const [fid, sid] = el.dataset.editSubOwner.split('|');
+      const feat = FEATURES.find(x => x.id === fid);
+      const sub  = feat?.sub.find(x => x.id === sid);
+      if (!sub) return;
+      const val = prompt('Edit owner (comma-separated for multiple):', sub.owner || '');
+      if (val !== null) {
+        sub.owner = val.trim() || '—';
+        stamp(sub);
+        persist(); renderAll();
+      }
+    });
+  });
+
+  // % override
+  const pctEl = root.querySelector(`[data-fid]`);
+  root.querySelectorAll('.pct-num[data-fid]').forEach(el => {
+    el.addEventListener('click', () => {
+      if (!EDIT_MODE) return;
+      const fid = el.dataset.fid;
+      const current = OVERRIDES[fid] !== undefined ? OVERRIDES[fid] : computeProgress(f).pct;
+      const val = prompt('Manual % complete (0–100). Enter empty to clear override:', current);
+      if (val === null) return;
+      if (val.trim() === '') {
+        delete OVERRIDES[fid];
+      } else {
+        const n = Math.max(0, Math.min(100, parseInt(val, 10)));
+        if (isNaN(n)) { toast('Invalid number', 'error'); return; }
+        OVERRIDES[fid] = n;
+      }
+      persist(); renderAll();
+    });
+  });
+
+  // DDA workflow pill
+  const ddaWf = root.querySelector('[data-dda-wf]');
+  if (ddaWf) {
+    ddaWf.addEventListener('click', (e) => {
+      if (!EDIT_MODE) return;
+      e.stopPropagation();
+      const current = f.ddaStatus || 'Not Submitted';
+      const idx = DDA_WORKFLOW.indexOf(current);
+      f.ddaStatus = DDA_WORKFLOW[(idx + 1) % DDA_WORKFLOW.length];
+      persist(); renderAll();
+    });
+  }
+
+  // Blocked toggle
+  const bl = root.querySelector('[data-blocked-fid]');
+  if (bl) bl.addEventListener('change', () => {
+    f.blocked = bl.checked;
+    persist(); renderAll();
+  });
+
+  // Sprint
+  const sp = root.querySelector('[data-sprint-fid]');
+  if (sp) sp.addEventListener('change', () => {
+    const v = sp.value.trim();
+    f.sprint = v ? parseInt(v, 10) : null;
+    persist(); renderAll();
+  });
+
+  // Notes
+  const noteInput = root.querySelector('[data-note-input]');
+  const noteSave  = root.querySelector('[data-note-save]');
+  if (noteSave && noteInput) {
+    noteSave.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const text = noteInput.value.trim();
+      if (!text) return;
+      NOTES[f.id] = NOTES[f.id] || [];
+      NOTES[f.id].push({ text, author: IDENTITY || '—', ts: formatTs(new Date()) });
+      persist(); renderAll();
+      toast('Note added', 'success');
+    });
+  }
+}
+
+/* =================================================================
+   Status cycling
+   ================================================================= */
+function cycleSubtaskStatus(fid, sid) {
+  const feat = FEATURES.find(x => x.id === fid);
+  const sub  = feat?.sub.find(x => x.id === sid);
+  if (!sub) return;
+  const idx = STATUS_CYCLE.indexOf(sub.status);
+  sub.status = STATUS_CYCLE[(idx + 1) % STATUS_CYCLE.length];
+  stamp(sub);
+  persist(); renderAll();
+}
+function cycleFeatureStatus(fid) {
+  const feat = FEATURES.find(x => x.id === fid);
+  if (!feat) return;
+  const current = deriveFeatureStatus(feat);
+  const idx = STATUS_CYCLE.indexOf(current);
+  feat.status = STATUS_CYCLE[(idx + 1) % STATUS_CYCLE.length];
+  persist(); renderAll();
+}
+
+/* =================================================================
+   Confirmation + Modal
+   ================================================================= */
+function confirmDelete(msg, onOk) {
+  const host = document.getElementById('modal-host');
+  host.innerHTML = `
+    <div class="modal">
+      <h3>Confirm</h3>
+      <div class="modal-sub">${escapeHtml(msg)}</div>
+      <div class="actions">
+        <button class="btn-cancel" id="m-cancel">Cancel</button>
+        <button class="btn-danger" id="m-ok">Delete</button>
+      </div>
+    </div>`;
+  host.classList.add('active');
+  document.getElementById('m-cancel').onclick = () => host.classList.remove('active');
+  document.getElementById('m-ok').onclick = () => { host.classList.remove('active'); onOk(); };
+}
+
+function openAddFeatureModal() {
+  const host = document.getElementById('modal-host');
+  host.innerHTML = `
+    <div class="modal">
+      <h3>Add Feature</h3>
+      <div class="modal-sub">New feature will be added to the end of the list.</div>
+      <div class="field">
+        <label>Feature name</label>
+        <input type="text" id="nf-name" placeholder="e.g. New Analytics Dashboard" autofocus/>
+      </div>
+      <div class="field">
+        <label>Category</label>
+        <select id="nf-cat">
+          ${CATEGORIES.map(c => `<option value="${escapeHtml(c)}">${escapeHtml(c)}</option>`).join('')}
+        </select>
+      </div>
+      <div class="field">
+        <label>Quarter</label>
+        <select id="nf-qtr">
+          <option value="—">—</option>
+          <option>Q1</option><option>Q2</option><option>Q3</option><option>Q4</option>
+          <option>Q1-Q2</option><option>Q2-Q3</option><option>Q3-Q4</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>Sprint (optional)</label>
+        <input type="number" id="nf-sprint" min="1" max="999" placeholder="e.g. 78"/>
+      </div>
+      <div class="field">
+        <label>Initial status</label>
+        <select id="nf-status">
+          ${STATUS_CYCLE.map(s => `<option value="${escapeHtml(s)}" ${s==='Not started'?'selected':''}>${escapeHtml(s)}</option>`).join('')}
+        </select>
+      </div>
+      <div class="field toggle-row">
+        <input type="checkbox" id="nf-dda"/>
+        <label for="nf-dda" style="margin:0;text-transform:none;letter-spacing:0;font-size:13px;color:var(--text);font-weight:500">DDA dependent</label>
+      </div>
+      <div class="actions">
+        <button class="btn-cancel" id="m-cancel">Cancel</button>
+        <button class="btn-primary" id="m-save">Add Feature</button>
+      </div>
+    </div>`;
+  host.classList.add('active');
+  document.getElementById('m-cancel').onclick = () => host.classList.remove('active');
+  document.getElementById('m-save').onclick = () => {
+    const name = document.getElementById('nf-name').value.trim();
+    if (!name) { toast('Name is required', 'error'); return; }
+    const cat = document.getElementById('nf-cat').value;
+    const qtr = document.getElementById('nf-qtr').value;
+    const sp  = document.getElementById('nf-sprint').value.trim();
+    const st  = document.getElementById('nf-status').value;
+    const dda = document.getElementById('nf-dda').checked;
+    const maxSlide = FEATURES.reduce((m,f) => Math.max(m, f.slide || 0), 0);
+    const f = {
+      id: nextId('f'),
+      slide: maxSlide + 1,
+      name, category: cat, quarter: qtr, status: st, dda,
+      sprint: sp ? parseInt(sp, 10) : null,
+      ddaStatus: 'Not Submitted',
+      blocked: false,
+      sub: []
+    };
+    FEATURES.push(f);
+    persist(); renderAll();
+    host.classList.remove('active');
+    toast('Feature added', 'success');
+  };
+}
+
+function openAddSubtaskModal(fid) {
+  const feat = FEATURES.find(x => x.id === fid);
+  if (!feat) return;
+  const host = document.getElementById('modal-host');
+  const ownerOpts = KNOWN_OWNERS.map(o => `<option value="${escapeHtml(o)}">${escapeHtml(o)}</option>`).join('');
+  host.innerHTML = `
+    <div class="modal">
+      <h3>Add Sub-task</h3>
+      <div class="modal-sub">To: <strong>${escapeHtml(feat.name)}</strong></div>
+      <div class="field">
+        <label>Task</label>
+        <input type="text" id="ns-task" placeholder="What needs to happen?" autofocus/>
+      </div>
+      <div class="field">
+        <label>Due date</label>
+        <input type="text" id="ns-due" placeholder="YYYY-MM-DD, range, or —"/>
+      </div>
+      <div class="field">
+        <label>Owner</label>
+        <select id="ns-owner">
+          <option value="—">—</option>
+          ${ownerOpts}
+          <option value="__custom__">Custom…</option>
+        </select>
+      </div>
+      <div class="field" id="ns-custom-wrap" style="display:none">
+        <label>Custom owner(s)</label>
+        <input type="text" id="ns-custom" placeholder="e.g. Najjar, Ahmad"/>
+      </div>
+      <div class="field">
+        <label>Status</label>
+        <select id="ns-status">
+          ${STATUS_CYCLE.map(s => `<option value="${escapeHtml(s)}" ${s==='Pending'?'selected':''}>${escapeHtml(s)}</option>`).join('')}
+        </select>
+      </div>
+      <div class="actions">
+        <button class="btn-cancel" id="m-cancel">Cancel</button>
+        <button class="btn-primary" id="m-save">Add Sub-task</button>
+      </div>
+    </div>`;
+  host.classList.add('active');
+  const ownSel = document.getElementById('ns-owner');
+  const cusWrap = document.getElementById('ns-custom-wrap');
+  ownSel.onchange = () => { cusWrap.style.display = (ownSel.value === '__custom__') ? '' : 'none'; };
+  document.getElementById('m-cancel').onclick = () => host.classList.remove('active');
+  document.getElementById('m-save').onclick = () => {
+    const task = document.getElementById('ns-task').value.trim();
+    if (!task) { toast('Task text is required', 'error'); return; }
+    const due = document.getElementById('ns-due').value.trim() || '—';
+    let owner = ownSel.value;
+    if (owner === '__custom__') owner = document.getElementById('ns-custom').value.trim() || '—';
+    const status = document.getElementById('ns-status').value;
+    const s = { id: nextId('s'), task, due, status, owner };
+    stamp(s);
+    feat.sub.push(s);
+    state.openIds.add(fid);
+    persist(); renderAll();
+    host.classList.remove('active');
+    toast('Sub-task added', 'success');
+  };
+}
+
+/* =================================================================
+   Other actions
+   ================================================================= */
 function renderOther() {
   document.getElementById('other-tbody').innerHTML = OTHER_ACTIONS.map(a => `
     <tr>
@@ -679,38 +1604,206 @@ function renderOther() {
   `).join('');
 }
 
-/* ---------------- Bindings ---------------- */
-document.getElementById('search').addEventListener('input', e => {
-  state.search = e.target.value;
-  renderFeatures();
-});
-document.getElementById('status-filter').addEventListener('change', e => {
-  state.status = e.target.value;
-  renderFeatures();
-});
-document.getElementById('clear').addEventListener('click', () => {
-  state.selectedCats.clear();
-  state.status = '';
-  state.search = '';
-  document.getElementById('search').value = '';
-  document.getElementById('status-filter').value = '';
+/* =================================================================
+   CSV export
+   ================================================================= */
+function exportCsv() {
+  const rows = [[
+    'Feature','Slide','Category','Quarter','Sprint','DDA Dependent','DDA Status',
+    'Feature Status','Blocked','% Complete','Sub-task','Due Date','Sub-task Status','Owner','Sub-task Last Updated By','Sub-task Last Updated At','Notes'
+  ]];
+  FEATURES.forEach(f => {
+    const p = computeProgress(f);
+    const fStatus = deriveFeatureStatus(f);
+    const noteStr = (NOTES[f.id] || []).map(n => `${n.text} — ${n.author} (${n.ts})`).join(' | ');
+    if (f.sub.length) {
+      f.sub.forEach(s => {
+        rows.push([
+          f.name, f.slide, f.category, f.quarter, f.sprint || '', f.dda?'Yes':'No', f.dda ? (f.ddaStatus || '') : '',
+          fStatus, f.blocked?'Yes':'No', p.pct,
+          s.task, s.due, s.status, s.owner, s.updatedBy || '', s.updatedAt || '', noteStr
+        ]);
+      });
+    } else {
+      rows.push([
+        f.name, f.slide, f.category, f.quarter, f.sprint || '', f.dda?'Yes':'No', f.dda ? (f.ddaStatus || '') : '',
+        fStatus, f.blocked?'Yes':'No', p.pct,
+        '', '', '', '', '', '', noteStr
+      ]);
+    }
+  });
+  const csv = rows.map(r => r.map(cell => {
+    const s = String(cell == null ? '' : cell);
+    return /[",\n]/.test(s) ? `"${s.replace(/"/g, '""')}"` : s;
+  }).join(',')).join('\r\n');
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  const d = new Date();
+  const pad = n => String(n).padStart(2,'0');
+  a.href = url;
+  a.download = `dv_roadmap_tracker_${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}.csv`;
+  document.body.appendChild(a); a.click(); a.remove();
+  URL.revokeObjectURL(url);
+  toast('CSV exported', 'success');
+}
+
+/* =================================================================
+   Snapshots
+   ================================================================= */
+function takeSnapshot(label) {
+  const snaps = lsGet(LS.snapshots, []);
+  snaps.push({
+    label: label || formatTs(new Date()),
+    date: new Date().toISOString(),
+    author: IDENTITY || '—',
+    data: deepClone(FEATURES),
+    notes: deepClone(NOTES),
+    overrides: deepClone(OVERRIDES)
+  });
+  while (snaps.length > 8) snaps.shift();
+  lsSet(LS.snapshots, snaps);
+  toast('Snapshot saved (' + snaps.length + '/8)', 'success');
+}
+
+function diffSnapshots(a, b) {
+  // count differences between two snapshot "data" arrays
+  const mapA = {}; a.data.forEach(f => mapA[f.id] = f);
+  const mapB = {}; b.data.forEach(f => mapB[f.id] = f);
+  let added = 0, removed = 0, statusChg = 0;
+  Object.keys(mapB).forEach(id => {
+    if (!mapA[id]) { added++; return; }
+    if (mapA[id].status !== mapB[id].status) statusChg++;
+    const subA = {}; mapA[id].sub.forEach(s => subA[s.id] = s);
+    const subB = {}; mapB[id].sub.forEach(s => subB[s.id] = s);
+    Object.keys(subB).forEach(sid => {
+      if (!subA[sid]) statusChg++; // sub-task added counted in status-like changes
+      else if (subA[sid].status !== subB[sid].status) statusChg++;
+    });
+  });
+  Object.keys(mapA).forEach(id => { if (!mapB[id]) removed++; });
+  return { added, removed, statusChg };
+}
+
+function openHistoryPanel() {
+  const snaps = lsGet(LS.snapshots, []);
+  const host = document.getElementById('modal-host');
+  let rows = '<div style="color:var(--muted);font-style:italic">No snapshots yet. Click "Take Snapshot" to save one.</div>';
+  if (snaps.length) {
+    rows = '<table style="width:100%;border-collapse:collapse;font-size:13px">'
+      + '<thead><tr><th style="text-align:left;padding:6px 4px;font-size:11px;color:var(--muted)">#</th><th style="text-align:left;padding:6px 4px;font-size:11px;color:var(--muted)">Label</th><th style="text-align:left;padding:6px 4px;font-size:11px;color:var(--muted)">Author</th><th style="text-align:left;padding:6px 4px;font-size:11px;color:var(--muted)">Vs previous</th></tr></thead><tbody>';
+    snaps.forEach((s, i) => {
+      const diff = i > 0 ? diffSnapshots(snaps[i-1], s) : null;
+      const diffStr = diff ? `+${diff.added} added · −${diff.removed} removed · ${diff.statusChg} status change${diff.statusChg===1?'':'s'}` : 'baseline';
+      rows += `<tr><td style="padding:6px 4px">${i+1}</td><td style="padding:6px 4px">${escapeHtml(s.label)}</td><td style="padding:6px 4px">${escapeHtml(s.author)}</td><td style="padding:6px 4px;color:var(--muted)">${escapeHtml(diffStr)}</td></tr>`;
+    });
+    rows += '</tbody></table>';
+  }
+  host.innerHTML = `
+    <div class="modal" style="width:min(640px,100%)">
+      <h3>Snapshot History</h3>
+      <div class="modal-sub">Last ${snaps.length} snapshot(s). Oldest auto-purged when cap reached (max 8).</div>
+      ${rows}
+      <div class="actions">
+        <button class="btn-cancel" id="m-cancel">Close</button>
+      </div>
+    </div>`;
+  host.classList.add('active');
+  document.getElementById('m-cancel').onclick = () => host.classList.remove('active');
+}
+
+/* =================================================================
+   Edit mode toggle
+   ================================================================= */
+function applyModeClass() {
+  document.body.classList.toggle('view-mode', !EDIT_MODE);
+  const btn = document.getElementById('mode-toggle');
+  if (btn) btn.textContent = 'Mode: ' + (EDIT_MODE ? 'Edit' : 'View');
+}
+function toggleMode() {
+  EDIT_MODE = !EDIT_MODE;
+  sessionStorage.setItem(LS.mode, EDIT_MODE ? 'edit' : 'view');
+  applyModeClass();
+  renderAll();
+}
+
+/* =================================================================
+   Reset
+   ================================================================= */
+function resetAll() {
+  confirmDelete('Reset all data to defaults? This clears statuses, notes, snapshots, overrides, and custom features. Cannot be undone.', () => {
+    localStorage.removeItem(LS.data);
+    localStorage.removeItem(LS.notes);
+    localStorage.removeItem(LS.overrides);
+    localStorage.removeItem(LS.updated);
+    localStorage.removeItem(LS.snapshots);
+    // keep identity intentionally
+    toast('Reset complete. Reloading…', 'success');
+    setTimeout(() => location.reload(), 600);
+  });
+}
+
+/* =================================================================
+   Boot
+   ================================================================= */
+function renderAll() {
+  renderStats();
   renderChips();
   renderFeatures();
-});
-document.getElementById('expand-all').addEventListener('click', () => {
-  FEATURES.forEach(f => { if (f.sub && f.sub.length) state.openSlides.add(f.slide); });
-  renderFeatures();
-});
-document.getElementById('collapse-all').addEventListener('click', () => {
-  state.openSlides.clear();
-  renderFeatures();
-});
+  renderOther();
+  syncUrl();
+}
 
-/* ---------------- Init ---------------- */
-renderStats();
-renderChips();
-renderFeatures();
-renderOther();
+function bootApp() {
+  loadModel();
+  restoreFromUrl();
+  document.getElementById('global-updated').textContent = LAST_UPDATED || '—';
+
+  // Search
+  document.getElementById('search').addEventListener('input', e => {
+    state.search = e.target.value;
+    renderFeatures(); syncUrl();
+  });
+  document.getElementById('search').value = state.search;
+
+  document.getElementById('status-filter').addEventListener('change', e => {
+    state.status = e.target.value;
+    renderFeatures(); syncUrl();
+  });
+  document.getElementById('status-filter').value = state.status;
+
+  document.getElementById('clear').addEventListener('click', () => {
+    state.selectedCats.clear();
+    state.selectedOwners.clear();
+    state.selectedSprints.clear();
+    state.status = '';
+    state.search = '';
+    document.getElementById('search').value = '';
+    document.getElementById('status-filter').value = '';
+    renderAll();
+  });
+  document.getElementById('expand-all').addEventListener('click', () => {
+    FEATURES.forEach(f => state.openIds.add(f.id));
+    renderFeatures();
+  });
+  document.getElementById('collapse-all').addEventListener('click', () => {
+    state.openIds.clear();
+    renderFeatures();
+  });
+
+  document.getElementById('add-feature-btn').addEventListener('click', openAddFeatureModal);
+  document.getElementById('export-csv').addEventListener('click', exportCsv);
+  document.getElementById('mode-toggle').addEventListener('click', toggleMode);
+  document.getElementById('snapshot-btn').addEventListener('click', () => {
+    const label = prompt('Snapshot label (optional):', formatTs(new Date()));
+    if (label === null) return;
+    takeSnapshot(label || formatTs(new Date()));
+  });
+  document.getElementById('history-btn').addEventListener('click', openHistoryPanel);
+  document.getElementById('reset-btn').addEventListener('click', resetAll);
+
+  renderAll();
+}
 </script>
 </body>
 </html>
