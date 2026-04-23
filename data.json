@@ -11,6 +11,7 @@
       "sprint": 76,
       "blocked": false,
       "ddaStatus": "Not Submitted",
+      "committed": true,
       "description": "Implement a consistent status model and status history for sharing requests to enable end-to-end reporting, diagnostics, and analytics.",
       "sub": [
         {
@@ -98,6 +99,7 @@
       "sprint": 72,
       "blocked": false,
       "ddaStatus": "Not Submitted",
+      "committed": true,
       "description": "Complete Primary/Secondary EID handling with final EN/AR copy approval and edge case handling.",
       "sub": [
         {
@@ -149,6 +151,7 @@
       "sprint": null,
       "blocked": false,
       "ddaStatus": "Not Submitted",
+      "committed": true,
       "description": "Create a process for offboarding already onboarded Service Providers, with the option of re-onboarding.",
       "sub": [
         {
@@ -200,6 +203,7 @@
       "sprint": null,
       "blocked": false,
       "ddaStatus": "Not Submitted",
+      "committed": true,
       "description": "Simplify the QR code generation logic and introduce a new way to trigger sharing requests to the user from the SP channel.",
       "sub": [
         {
@@ -233,6 +237,7 @@
       "sprint": null,
       "blocked": false,
       "ddaStatus": "Not Submitted",
+      "committed": true,
       "description": "UI/UX designer reviews current screens to identify room for improvement and biggest pain points. Output is a prioritized backlog with recommended fixes.",
       "sub": [
         {
@@ -257,6 +262,7 @@
       "sprint": null,
       "blocked": false,
       "ddaStatus": "Not Submitted",
+      "committed": true,
       "description": "Placeholder to implement outcomes of design audit and design system epics. Improves documents list view so users can find, filter, and act on documents faster.",
       "sub": []
     },
@@ -271,6 +277,7 @@
       "sprint": null,
       "blocked": false,
       "ddaStatus": "Not Submitted",
+      "committed": true,
       "description": "Auto-fill forms using stored document data to streamline user workflows. Service Provider related.",
       "sub": [
         {
@@ -295,6 +302,7 @@
       "sprint": null,
       "blocked": false,
       "ddaStatus": "Not Submitted",
+      "committed": true,
       "description": "One-time consent for DV to periodically check and auto-add new/updated documents from issuers. Pending Legal/TDRA approval.",
       "sub": [
         {
@@ -319,6 +327,7 @@
       "sprint": null,
       "blocked": false,
       "ddaStatus": "Not Submitted",
+      "committed": true,
       "description": "Enable sharing of Digital Vault documents over the counter / direct sharing using UUID.",
       "sub": [
         {
@@ -352,6 +361,7 @@
       "sprint": null,
       "blocked": false,
       "ddaStatus": "Not Submitted",
+      "committed": true,
       "description": "Second bundle of UI/UX improvements based on design audit, design system update and accessibility findings.",
       "sub": []
     },
@@ -366,6 +376,7 @@
       "sprint": null,
       "blocked": false,
       "ddaStatus": "Not Submitted",
+      "committed": true,
       "description": "Enable downloading all issued documents in DV.",
       "sub": [
         {
@@ -390,6 +401,7 @@
       "sprint": null,
       "blocked": false,
       "ddaStatus": "Not Submitted",
+      "committed": false,
       "description": "Redesign the DV home page to prioritize top tasks and reduce navigation friction.",
       "sub": [
         {
@@ -414,6 +426,7 @@
       "sprint": null,
       "blocked": false,
       "ddaStatus": "Not Submitted",
+      "committed": false,
       "description": "Redesign the document request journey with clearer steps, better copy, and trackable outcomes aligned to the status model.",
       "sub": []
     },
@@ -428,6 +441,7 @@
       "sprint": null,
       "blocked": false,
       "ddaStatus": "Not Submitted",
+      "committed": false,
       "description": "Revamp the sharing flow across selection, consent, confirmation, and failure recovery, tied to status-based reporting for measurable improvements.",
       "sub": []
     },
@@ -442,6 +456,7 @@
       "sprint": 78,
       "blocked": false,
       "ddaStatus": "Not Submitted",
+      "committed": false,
       "description": "Select and integrate analytics tool (UXCam/Firebase Analytics) to enable data-driven optimization, session replay, and Real User Monitoring (RUM). DDA Dependent.",
       "sub": [
         {
@@ -466,6 +481,7 @@
       "sprint": null,
       "blocked": false,
       "ddaStatus": "Not Submitted",
+      "committed": false,
       "description": "Sharing third-party data via a user-controlled consent mechanism.",
       "sub": []
     },
@@ -480,6 +496,7 @@
       "sprint": null,
       "blocked": false,
       "ddaStatus": "Not Submitted",
+      "committed": false,
       "description": "Joint effort with DDA UI/UX team to update and enhance the DV design system for consistent implementation across teams.",
       "sub": []
     },
@@ -494,6 +511,7 @@
       "sprint": null,
       "blocked": false,
       "ddaStatus": "Not Submitted",
+      "committed": false,
       "description": "Increase accessibility support across key DV screens and flows (screen reader, contrast, dynamic text, focus order, touch targets). Validate against agreed WCAG target. DDA Dependent.",
       "sub": []
     },
@@ -508,6 +526,7 @@
       "sprint": null,
       "blocked": false,
       "ddaStatus": "Not Submitted",
+      "committed": false,
       "description": "Improve SEO of the UAEVerify website by adding proper metadata across key pages to rank better in Google search results.",
       "sub": []
     },
@@ -522,6 +541,7 @@
       "sprint": null,
       "blocked": false,
       "ddaStatus": "Not Submitted",
+      "committed": false,
       "description": "Create the operational dashboard to track the state of sharing requests using the latest status model.",
       "sub": []
     },
@@ -536,6 +556,7 @@
       "sprint": 70,
       "blocked": false,
       "ddaStatus": "Not Submitted",
+      "committed": false,
       "description": "Detect and resolve infinite loading states across: issuer list, download/share QR verification, notification list, and document selection screen.",
       "sub": []
     },
@@ -550,6 +571,7 @@
       "sprint": null,
       "blocked": false,
       "ddaStatus": "Not Submitted",
+      "committed": false,
       "description": "Implement TTL-based document deletion and scheduled deletion of anonymous users following the December 6th incident when batch processors were stopped.",
       "sub": []
     },
@@ -564,6 +586,7 @@
       "sprint": null,
       "blocked": false,
       "ddaStatus": "Not Submitted",
+      "committed": false,
       "description": "Create a Software Development Kit (SDK) for Service Providers for Android and iOS, with all required API implementations for easy integration.",
       "sub": []
     },
@@ -578,6 +601,7 @@
       "sprint": null,
       "blocked": false,
       "ddaStatus": "Not Submitted",
+      "committed": false,
       "description": "Automated DR scripts: switch apps between environments (DR/PROD), primary DB switching, and traffic switching. Target: complete DR in under 20 minutes.",
       "sub": []
     },
@@ -592,6 +616,7 @@
       "sprint": null,
       "blocked": false,
       "ddaStatus": "Not Submitted",
+      "committed": false,
       "description": "Automation testing suite for SPs to complement the SDK and speed up SP testing with Digital Vault.",
       "sub": []
     },
@@ -606,6 +631,7 @@
       "sprint": null,
       "blocked": false,
       "ddaStatus": "Not Submitted",
+      "committed": false,
       "description": "Fix License Name and Number not showing when customer scans QR code from UAE Verify portal.",
       "sub": []
     },
@@ -620,6 +646,7 @@
       "sprint": null,
       "blocked": false,
       "ddaStatus": "Not Submitted",
+      "committed": false,
       "description": "Branch strategy-based CI/CD: code committed to a branch automatically deploys to the corresponding environment.",
       "sub": []
     },
@@ -634,6 +661,7 @@
       "sprint": null,
       "blocked": false,
       "ddaStatus": "Not Submitted",
+      "committed": false,
       "description": "Automate incident report generation and operational tasks.",
       "sub": []
     }

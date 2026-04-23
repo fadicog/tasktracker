@@ -225,6 +225,11 @@
   .badge.sprint { background: #eceff1; color: #455a64; border: 1px solid #cfd8dc; }
   .badge.blocked { background: #ffebee; color: var(--danger); border: 1px solid #ffcdd2; }
   .badge.dda-wf { background: #fff3e0; color: var(--warn-fg); border: 1px solid #ffe0b2; }
+  .badge.committed { background: #e8f5e9; color: #2e7d32; border: 1px solid #a5d6a7; }
+  .badge.not-committed { background: #fafafa; color: #888; border: 1px solid #e0e0e0; }
+  .badge.committed.editable, .badge.not-committed.editable { cursor: pointer; }
+  .badge.committed.editable:hover { background: #c8e6c9; }
+  .badge.not-committed.editable:hover { background: #f0f0f0; }
 
   .cat-pill, .status-pill {
     font-size: 11px; font-weight: 600; padding: 4px 10px; border-radius: 999px;
@@ -1769,6 +1774,11 @@ function renderFeature(f) {
     : '';
 
   const badges = [];
+  if (f.committed === true) {
+    badges.push(`<span class="badge committed" data-committed-fid="${escapeHtml(f.id)}" title="TDRA Committed — click in edit mode to toggle">COMMITTED</span>`);
+  } else {
+    badges.push(`<span class="badge not-committed" data-committed-fid="${escapeHtml(f.id)}" title="Not committed — click in edit mode to toggle">NOT COMMITTED</span>`);
+  }
   if (f.dda) badges.push('<span class="badge dda">DDA DEPENDENT</span>');
   if (f.blocked) badges.push('<span class="badge blocked">BLOCKED</span>');
   if (f.dda) badges.push(`<span class="badge dda-wf" data-fid="${escapeHtml(f.id)}" data-dda-wf="1" title="Click to edit DDA workflow status">DDA: ${escapeHtml(f.ddaStatus || 'Not Submitted')}</span>`);
@@ -2082,6 +2092,17 @@ function bindFeatureHandlers(f) {
       const current = f.ddaStatus || 'Not Submitted';
       const idx = DDA_WORKFLOW.indexOf(current);
       f.ddaStatus = DDA_WORKFLOW[(idx + 1) % DDA_WORKFLOW.length];
+      persist(); renderAll();
+    });
+  }
+
+  // Committed toggle (edit mode only — click badge to flip)
+  const committedBtn = root.querySelector('[data-committed-fid]');
+  if (committedBtn) {
+    committedBtn.addEventListener('click', (e) => {
+      if (!EDIT_MODE) return;
+      e.stopPropagation();
+      f.committed = !f.committed;
       persist(); renderAll();
     });
   }
