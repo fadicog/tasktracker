@@ -303,7 +303,7 @@
     {
       "slide": 14,
       "id": "f-14",
-      "name": "Over the Counter Document Sharing",
+      "name": "Direct Sharing Using UUID (OTC)",
       "category": "Product",
       "quarter": "—",
       "status": "Pending",
@@ -320,6 +320,15 @@
           "owner": "Najjar",
           "updatedBy": "",
           "updatedAt": ""
+        },
+        {
+          "id": "s-14-2",
+          "task": "Discussions between TDRA/DV/DDA — check latest status and alignment with other initiatives",
+          "due": "—",
+          "status": "Pending",
+          "owner": "Malak",
+          "updatedBy": "Fadi",
+          "updatedAt": "23 Apr 2026 09:30"
         }
       ]
     },
@@ -617,6 +626,6 @@
   ],
   "notes": {},
   "overrides": {},
-  "lastUpdated": "23 Apr 2026 09:00",
+  "lastUpdated": "23 Apr 2026 09:30",
   "version": 1
 }
