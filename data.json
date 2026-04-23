@@ -149,13 +149,31 @@
       "ddaStatus": "Not Submitted",
       "sub": [
         {
+          "id": "s-8-0",
+          "task": "Product team meeting with SP team — align on target SPs and way forward",
+          "due": "2026-04-14",
+          "status": "Completed",
+          "owner": "Fadi",
+          "updatedBy": "Fadi",
+          "updatedAt": "23 Apr 2026 09:00"
+        },
+        {
           "id": "s-8-1",
-          "task": "Fadi/Surbhi meeting",
+          "task": "Set up meeting between Ops and SP team to discuss way forward",
           "due": "2026-04-27",
           "status": "Pending",
-          "owner": "Fadi, Surbhi",
-          "updatedBy": "",
-          "updatedAt": ""
+          "owner": "Fadi",
+          "updatedBy": "Fadi",
+          "updatedAt": "23 Apr 2026 09:00"
+        },
+        {
+          "id": "s-8-3",
+          "task": "Finalise offboarding approach/process for SPs and Issuers",
+          "due": "2026-04-25",
+          "status": "Pending",
+          "owner": "Jeffrey",
+          "updatedBy": "Fadi",
+          "updatedAt": "23 Apr 2026 09:00"
         },
         {
           "id": "s-8-2",
@@ -599,6 +617,6 @@
   ],
   "notes": {},
   "overrides": {},
-  "lastUpdated": "22 Apr 2026 18:05",
+  "lastUpdated": "23 Apr 2026 09:00",
   "version": 1
 }
