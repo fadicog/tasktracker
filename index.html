@@ -251,6 +251,11 @@
   .badge.dda-wf { background: #fff3e0; color: var(--warn-fg); border: 1px solid #ffe0b2; }
   .badge.committed { background: #e8f5e9; color: #2e7d32; border: 1px solid #a5d6a7; }
   .badge.not-committed { background: #fafafa; color: #888; border: 1px solid #e0e0e0; }
+  .badge.month-badge { background: #fff8e1; color: #b45309; border: 1px solid #fcd34d; min-width: 34px; text-align: center; }
+  .target-group { display: flex; flex-direction: column; gap: 3px; align-items: center; }
+  .target-group .badge { min-width: 34px; text-align: center; }
+  .badge.qtr-badge.editable:hover { background: #bbdefb; cursor: pointer; }
+  .badge.month-badge.editable:hover { background: #fde68a; cursor: pointer; }
   .badge.committed.editable, .badge.not-committed.editable { cursor: pointer; }
   .badge.committed.editable:hover { background: #c8e6c9; }
   .badge.not-committed.editable:hover { background: #f0f0f0; }
@@ -1830,9 +1835,16 @@ function renderFeature(f) {
          <div class="progress-bar"></div>
        </div>`;
 
-  const qtrHtml = (f.quarter && f.quarter !== '—')
-    ? `<span class="badge qtr qtr-badge">${escapeHtml(f.quarter)}</span>`
-    : `<span style="display:inline-block;min-width:42px"></span>`;
+  const qtrLabel   = (f.quarter && f.quarter !== '—') ? f.quarter : '—';
+  const monthLabel = f.targetMonth || '—';
+  const editableQtr   = EDIT_MODE ? ' editable' : '';
+  const editableMonth = EDIT_MODE ? ' editable' : '';
+  const qtrTip   = EDIT_MODE ? 'Click to change target quarter' : 'Target Quarter';
+  const monthTip = EDIT_MODE ? 'Click to change target month'   : 'Target Month';
+  const targetHtml = `<div class="target-group">
+    <span class="badge qtr qtr-badge${editableQtr}" data-edit-qtr="${escapeHtml(f.id)}" title="${qtrTip}">${escapeHtml(qtrLabel)}</span>
+    <span class="badge month-badge${editableMonth}" data-edit-month="${escapeHtml(f.id)}" title="${monthTip}">${escapeHtml(monthLabel)}</span>
+  </div>`;
   const sprintHtml = f.sprint
     ? `<span class="badge sprint sprint-badge">Sprint ${escapeHtml(String(f.sprint))}</span>`
     : '';
@@ -1894,7 +1906,7 @@ function renderFeature(f) {
         <span class="feat-title" data-toggle="${escapeHtml(f.id)}">${escapeHtml(f.name)}<span class="badges">${badges.join('')}</span></span>
         <span class="cat-pill" data-cat="${escapeHtml(f.category)}">${escapeHtml(f.category)}</span>
         ${sprintHtml}
-        ${qtrHtml}
+        ${targetHtml}
         ${progressHtml}
         <span class="status-pill editable" data-feat-status="${escapeHtml(f.id)}" data-st="${escapeHtml(fStatus)}">${escapeHtml(fStatus)}</span>
         <span class="row-actions edit-only">
@@ -2221,6 +2233,52 @@ function bindFeatureHandlers(f) {
       const idx = DDA_WORKFLOW.indexOf(current);
       f.ddaStatus = DDA_WORKFLOW[(idx + 1) % DDA_WORKFLOW.length];
       persist(); renderAll();
+    });
+  }
+
+  // Quarter edit (inline select)
+  const qtrEl = root.querySelector('[data-edit-qtr]');
+  if (qtrEl && EDIT_MODE) {
+    qtrEl.addEventListener('click', e => {
+      e.stopPropagation();
+      if (qtrEl.dataset.editing === '1') return;
+      qtrEl.dataset.editing = '1';
+      const sel = document.createElement('select');
+      sel.style.cssText = 'font-size:11px;border:1px solid var(--navy);border-radius:4px;padding:2px 3px;font-family:inherit;max-width:70px';
+      ['—','Q1','Q2','Q3','Q4','Q1-Q2','Q2-Q3','Q3-Q4','H1','H2'].forEach(v => {
+        const o = document.createElement('option');
+        o.value = v; o.textContent = v;
+        if (v === (f.quarter || '—')) o.selected = true;
+        sel.appendChild(o);
+      });
+      let saved = false;
+      const finish = () => { if (saved) return; saved = true; f.quarter = sel.value; persist(); renderAll(); };
+      sel.addEventListener('change', finish);
+      sel.addEventListener('blur', finish);
+      qtrEl.replaceWith(sel); sel.focus();
+    });
+  }
+
+  // Target month edit (inline select)
+  const monthEl = root.querySelector('[data-edit-month]');
+  if (monthEl && EDIT_MODE) {
+    monthEl.addEventListener('click', e => {
+      e.stopPropagation();
+      if (monthEl.dataset.editing === '1') return;
+      monthEl.dataset.editing = '1';
+      const sel = document.createElement('select');
+      sel.style.cssText = 'font-size:11px;border:1px solid var(--navy);border-radius:4px;padding:2px 3px;font-family:inherit;max-width:60px';
+      ['—','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'].forEach(v => {
+        const o = document.createElement('option');
+        o.value = v; o.textContent = v;
+        if (v === (f.targetMonth || '—')) o.selected = true;
+        sel.appendChild(o);
+      });
+      let saved = false;
+      const finish = () => { if (saved) return; saved = true; f.targetMonth = sel.value === '—' ? '' : sel.value; persist(); renderAll(); };
+      sel.addEventListener('change', finish);
+      sel.addEventListener('blur', finish);
+      monthEl.replaceWith(sel); sel.focus();
     });
   }
 
