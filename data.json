@@ -247,10 +247,46 @@
       "sub": [
         {
           "id": "s-10-1",
-          "task": "DV review meeting",
+          "task": "DV related review meeting 13/04 (Ahmad to schedule)",
           "due": "2026-04-13",
           "status": "Pending",
-          "owner": "Malak, Ahmad",
+          "owner": "Ahmad",
+          "updatedBy": "Fadi",
+          "updatedAt": "24 Apr 2026 09:00"
+        },
+        {
+          "id": "s-10-2",
+          "task": "Capture feedback from the review",
+          "due": "—",
+          "status": "Not started",
+          "owner": "—",
+          "updatedBy": "",
+          "updatedAt": ""
+        },
+        {
+          "id": "s-10-3",
+          "task": "Have a plan for DV audit screens",
+          "due": "—",
+          "status": "Not started",
+          "owner": "—",
+          "updatedBy": "",
+          "updatedAt": ""
+        },
+        {
+          "id": "s-10-4",
+          "task": "DDA audit — plan with DDA",
+          "due": "—",
+          "status": "Not started",
+          "owner": "—",
+          "updatedBy": "",
+          "updatedAt": ""
+        },
+        {
+          "id": "s-10-5",
+          "task": "Create a backlog of design items",
+          "due": "—",
+          "status": "Not started",
+          "owner": "Ahmad",
           "updatedBy": "",
           "updatedAt": ""
         }
