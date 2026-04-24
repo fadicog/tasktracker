@@ -331,6 +331,15 @@
           "owner": "Fadi",
           "updatedBy": "",
           "updatedAt": ""
+        },
+        {
+          "id": "s-12-2",
+          "task": "Schedule a meeting to review the findings + SP team",
+          "due": "2026-04-30",
+          "status": "Pending",
+          "owner": "Fadi",
+          "updatedBy": "Fadi",
+          "updatedAt": "24 Apr 2026 09:00"
         }
       ]
     },
