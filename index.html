@@ -197,11 +197,24 @@
 
   .feature .head {
     display: grid;
-    grid-template-columns: 30px 46px 1fr auto auto auto auto auto auto;
+    grid-template-columns: 20px 30px 46px 1fr auto auto auto auto auto auto;
     gap: 12px; align-items: center;
     padding: 12px 16px; user-select: none;
     border-left: 4px solid var(--cat-product);
   }
+  body.view-mode .feature .head { grid-template-columns: 0 30px 46px 1fr auto auto auto auto auto auto; }
+
+  .drag-handle {
+    cursor: grab; color: #bbb; font-size: 18px; line-height: 1;
+    user-select: none; display: flex; align-items: center; justify-content: center;
+    transition: color .15s;
+  }
+  .drag-handle:hover { color: var(--navy); }
+  .drag-handle:active { cursor: grabbing; }
+  .feature.dragging { opacity: 0.45; box-shadow: none !important; }
+  .feature.drag-over { border-top: 3px solid var(--navy) !important; }
+  .slide-num.editable-slide { cursor: text; }
+  .slide-num.editable-slide:hover { background: #eef1f8; border-radius: 4px; }
   .feature[data-cat="Product"]      .head { border-left-color: var(--cat-product); }
   .feature[data-cat="Design"]       .head { border-left-color: var(--cat-design); }
   .feature[data-cat="Design (DDA)"] .head { border-left-color: var(--cat-dda); }
@@ -622,14 +635,17 @@
     header.site .meta { text-align: left; }
     main { padding: 14px; }
     .feature .head {
-      grid-template-columns: 26px 40px 1fr auto;
+      grid-template-columns: 0 26px 40px 1fr auto;
       grid-template-areas:
-        "caret slide title actions"
-        "caret slide cats cats"
-        "progress progress progress progress"
-        "status  status  status  status";
+        "drag caret slide title actions"
+        "drag caret slide cats cats"
+        "progress progress progress progress progress"
+        "status  status  status  status  status";
       gap: 8px 10px;
     }
+    .feature .head .drag-handle { grid-area: drag; width:0; overflow:hidden; }
+    body:not(.view-mode) .feature .head { grid-template-columns: 20px 26px 40px 1fr auto; }
+    body:not(.view-mode) .feature .head .drag-handle { width: auto; overflow: visible; }
     .feature .head .caret    { grid-area: caret; }
     .feature .head .slide-num{ grid-area: slide; }
     .feature .head .feat-title{ grid-area: title; }
@@ -973,6 +989,7 @@ function lsDel(key)      { localStorage.removeItem(key); }
    ================================================================= */
 let FEATURES     = [];
 let OTHER_ACTIONS = [];
+let _dragFid     = null;
 let NOTES        = {};
 let OVERRIDES    = {};
 let IDENTITY     = '';
@@ -1869,10 +1886,11 @@ function renderFeature(f) {
     : '';
 
   return `
-    <div class="feature ${isOpen ? 'open' : ''} ${f.blocked ? 'blocked' : ''}" data-cat="${escapeHtml(f.category)}" data-fid="${escapeHtml(f.id)}">
+    <div class="feature ${isOpen ? 'open' : ''} ${f.blocked ? 'blocked' : ''}" data-cat="${escapeHtml(f.category)}" data-fid="${escapeHtml(f.id)}" draggable="${EDIT_MODE ? 'true' : 'false'}">
       <div class="head">
+        <span class="drag-handle edit-only" title="Drag to reorder">&#8942;&#8942;</span>
         <span class="caret" data-toggle="${escapeHtml(f.id)}">&#9654;</span>
-        <span class="slide-num">#${escapeHtml(String(f.slide || '—'))}</span>
+        <span class="slide-num${EDIT_MODE ? ' editable-slide' : ''}" data-edit-slide="${escapeHtml(f.id)}" title="${EDIT_MODE ? 'Click to edit slide number' : ''}">#${escapeHtml(String(f.slide || '—'))}</span>
         <span class="feat-title" data-toggle="${escapeHtml(f.id)}">${escapeHtml(f.name)}<span class="badges">${badges.join('')}</span></span>
         <span class="cat-pill" data-cat="${escapeHtml(f.category)}">${escapeHtml(f.category)}</span>
         ${sprintHtml}
@@ -1927,6 +1945,69 @@ function renderNotesBlock(fid, arr) {
 function bindFeatureHandlers(f) {
   const root = document.querySelector(`.feature[data-fid="${CSS.escape(f.id)}"]`);
   if (!root) return;
+
+  // Slide number inline edit
+  const slideEl = root.querySelector('[data-edit-slide]');
+  if (slideEl && EDIT_MODE) {
+    slideEl.addEventListener('click', e => {
+      e.stopPropagation();
+      if (slideEl.dataset.editing === '1') return;
+      slideEl.dataset.editing = '1';
+      const inp = document.createElement('input');
+      inp.type = 'number'; inp.min = 1; inp.max = 999;
+      inp.value = f.slide || '';
+      inp.style.cssText = 'width:46px;border:1px solid var(--navy);border-radius:4px;padding:1px 4px;font-size:12px;text-align:center;font-family:inherit';
+      let saved = false;
+      const finish = () => {
+        if (saved) return; saved = true;
+        const v = parseInt(inp.value, 10);
+        if (!isNaN(v) && v > 0) { f.slide = v; persist(); }
+        renderFeatures();
+      };
+      inp.addEventListener('blur', finish);
+      inp.addEventListener('keydown', e2 => {
+        if (e2.key === 'Enter') inp.blur();
+        if (e2.key === 'Escape') { saved = true; renderFeatures(); }
+      });
+      slideEl.replaceWith(inp);
+      inp.focus(); inp.select();
+    });
+  }
+
+  // Drag-and-drop reordering
+  if (EDIT_MODE) {
+    root.addEventListener('dragstart', e => {
+      _dragFid = f.id;
+      root.classList.add('dragging');
+      e.dataTransfer.effectAllowed = 'move';
+      e.dataTransfer.setData('text/plain', f.id);
+    });
+    root.addEventListener('dragend', () => {
+      root.classList.remove('dragging');
+      root.classList.remove('drag-over');
+    });
+    root.addEventListener('dragover', e => {
+      if (!_dragFid || _dragFid === f.id) return;
+      e.preventDefault();
+      e.dataTransfer.dropEffect = 'move';
+      root.classList.add('drag-over');
+    });
+    root.addEventListener('dragleave', e => {
+      if (!root.contains(e.relatedTarget)) root.classList.remove('drag-over');
+    });
+    root.addEventListener('drop', e => {
+      e.preventDefault();
+      root.classList.remove('drag-over');
+      if (!_dragFid || _dragFid === f.id) return;
+      const fromIdx = FEATURES.findIndex(x => x.id === _dragFid);
+      const toIdx   = FEATURES.findIndex(x => x.id === f.id);
+      _dragFid = null;
+      if (fromIdx === -1 || toIdx === -1) return;
+      const [item] = FEATURES.splice(fromIdx, 1);
+      FEATURES.splice(toIdx, 0, item);
+      persist(); renderFeatures();
+    });
+  }
 
   // Toggle open/close
   root.querySelectorAll('[data-toggle]').forEach(el => {
