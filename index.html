@@ -2375,8 +2375,8 @@ function renderOther() {
       const st = a.status || 'Open';
       const updatedLabel = a.updatedAt ? `${escapeHtml(a.updatedBy||'—')} · ${escapeHtml(a.updatedAt)}` : '';
       return `<tr data-oaid="${escapeHtml(a.id)}">
-        <td><span class="task-text" data-oa-edit-action="${escapeHtml(a.id)}" title="Click to edit">${escapeHtml(a.action)}</span></td>
-        <td><span class="task-text" data-oa-edit-desc="${escapeHtml(a.id)}" title="Click to edit">${escapeHtml(a.desc||'')}</span></td>
+        <td><span class="task-text oa-editable" data-oa-edit-action="${escapeHtml(a.id)}" title="Click to edit">${escapeHtml(a.action)}</span></td>
+        <td><span class="task-text oa-editable" data-oa-edit-desc="${escapeHtml(a.id)}" title="Click to edit">${a.desc ? escapeHtml(a.desc) : '<em style="color:var(--muted);font-style:italic;font-weight:400">click to add…</em>'}</span></td>
         <td><span class="status-pill editable" data-oa-status="${escapeHtml(a.id)}" data-st="${escapeHtml(st)}">${escapeHtml(st)}</span></td>
         <td class="owner"><span data-oa-edit-owner="${escapeHtml(a.id)}" title="Click to edit">${escapeHtml(a.owner||'—')}</span></td>
         <td class="${dateCls}"><span data-oa-edit-date="${escapeHtml(a.id)}" title="Click to set due date">${escapeHtml(formatDisplayDate(a.due||'—'))}</span></td>
@@ -2391,6 +2391,30 @@ function renderOther() {
 function bindOtherHandlers() {
   const tbody = document.getElementById('other-tbody');
 
+  // Shared inline cell editor — replaces span with input, saves on blur/Enter
+  function inlineEditOa(el, currentVal, onSave) {
+    if (el.dataset.editing === '1') return;
+    el.dataset.editing = '1';
+    const inp = document.createElement('input');
+    inp.type = 'text';
+    inp.value = currentVal;
+    inp.style.cssText = 'width:100%;box-sizing:border-box;border:1px solid var(--navy);border-radius:4px;padding:3px 6px;font-size:13px;font-family:inherit;background:#fff';
+    let saved = false;
+    const finish = () => {
+      if (saved) return;
+      saved = true;
+      onSave(inp.value.trim());
+    };
+    inp.addEventListener('blur', finish);
+    inp.addEventListener('keydown', e => {
+      if (e.key === 'Enter') { e.preventDefault(); inp.blur(); }
+      if (e.key === 'Escape') { saved = true; renderOther(); }
+    });
+    el.replaceWith(inp);
+    inp.focus();
+    inp.select();
+  }
+
   // Edit action text
   tbody.querySelectorAll('[data-oa-edit-action]').forEach(el => {
     el.addEventListener('click', () => {
@@ -2398,10 +2422,10 @@ function bindOtherHandlers() {
       const id = el.dataset.oaEditAction;
       const a  = OTHER_ACTIONS.find(x => x.id === id);
       if (!a) return;
-      const v = prompt('Action:', a.action);
-      if (v === null) return;
-      a.action = v.trim() || a.action;
-      stampOa(a); persist(); renderOther();
+      inlineEditOa(el, a.action, val => {
+        if (val) a.action = val;
+        stampOa(a); persist(); renderOther();
+      });
     });
   });
 
@@ -2412,10 +2436,10 @@ function bindOtherHandlers() {
       const id = el.dataset.oaEditDesc;
       const a  = OTHER_ACTIONS.find(x => x.id === id);
       if (!a) return;
-      const v = prompt('Description / Notes:', a.desc || '');
-      if (v === null) return;
-      a.desc = v.trim();
-      stampOa(a); persist(); renderOther();
+      inlineEditOa(el, a.desc || '', val => {
+        a.desc = val;
+        stampOa(a); persist(); renderOther();
+      });
     });
   });
 
