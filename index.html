@@ -104,6 +104,17 @@
 
   main { max-width: 1400px; margin: 0 auto; padding: 20px 32px 60px; }
 
+  /* ---------------- Data freshness banner ---------------- */
+  .freshness-bar {
+    display: flex; align-items: center; gap: 10px;
+    background: #e8f4fd; border: 1px solid #b3d9f2; border-radius: 8px;
+    padding: 8px 16px; margin-bottom: 16px;
+    font-size: 13px; color: #1a5f8a;
+  }
+  .freshness-bar .fresh-icon { font-size: 15px; flex-shrink: 0; }
+  .freshness-bar .fresh-label { font-weight: 600; margin-right: 4px; }
+  .freshness-bar .fresh-ts { font-weight: 400; }
+
   /* ---------------- Stat cards ---------------- */
   .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 18px; }
   .stat {
@@ -689,6 +700,13 @@
   </header>
 
   <main>
+    <!-- Data freshness -->
+    <div class="freshness-bar" id="freshness-bar">
+      <span class="fresh-icon">&#128197;</span>
+      <span class="fresh-label">Data last refreshed:</span>
+      <span class="fresh-ts" id="freshness-ts">loading…</span>
+    </div>
+
     <!-- KPIs -->
     <section class="stats" id="stats"></section>
 
@@ -1002,7 +1020,9 @@ async function loadModel() {
     applyJsonToModel({ features: STATIC_FEATURES, otherActions: [], notes: {}, overrides: {}, lastUpdated: '' });
   }
 
-  document.getElementById('global-updated').textContent = LAST_UPDATED || '—';
+  const tsText = LAST_UPDATED || '—';
+  document.getElementById('global-updated').textContent = tsText;
+  document.getElementById('freshness-ts').textContent = tsText;
   if (IDENTITY) document.getElementById('identity-display').textContent = IDENTITY;
 }
 
