@@ -746,13 +746,23 @@
 
     <!-- Other actions -->
     <section class="other-actions">
-      <h2>Other Actions (Standalone Items)</h2>
+      <h2>Other Actions &amp; Unclassified Items</h2>
+      <div style="font-size:12px;color:var(--muted);margin-bottom:12px;">Capture standalone action points, open questions, and items not yet assigned to a feature.</div>
       <table>
         <thead>
-          <tr><th>Action</th><th>Description</th><th>Owner</th></tr>
+          <tr>
+            <th style="width:28%">Action</th>
+            <th style="width:25%">Description / Notes</th>
+            <th style="width:10%">Status</th>
+            <th style="width:12%">Owner</th>
+            <th style="width:10%">Due</th>
+            <th style="width:10%" class="edit-only">Last Update</th>
+            <th style="width:5%" class="edit-only"></th>
+          </tr>
         </thead>
         <tbody id="other-tbody"></tbody>
       </table>
+      <button class="subtask-addbtn edit-only" id="add-other-btn" style="margin-top:10px">+ Add Action Point</button>
     </section>
 
     <div class="foot">
@@ -2354,13 +2364,130 @@ function openAddSubtaskModal(fid) {
    Other actions
    ================================================================= */
 function renderOther() {
-  document.getElementById('other-tbody').innerHTML = OTHER_ACTIONS.map(a => `
-    <tr>
-      <td style="font-weight:600">${escapeHtml(a.action)}</td>
-      <td>${escapeHtml(a.desc)}</td>
-      <td style="white-space:nowrap">${escapeHtml(a.owner)}</td>
-    </tr>
-  `).join('');
+  const tbody = document.getElementById('other-tbody');
+  if (!OTHER_ACTIONS.length) {
+    tbody.innerHTML = `<tr><td colspan="7" style="color:var(--muted);font-style:italic;font-size:13px;padding:12px">No items yet. Add an action point below.</td></tr>`;
+  } else {
+    tbody.innerHTML = OTHER_ACTIONS.map(a => {
+      const overdue = isOverdue({ due: a.due, status: a.status });
+      const soon    = isDueSoon({ due: a.due, status: a.status });
+      const dateCls = 'date' + (overdue ? ' overdue' : (soon ? ' soon' : ''));
+      const st = a.status || 'Open';
+      const updatedLabel = a.updatedAt ? `${escapeHtml(a.updatedBy||'—')} · ${escapeHtml(a.updatedAt)}` : '';
+      return `<tr data-oaid="${escapeHtml(a.id)}">
+        <td><span class="task-text" data-oa-edit-action="${escapeHtml(a.id)}" title="Click to edit">${escapeHtml(a.action)}</span></td>
+        <td><span class="task-text" data-oa-edit-desc="${escapeHtml(a.id)}" title="Click to edit">${escapeHtml(a.desc||'')}</span></td>
+        <td><span class="status-pill editable" data-oa-status="${escapeHtml(a.id)}" data-st="${escapeHtml(st)}">${escapeHtml(st)}</span></td>
+        <td class="owner"><span data-oa-edit-owner="${escapeHtml(a.id)}" title="Click to edit">${escapeHtml(a.owner||'—')}</span></td>
+        <td class="${dateCls}"><span data-oa-edit-date="${escapeHtml(a.id)}" title="Click to set due date">${escapeHtml(formatDisplayDate(a.due||'—'))}</span></td>
+        <td class="updated edit-only" style="font-size:11px;color:var(--muted)">${updatedLabel}</td>
+        <td class="row-ctrl edit-only"><button class="icon-btn danger" data-oa-del="${escapeHtml(a.id)}" title="Delete">&#10005;</button></td>
+      </tr>`;
+    }).join('');
+  }
+  bindOtherHandlers();
+}
+
+function bindOtherHandlers() {
+  const tbody = document.getElementById('other-tbody');
+
+  // Edit action text
+  tbody.querySelectorAll('[data-oa-edit-action]').forEach(el => {
+    el.addEventListener('click', () => {
+      if (!EDIT_MODE) return;
+      const id = el.dataset.oaEditAction;
+      const a  = OTHER_ACTIONS.find(x => x.id === id);
+      if (!a) return;
+      const v = prompt('Action:', a.action);
+      if (v === null) return;
+      a.action = v.trim() || a.action;
+      stampOa(a); persist(); renderOther();
+    });
+  });
+
+  // Edit description
+  tbody.querySelectorAll('[data-oa-edit-desc]').forEach(el => {
+    el.addEventListener('click', () => {
+      if (!EDIT_MODE) return;
+      const id = el.dataset.oaEditDesc;
+      const a  = OTHER_ACTIONS.find(x => x.id === id);
+      if (!a) return;
+      const v = prompt('Description / Notes:', a.desc || '');
+      if (v === null) return;
+      a.desc = v.trim();
+      stampOa(a); persist(); renderOther();
+    });
+  });
+
+  // Status pill
+  tbody.querySelectorAll('[data-oa-status]').forEach(pill => {
+    pill.addEventListener('click', () => {
+      if (!EDIT_MODE) return;
+      const id = pill.dataset.oaStatus;
+      const a  = OTHER_ACTIONS.find(x => x.id === id);
+      if (!a) return;
+      const cycle = ['Open','In Progress','Pending','Done','Cancelled'];
+      const idx   = cycle.indexOf(a.status || 'Open');
+      a.status    = cycle[(idx + 1) % cycle.length];
+      stampOa(a); persist(); renderOther();
+    });
+  });
+
+  // Edit owner
+  tbody.querySelectorAll('[data-oa-edit-owner]').forEach(el => {
+    el.addEventListener('click', () => {
+      if (!EDIT_MODE) return;
+      const id = el.dataset.oaEditOwner;
+      const a  = OTHER_ACTIONS.find(x => x.id === id);
+      if (!a) return;
+      const host = el;
+      if (host._ownerPicker) return;
+      const picker = createOwnerPicker(host, {
+        multi: true, current: a.owner || '',
+        onSave: val => { a.owner = val; stampOa(a); persist(); renderOther(); },
+        onCancel: () => renderOther()
+      });
+      host._ownerPicker = picker;
+    });
+  });
+
+  // Edit due date
+  tbody.querySelectorAll('[data-oa-edit-date]').forEach(el => {
+    el.addEventListener('click', () => {
+      if (!EDIT_MODE) return;
+      const id = el.dataset.oaEditDate;
+      const a  = OTHER_ACTIONS.find(x => x.id === id);
+      if (!a) return;
+      createDatePicker(el, {
+        current: a.due || '—',
+        onSave: val => { a.due = val; stampOa(a); persist(); renderOther(); },
+        onCancel: () => {}
+      });
+    });
+  });
+
+  // Delete
+  tbody.querySelectorAll('[data-oa-del]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (!EDIT_MODE) return;
+      const id = btn.dataset.oaDel;
+      confirmDelete('Delete this action point?', () => {
+        OTHER_ACTIONS = OTHER_ACTIONS.filter(x => x.id !== id);
+        persist(); renderOther();
+      });
+    });
+  });
+}
+
+function addOtherAction() {
+  const id = 'oa-' + Date.now();
+  OTHER_ACTIONS.push({ id, action: 'New action', desc: '', status: 'Open', owner: '—', due: '—', updatedBy: '', updatedAt: '' });
+  persist(); renderOther();
+}
+
+function stampOa(a) {
+  a.updatedBy = IDENTITY || '—';
+  a.updatedAt = formatTs(new Date());
 }
 
 /* =================================================================
@@ -2558,6 +2685,7 @@ async function bootApp() {
   });
 
   document.getElementById('add-feature-btn').addEventListener('click', openAddFeatureModal);
+  document.getElementById('add-other-btn').addEventListener('click', addOtherAction);
   document.getElementById('export-csv').addEventListener('click', exportCsv);
   document.getElementById('mode-toggle').addEventListener('click', toggleMode);
   document.getElementById('snapshot-btn').addEventListener('click', () => {

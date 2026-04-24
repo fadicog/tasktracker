@@ -671,13 +671,21 @@
       "id": "oa-1",
       "action": "Request visa - failure",
       "desc": "Count of failure mapped to issues",
-      "owner": "Fadi, Shri"
+      "status": "Open",
+      "owner": "Fadi, Shri",
+      "due": "—",
+      "updatedBy": "",
+      "updatedAt": ""
     },
     {
       "id": "oa-2",
       "action": "Multi language on app",
       "desc": "UAE PASS extending to Hindi, Urdu, Filipino, Chinese. Send communication to DDA, ask full scope/timeline/origin. Analysis needed.",
-      "owner": "Malak, Sai"
+      "status": "Open",
+      "owner": "Malak, Sai",
+      "due": "—",
+      "updatedBy": "",
+      "updatedAt": ""
     }
   ],
   "notes": {},
