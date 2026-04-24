@@ -1039,6 +1039,7 @@ function applyJsonToModel(json) {
 function persist() {
   LAST_UPDATED = formatTs(new Date());
   document.getElementById('global-updated').textContent = LAST_UPDATED;
+  document.getElementById('freshness-ts').textContent = LAST_UPDATED;
   lsSet(LS.identity, IDENTITY);
   clearTimeout(_saveTimer);
   _saveTimer = setTimeout(commitToGitHub, 800);
@@ -1137,8 +1138,14 @@ function stamp(obj) {
 }
 function formatTs(d) {
   const mo = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
-  const pad = n => String(n).padStart(2,'0');
-  return `${d.getDate()} ${mo[d.getMonth()]} ${d.getFullYear()} ${pad(d.getHours())}:${pad(d.getMinutes())}`;
+  const parts = new Intl.DateTimeFormat('en-GB', {
+    timeZone: 'Asia/Dubai',
+    day: 'numeric', month: 'numeric', year: 'numeric',
+    hour: '2-digit', minute: '2-digit', hour12: false
+  }).formatToParts(d);
+  const get = t => parts.find(p => p.type === t).value;
+  const pad = n => String(n).padStart(2, '0');
+  return `${parseInt(get('day'))} ${mo[parseInt(get('month')) - 1]} ${get('year')} ${pad(get('hour'))}:${pad(get('minute'))}`;
 }
 
 /* =================================================================
