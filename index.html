@@ -703,6 +703,11 @@
           <option value="Pending">Pending</option>
           <option value="Not started">Not started</option>
         </select>
+        <select id="committed-filter">
+          <option value="">All items</option>
+          <option value="committed">Committed</option>
+          <option value="not-committed">Not Committed</option>
+        </select>
         <button class="clear-btn" id="clear">Clear filters</button>
         <button class="clear-btn" id="expand-all">Expand all</button>
         <button class="clear-btn" id="collapse-all">Collapse all</button>
@@ -1344,6 +1349,7 @@ const state = {
   selectedOwners: new Set(),
   selectedSprints: new Set(),
   status: "",
+  committed: "",
   search: "",
   openIds: new Set()
 };
@@ -1358,6 +1364,7 @@ function restoreFromUrl() {
   const sprints = p.get('sprint');
   if (sprints) sprints.split(',').forEach(s => state.selectedSprints.add(s));
   const st = p.get('status'); if (st) state.status = st;
+  const cm = p.get('committed'); if (cm) state.committed = cm;
   const sq = p.get('q'); if (sq) state.search = sq;
 }
 function syncUrl() {
@@ -1366,6 +1373,7 @@ function syncUrl() {
   if (state.selectedOwners.size)  p.set('owner',  [...state.selectedOwners].join(','));
   if (state.selectedSprints.size) p.set('sprint', [...state.selectedSprints].join(','));
   if (state.status) p.set('status', state.status);
+  if (state.committed) p.set('committed', state.committed);
   if (state.search) p.set('q', state.search);
   const qs = p.toString();
   const url = location.pathname + (qs ? '?' + qs : '');
@@ -1635,6 +1643,8 @@ function filteredFeatures() {
                      (s === 'Not started') ? 'Pending' : s;
       if (stNorm !== state.status) return false;
     }
+    if (state.committed === 'committed' && f.committed !== true) return false;
+    if (state.committed === 'not-committed' && f.committed !== false) return false;
     if (q && !f.name.toLowerCase().includes(q)) return false;
     return true;
   });
@@ -2493,14 +2503,22 @@ async function bootApp() {
   });
   document.getElementById('status-filter').value = state.status;
 
+  document.getElementById('committed-filter').addEventListener('change', e => {
+    state.committed = e.target.value;
+    renderFeatures(); syncUrl();
+  });
+  document.getElementById('committed-filter').value = state.committed;
+
   document.getElementById('clear').addEventListener('click', () => {
     state.selectedCats.clear();
     state.selectedOwners.clear();
     state.selectedSprints.clear();
     state.status = '';
+    state.committed = '';
     state.search = '';
     document.getElementById('search').value = '';
     document.getElementById('status-filter').value = '';
+    document.getElementById('committed-filter').value = '';
     renderAll();
   });
   document.getElementById('expand-all').addEventListener('click', () => {
