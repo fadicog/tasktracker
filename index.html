@@ -490,6 +490,78 @@
   .modal .actions .btn-cancel  { background: #eceff1; color: var(--text); }
   .modal .actions .btn-cancel:hover  { background: #cfd8dc; }
 
+  /* ---------------- Help Modal ---------------- */
+  .help-modal { width: min(980px, 100%); max-width: 980px; padding: 0; max-height: 92vh; overflow: hidden; }
+  .help-modal .help-head {
+    padding: 18px 24px; border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 10px;
+    background: linear-gradient(135deg, var(--navy) 0%, #2a3597 100%); color: #fff;
+  }
+  .help-modal .help-head h3 { font-size: 19px; color: #fff; margin: 0; font-weight: 700; }
+  .help-modal .help-head .help-sub { font-size: 12px; opacity: .85; margin-left: 6px; }
+  .help-modal .help-head .close-help {
+    margin-left: auto; background: rgba(255,255,255,.18); border: 1px solid rgba(255,255,255,.3);
+    border-radius: 6px; padding: 6px 14px; cursor: pointer; font-family: inherit; font-size: 13px; color: #fff;
+  }
+  .help-modal .help-head .close-help:hover { background: rgba(255,255,255,.28); }
+  .help-modal .help-body { display: flex; height: calc(92vh - 64px); }
+  .help-modal .help-nav { width: 210px; flex-shrink: 0; padding: 14px 0; border-right: 1px solid var(--border); background: #fafbfd; overflow-y: auto; }
+  .help-modal .help-nav button {
+    display: block; width: 100%; text-align: left; padding: 9px 18px; background: transparent;
+    border: 0; cursor: pointer; font-family: inherit; font-size: 13px; color: var(--text);
+    border-left: 3px solid transparent; transition: background .15s;
+  }
+  .help-modal .help-nav button:hover { background: rgba(26,35,126,.06); }
+  .help-modal .help-nav button.active { background: rgba(26,35,126,.1); border-left-color: var(--navy); color: var(--navy); font-weight: 600; }
+  .help-modal .help-content { flex: 1; padding: 22px 28px 30px; overflow-y: auto; }
+  .help-modal .help-section { display: none; max-width: 700px; }
+  .help-modal .help-section.active { display: block; }
+  .help-modal .help-section h4 { font-size: 18px; color: var(--navy); margin-bottom: 8px; font-weight: 700; }
+  .help-modal .help-section h5 { font-size: 14px; color: var(--text); margin: 18px 0 6px; font-weight: 600; }
+  .help-modal .help-section p { font-size: 13.5px; line-height: 1.65; color: var(--text); margin-bottom: 8px; }
+  .help-modal .help-section ul, .help-modal .help-section ol { padding-left: 22px; margin: 6px 0 12px; font-size: 13.5px; line-height: 1.7; }
+  .help-modal .help-section li { margin-bottom: 4px; }
+  .help-modal .help-section code, .help-modal .help-section .kbd {
+    background: #eef1f7; padding: 2px 7px; border-radius: 4px;
+    font-family: 'Consolas', 'Monaco', monospace; font-size: 12px; color: var(--navy-dark);
+  }
+  .help-modal .help-section .step {
+    background: #f7f9fc; border-left: 3px solid var(--navy);
+    padding: 10px 14px; margin: 8px 0; border-radius: 0 4px 4px 0;
+  }
+  .help-modal .help-section .step strong { color: var(--navy); display: inline-block; min-width: 22px; }
+  .help-modal .help-section .tip {
+    background: #fff8e1; border-left: 3px solid #fbc02d;
+    padding: 9px 14px; margin: 10px 0; border-radius: 0 4px 4px 0; font-size: 12.5px; color: #6a4f00;
+  }
+  .help-modal .help-section .warn {
+    background: #ffebee; border-left: 3px solid var(--danger);
+    padding: 9px 14px; margin: 10px 0; border-radius: 0 4px 4px 0; font-size: 12.5px; color: #8a1818;
+  }
+  .help-modal .help-section .shot {
+    background: #f4f6fb; border: 1px solid var(--border); border-radius: 8px;
+    padding: 16px; margin: 12px 0;
+  }
+  .help-modal .help-section .shot-cap {
+    font-size: 11px; color: var(--muted); margin-top: 8px;
+    font-style: italic; text-align: center;
+  }
+  .help-modal .help-section table.help-tbl {
+    width: 100%; border-collapse: collapse; margin: 10px 0; font-size: 12.5px;
+  }
+  .help-modal .help-section table.help-tbl th,
+  .help-modal .help-section table.help-tbl td {
+    padding: 7px 10px; border: 1px solid var(--border); text-align: left; vertical-align: top;
+  }
+  .help-modal .help-section table.help-tbl th {
+    background: #f4f6fb; font-weight: 600; font-size: 12px; color: var(--navy);
+  }
+  .help-modal .help-section table.help-tbl td:first-child { font-weight: 600; white-space: nowrap; }
+  .help-modal .help-section .pill-demo {
+    display: inline-block; padding: 3px 10px; border-radius: 999px;
+    font-size: 11px; font-weight: 600; margin: 0 2px;
+  }
+
   /* ---------------- Owner Picker ---------------- */
   .owner-picker { position: relative; width: 100%; font-family: inherit; }
   .owner-picker .op-trigger {
@@ -715,6 +787,7 @@
           <button class="hbtn" id="snapshot-btn">Take Snapshot</button>
           <button class="hbtn" id="history-btn">History</button>
           <button class="hbtn" id="pat-btn" title="Configure GitHub token">&#128273; Token</button>
+          <button class="hbtn" id="help-btn" title="Open user manual">&#10067; Help</button>
         </div>
       </div>
     </div>
@@ -814,6 +887,452 @@
     <div style="margin-top:14px;font-size:11px;color:#888;line-height:1.6">
       Need a token? <a href="https://github.com/settings/tokens?type=beta" target="_blank">github.com/settings/tokens</a><br/>
       Required permission: <strong>Contents → Read and write</strong> on repo <strong>fadicog/tasktracker</strong>
+    </div>
+  </div>
+</div>
+
+<!-- Help Modal -->
+<div id="help-modal" class="modal-backdrop">
+  <div class="modal help-modal">
+    <div class="help-head">
+      <span style="font-size:22px">&#10067;</span>
+      <h3>User Manual</h3>
+      <span class="help-sub">UAE PASS DV — 2026 Roadmap Tracker</span>
+      <button class="close-help" id="help-close">Close</button>
+    </div>
+    <div class="help-body">
+      <nav class="help-nav" id="help-nav">
+        <button class="active" data-help="welcome">Welcome &amp; Quick Start</button>
+        <button data-help="features">Features at a Glance</button>
+        <button data-help="filters">Search &amp; Filters</button>
+        <button data-help="feature-card">The Feature Card</button>
+        <button data-help="editing">Editing Items</button>
+        <button data-help="subtasks">Sub-tasks</button>
+        <button data-help="reorder">Reorder &amp; Targets</button>
+        <button data-help="other-actions">Other Actions</button>
+        <button data-help="github">GitHub Sync &amp; Token</button>
+        <button data-help="snapshots">Snapshots &amp; History</button>
+        <button data-help="export">Export &amp; Sharing</button>
+        <button data-help="modes">View vs Edit Mode</button>
+        <button data-help="tips">Tips &amp; Troubleshooting</button>
+      </nav>
+      <div class="help-content" id="help-content">
+
+        <!-- 1. Welcome -->
+        <section class="help-section active" data-help="welcome">
+          <h4>Welcome</h4>
+          <p>This tracker is the live workspace for the <strong>UAE PASS Digital Vault 2026 Roadmap</strong>. It mirrors the slide deck (slides #6–#33) and adds sub-tasks, owners, due dates, target months, and progress for every feature. Data is synced to GitHub on every change.</p>
+          <h5>3-step Quick Start</h5>
+          <div class="step"><strong>1.</strong> Enter password <code>TDRA2026</code> at the gate, then pick or add your name (this stamps every edit you make).</div>
+          <div class="step"><strong>2.</strong> If you only need to view, click <code>Mode: Edit</code> in the header to switch to <strong>View</strong> mode — all edit affordances disappear.</div>
+          <div class="step"><strong>3.</strong> If you need to edit, click <code>&#128273; Token</code> and paste a GitHub fine-grained token with <em>Contents: Read &amp; Write</em> on <code>fadicog/tasktracker</code>. Without it, your changes won't save back to GitHub.</div>
+          <div class="tip">&#128161; <strong>Tip:</strong> The blue banner at the top shows when the data was last refreshed (Dubai time). It updates automatically after every save.</div>
+          <h5>What you can do here</h5>
+          <ul>
+            <li>Track 33+ roadmap features across <strong>Product, Design, UX, Technical, SP</strong></li>
+            <li>Add/edit sub-tasks with status, owner, due date, last update</li>
+            <li>Filter by category, owner, sprint, status, TDRA-committed flag</li>
+            <li>Drag features to reorder, set target quarter and month</li>
+            <li>Capture standalone action items in the <em>Other Actions</em> table</li>
+            <li>Snapshot the state and restore it later</li>
+            <li>Export to CSV; share filtered URLs</li>
+          </ul>
+        </section>
+
+        <!-- 2. Features at a glance -->
+        <section class="help-section" data-help="features">
+          <h4>Features at a Glance</h4>
+          <p>Complete list of everything this tracker does:</p>
+          <table class="help-tbl">
+            <thead><tr><th>Area</th><th>Feature</th><th>Where</th></tr></thead>
+            <tbody>
+              <tr><td>Access</td><td>Password-gated (SHA-256 of <code>TDRA2026</code>)</td><td>Login screen</td></tr>
+              <tr><td>Access</td><td>Identity selection (stamps edits)</td><td>After password</td></tr>
+              <tr><td>Access</td><td>View / Edit mode toggle</td><td>Header — <code>Mode: Edit</code></td></tr>
+              <tr><td>Sync</td><td>Live read/write to GitHub <code>data.json</code></td><td>Auto on every change</td></tr>
+              <tr><td>Sync</td><td>Personal Access Token storage (browser only)</td><td>Header — <code>&#128273; Token</code></td></tr>
+              <tr><td>Sync</td><td>Dubai-time freshness banner</td><td>Top of page</td></tr>
+              <tr><td>Browse</td><td>Free-text search across feature names</td><td>Search box</td></tr>
+              <tr><td>Browse</td><td>Status filter (Completed / In Progress / Pending / Not started)</td><td>Dropdown</td></tr>
+              <tr><td>Browse</td><td>TDRA Committed / Not Committed filter</td><td>Dropdown</td></tr>
+              <tr><td>Browse</td><td>Multi-select chips: Category, Owner, Sprint</td><td>Filter chips</td></tr>
+              <tr><td>Browse</td><td>Expand all / Collapse all</td><td>Buttons</td></tr>
+              <tr><td>Browse</td><td>KPI tiles (totals, by status, by category)</td><td>Stats row</td></tr>
+              <tr><td>Browse</td><td>Shareable filtered URLs (state in URL)</td><td>Address bar</td></tr>
+              <tr><td>Feature</td><td>Inline editable: name, description, slide #</td><td>Click on text</td></tr>
+              <tr><td>Feature</td><td>Drag-to-reorder</td><td>&#8942;&#8942; handle</td></tr>
+              <tr><td>Feature</td><td>Category dropdown (6 categories)</td><td>Category pill</td></tr>
+              <tr><td>Feature</td><td>Sprint badge (editable)</td><td>Sprint pill</td></tr>
+              <tr><td>Feature</td><td>Target quarter + target month (stacked, editable)</td><td>Right of sprint</td></tr>
+              <tr><td>Feature</td><td>Status pill (cycles through 5 states)</td><td>Status pill</td></tr>
+              <tr><td>Feature</td><td>TDRA Committed / Not Committed badge</td><td>Title row</td></tr>
+              <tr><td>Feature</td><td>DDA badge + DDA workflow status</td><td>Title row</td></tr>
+              <tr><td>Feature</td><td>Blocked flag</td><td>Title row</td></tr>
+              <tr><td>Feature</td><td>Auto-calculated progress bar</td><td>Right of card</td></tr>
+              <tr><td>Sub-tasks</td><td>Add / edit / delete sub-tasks</td><td>Inside expanded card</td></tr>
+              <tr><td>Sub-tasks</td><td>Per-task: status, owner, due date, last updated</td><td>Sub-task row</td></tr>
+              <tr><td>Other</td><td>Standalone action points table</td><td>Bottom of page</td></tr>
+              <tr><td>Other</td><td>Add / edit / delete action points</td><td>Other Actions</td></tr>
+              <tr><td>Backup</td><td>Take Snapshot (up to 8)</td><td>Header button</td></tr>
+              <tr><td>Backup</td><td>History panel (view + restore)</td><td>Header button</td></tr>
+              <tr><td>Backup</td><td>Reset to defaults</td><td>Page footer</td></tr>
+              <tr><td>Export</td><td>Export filtered list to CSV</td><td>Header button</td></tr>
+              <tr><td>Add</td><td>Add new feature (modal)</td><td>+ Add Feature</td></tr>
+              <tr><td>Add</td><td>Add new action point</td><td>+ Add Action Point</td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <!-- 3. Filters -->
+        <section class="help-section" data-help="filters">
+          <h4>Search &amp; Filters</h4>
+          <p>Six independent filters work together (AND logic). The URL updates as you filter, so you can copy and share a filtered view.</p>
+
+          <div class="shot">
+            <svg viewBox="0 0 700 130" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto">
+              <rect x="2" y="2" width="696" height="126" rx="8" fill="#fff" stroke="#e3e7ef"/>
+              <rect x="14" y="14" width="220" height="32" rx="6" fill="#fafbfd" stroke="#cfd8dc"/>
+              <text x="22" y="34" font-family="Inter, sans-serif" font-size="12" fill="#888">Search features…</text>
+              <rect x="244" y="14" width="130" height="32" rx="6" fill="#fafbfd" stroke="#cfd8dc"/>
+              <text x="252" y="34" font-family="Inter, sans-serif" font-size="12" fill="#1f2633">All statuses ▾</text>
+              <rect x="384" y="14" width="130" height="32" rx="6" fill="#fafbfd" stroke="#cfd8dc"/>
+              <text x="392" y="34" font-family="Inter, sans-serif" font-size="12" fill="#1f2633">All items ▾</text>
+              <rect x="524" y="14" width="80" height="32" rx="6" fill="#fff" stroke="#cfd8dc"/>
+              <text x="538" y="34" font-family="Inter, sans-serif" font-size="11" fill="#5b6476">Clear</text>
+              <text x="14" y="72" font-family="Inter, sans-serif" font-size="11" fill="#5b6476" font-weight="600">Filter by category</text>
+              <rect x="14" y="80" width="68" height="24" rx="12" fill="#1565c0"/><text x="48" y="96" text-anchor="middle" font-size="11" fill="#fff" font-family="Inter">Product</text>
+              <rect x="90" y="80" width="60" height="24" rx="12" fill="#fff" stroke="#cfd8dc"/><text x="120" y="96" text-anchor="middle" font-size="11" fill="#5b6476" font-family="Inter">Design</text>
+              <rect x="158" y="80" width="40" height="24" rx="12" fill="#00695c"/><text x="178" y="96" text-anchor="middle" font-size="11" fill="#fff" font-family="Inter">SP</text>
+              <rect x="206" y="80" width="46" height="24" rx="12" fill="#fff" stroke="#cfd8dc"/><text x="229" y="96" text-anchor="middle" font-size="11" fill="#5b6476" font-family="Inter">UX</text>
+              <rect x="260" y="80" width="68" height="24" rx="12" fill="#fff" stroke="#cfd8dc"/><text x="294" y="96" text-anchor="middle" font-size="11" fill="#5b6476" font-family="Inter">Technical</text>
+            </svg>
+            <div class="shot-cap">Top control bar — search, status &amp; committed dropdowns, plus chip rows</div>
+          </div>
+
+          <h5>Filter reference</h5>
+          <table class="help-tbl">
+            <thead><tr><th>Filter</th><th>What it does</th></tr></thead>
+            <tbody>
+              <tr><td>Search</td><td>Matches feature name (case-insensitive, partial)</td></tr>
+              <tr><td>Status</td><td>Shows only features with that overall status</td></tr>
+              <tr><td>Committed</td><td>TDRA Committed only / Not Committed only / All</td></tr>
+              <tr><td>Category chips</td><td>Multi-select. Click chip to toggle.</td></tr>
+              <tr><td>Owner chips</td><td>Multi-select across all sub-task owners</td></tr>
+              <tr><td>Sprint chips</td><td>Multi-select. Lists every sprint number used in the data.</td></tr>
+            </tbody>
+          </table>
+
+          <h5>How to share a filtered view</h5>
+          <div class="step"><strong>1.</strong> Apply your filters.</div>
+          <div class="step"><strong>2.</strong> Copy the URL from the address bar — filter state is encoded as query params.</div>
+          <div class="step"><strong>3.</strong> Send the URL. Anyone with the password sees the same filtered view.</div>
+
+          <div class="tip">&#128161; Use <em>Expand all</em> before exporting CSV if you want every sub-task captured.</div>
+        </section>
+
+        <!-- 4. Feature card -->
+        <section class="help-section" data-help="feature-card">
+          <h4>The Feature Card</h4>
+          <p>Each feature is a collapsible card. The header row holds every control; the body shows the description and sub-tasks.</p>
+
+          <div class="shot">
+            <svg viewBox="0 0 700 110" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto">
+              <rect x="2" y="2" width="696" height="106" rx="8" fill="#fff" stroke="#e3e7ef"/>
+              <text x="14" y="22" font-family="Inter" font-size="14" fill="#bbb" font-weight="700">⋮⋮</text>
+              <text x="32" y="22" font-family="Inter" font-size="13" fill="#1a237e">▶</text>
+              <text x="50" y="22" font-family="Inter" font-size="12" fill="#5b6476" font-weight="600">#6</text>
+              <text x="80" y="22" font-family="Inter" font-size="13" fill="#1f2633" font-weight="600">Status-Based Reporting Implementation</text>
+              <rect x="80" y="30" width="96" height="18" rx="9" fill="#e8f5e9" stroke="#a5d6a7"/>
+              <text x="128" y="42" text-anchor="middle" font-size="10" fill="#2e7d32" font-family="Inter">TDRA Committed</text>
+              <rect x="180" y="30" width="32" height="18" rx="9" fill="#e3f2fd" stroke="#90caf9"/>
+              <text x="196" y="42" text-anchor="middle" font-size="10" fill="#1565c0" font-family="Inter">DDA</text>
+              <rect x="450" y="14" width="60" height="20" rx="10" fill="#1565c0"/>
+              <text x="480" y="28" text-anchor="middle" font-size="10" fill="#fff" font-family="Inter">Product</text>
+              <rect x="516" y="14" width="42" height="20" rx="10" fill="#fff" stroke="#cfd8dc"/>
+              <text x="537" y="28" text-anchor="middle" font-size="10" fill="#5b6476" font-family="Inter">S70</text>
+              <rect x="564" y="6" width="44" height="18" rx="9" fill="#e3f2fd" stroke="#90caf9"/>
+              <text x="586" y="18" text-anchor="middle" font-size="10" fill="#1565c0" font-family="Inter">Q1</text>
+              <rect x="564" y="26" width="44" height="18" rx="9" fill="#fff8e1" stroke="#fcd34d"/>
+              <text x="586" y="38" text-anchor="middle" font-size="10" fill="#b45309" font-family="Inter">Apr</text>
+              <rect x="614" y="14" width="50" height="6" rx="3" fill="#eceff1"/>
+              <rect x="614" y="14" width="20" height="6" rx="3" fill="#388e3c"/>
+              <text x="614" y="34" font-size="10" fill="#5b6476" font-family="Inter">25%</text>
+              <rect x="668" y="14" width="22" height="20" rx="10" fill="#fff3e0" stroke="#e65100"/>
+              <text x="679" y="28" text-anchor="middle" font-size="9" fill="#e65100" font-family="Inter">⏱</text>
+              <line x1="14" y1="58" x2="686" y2="58" stroke="#eceff1"/>
+              <text x="82" y="76" font-family="Inter" font-size="11" fill="#5b6476" font-style="italic">Implements consistent SP status reporting per the canonical taxonomy…</text>
+              <line x1="14" y1="86" x2="686" y2="86" stroke="#eceff1" stroke-dasharray="2 2"/>
+              <text x="82" y="100" font-family="Inter" font-size="10" fill="#888">[ Sub-tasks appear here when expanded ]</text>
+            </svg>
+            <div class="shot-cap">Feature card layout (edit mode) — header row + description + sub-tasks</div>
+          </div>
+
+          <h5>Header controls (left to right)</h5>
+          <table class="help-tbl">
+            <thead><tr><th>Element</th><th>Purpose</th><th>Action</th></tr></thead>
+            <tbody>
+              <tr><td>&#8942;&#8942; Drag handle</td><td>Reorder features</td><td>Drag up/down (edit mode only)</td></tr>
+              <tr><td>▶ Caret</td><td>Expand / collapse</td><td>Click to toggle</td></tr>
+              <tr><td>#N Slide #</td><td>Slide number on the deck</td><td>Click to edit (edit mode)</td></tr>
+              <tr><td>Title</td><td>Feature name</td><td>Click to expand; pencil to edit</td></tr>
+              <tr><td>TDRA badge</td><td>Committed vs not-committed</td><td>Toggle in edit menu</td></tr>
+              <tr><td>DDA badge</td><td>Marks DDA-touched feature</td><td>Toggle in edit menu</td></tr>
+              <tr><td>Category pill</td><td>Coloured by category</td><td>Click to change (edit mode)</td></tr>
+              <tr><td>Sprint pill</td><td>Sprint number (e.g. S70)</td><td>Click to edit</td></tr>
+              <tr><td>Quarter / Month</td><td>Stacked target badges</td><td>Click to set quarter / month</td></tr>
+              <tr><td>Progress bar</td><td>% of completed sub-tasks</td><td>Auto-calculated</td></tr>
+              <tr><td>Status pill</td><td>Overall status</td><td>Click to cycle through states</td></tr>
+            </tbody>
+          </table>
+
+          <h5>Category colours</h5>
+          <p>
+            <span class="pill-demo" style="background:#1565c0;color:#fff">Product</span>
+            <span class="pill-demo" style="background:#6a1b9a;color:#fff">Design</span>
+            <span class="pill-demo" style="background:#7b1fa2;color:#fff">Design (DDA)</span>
+            <span class="pill-demo" style="background:#e65100;color:#fff">UX</span>
+            <span class="pill-demo" style="background:#2e7d32;color:#fff">Technical</span>
+            <span class="pill-demo" style="background:#00695c;color:#fff">SP</span>
+          </p>
+        </section>
+
+        <!-- 5. Editing -->
+        <section class="help-section" data-help="editing">
+          <h4>Editing Items</h4>
+          <p>Edit mode is on by default. Almost every visible field on a feature card is clickable to edit.</p>
+
+          <h5>Inline edits (click and type)</h5>
+          <ul>
+            <li><strong>Slide #</strong> — click <code>#6</code> to type a new number, Enter to save</li>
+            <li><strong>Feature title</strong> — pencil icon next to title</li>
+            <li><strong>Description</strong> — click the italic text under the header</li>
+            <li><strong>Sprint</strong> — click sprint pill</li>
+            <li><strong>Sub-task fields</strong> — click any cell in a sub-task row</li>
+          </ul>
+
+          <h5>Dropdown edits (click → pick)</h5>
+          <ul>
+            <li><strong>Category</strong> — click category pill, choose from 6 options</li>
+            <li><strong>Quarter / Month</strong> — click the badge, pick from list</li>
+            <li><strong>Status pill</strong> — click to <em>cycle</em>: Not started → Pending → Started → In Progress → Completed</li>
+            <li><strong>Owner</strong> — owner picker shows known owners + add new</li>
+            <li><strong>Due date</strong> — date picker</li>
+          </ul>
+
+          <h5>How to add a new feature</h5>
+          <div class="step"><strong>1.</strong> Scroll to the <em>+ Add Feature</em> button below the feature list.</div>
+          <div class="step"><strong>2.</strong> Fill in name, category, slide #, sprint (optional), description.</div>
+          <div class="step"><strong>3.</strong> Click <em>Add Feature</em>. It saves to GitHub immediately and appears at the bottom of the list.</div>
+
+          <h5>How to delete a feature</h5>
+          <div class="step"><strong>1.</strong> In edit mode, find the row-actions area on the far right of the card header.</div>
+          <div class="step"><strong>2.</strong> Click the trash icon and confirm.</div>
+          <div class="warn">&#9888; <strong>Warning:</strong> Deletion is immediate and saved to GitHub. Use Snapshots first if you want to be able to roll back.</div>
+
+          <div class="tip">&#128161; All edits debounce-save (~800 ms). The save status pill in the header turns green when it lands.</div>
+        </section>
+
+        <!-- 6. Sub-tasks -->
+        <section class="help-section" data-help="subtasks">
+          <h4>Sub-tasks</h4>
+          <p>Sub-tasks live inside an expanded feature card. They drive the progress bar and the global KPIs.</p>
+
+          <h5>Add a sub-task</h5>
+          <div class="step"><strong>1.</strong> Click the feature title or caret to expand the card.</div>
+          <div class="step"><strong>2.</strong> Click <em>+ Add Sub-task</em>.</div>
+          <div class="step"><strong>3.</strong> Fill in: task text, status, owner, due date. Submit.</div>
+
+          <h5>Edit a sub-task</h5>
+          <p>Every cell in the sub-task row is independently clickable. Status cycles, owner shows a picker, due date opens a date picker, task text is inline editable.</p>
+
+          <h5>Status values &amp; what they mean for progress</h5>
+          <table class="help-tbl">
+            <thead><tr><th>Status</th><th>Counts as done?</th><th>Use when</th></tr></thead>
+            <tbody>
+              <tr><td>Not started</td><td>No</td><td>Default for new tasks</td></tr>
+              <tr><td>Pending</td><td>No</td><td>Blocked or waiting on someone</td></tr>
+              <tr><td>Started</td><td>No</td><td>Just kicked off</td></tr>
+              <tr><td>In Progress</td><td>No</td><td>Active work</td></tr>
+              <tr><td>Completed</td><td><strong>Yes</strong></td><td>Done — counts toward progress</td></tr>
+            </tbody>
+          </table>
+
+          <h5>Delete a sub-task</h5>
+          <p>Click the trash icon at the end of the row. Confirms once before saving.</p>
+
+          <div class="tip">&#128161; The <strong>Last Update</strong> column auto-stamps your identity + Dubai timestamp on every change. Don't edit it manually.</div>
+        </section>
+
+        <!-- 7. Reorder & Targets -->
+        <section class="help-section" data-help="reorder">
+          <h4>Reorder &amp; Target Quarter / Month</h4>
+
+          <h5>Reorder features by dragging</h5>
+          <div class="step"><strong>1.</strong> Hover over a feature card — the <code>&#8942;&#8942;</code> drag handle on the far left becomes interactive.</div>
+          <div class="step"><strong>2.</strong> Click and drag up or down. A blue line shows where it will land.</div>
+          <div class="step"><strong>3.</strong> Drop. The order is saved to GitHub immediately.</div>
+          <div class="warn">&#9888; Reordering only works in <strong>Edit</strong> mode. In View mode, the handle is hidden.</div>
+
+          <h5>Target quarter (blue badge)</h5>
+          <p>Click the quarter badge to choose: Q1, Q2, Q3, Q4, Q1-Q2, Q2-Q3, Q3-Q4, or — (clear).</p>
+
+          <h5>Target month (amber badge)</h5>
+          <p>Click the month badge to pick a calendar month. Months display in short form (Jan, Feb, …).</p>
+
+          <div class="tip">&#128161; Use Quarter for planning-level intent and Month when you have a firm landing target. They display stacked under one column.</div>
+        </section>
+
+        <!-- 8. Other Actions -->
+        <section class="help-section" data-help="other-actions">
+          <h4>Other Actions &amp; Unclassified Items</h4>
+          <p>The table at the bottom of the page captures stand-alone action points that don't belong to any feature — e.g. process work, follow-ups, decisions, ad-hoc requests.</p>
+
+          <h5>Columns</h5>
+          <ul>
+            <li><strong>Action</strong> — short title (click to edit)</li>
+            <li><strong>Description / Notes</strong> — longer context (click to edit)</li>
+            <li><strong>Status</strong> — cycles like sub-task status</li>
+            <li><strong>Owner</strong> — owner picker</li>
+            <li><strong>Due</strong> — date picker</li>
+            <li><strong>Last Update</strong> — auto-stamped (edit mode only)</li>
+          </ul>
+
+          <h5>Add an action point</h5>
+          <div class="step"><strong>1.</strong> Click <em>+ Add Action Point</em> below the table.</div>
+          <div class="step"><strong>2.</strong> Fill the action text, then click each cell to set status / owner / due / description.</div>
+
+          <div class="tip">&#128161; Empty cells show <em>"click to add…"</em> placeholder so they're always clickable — they have no zero-width hit areas.</div>
+        </section>
+
+        <!-- 9. GitHub Sync -->
+        <section class="help-section" data-help="github">
+          <h4>GitHub Sync &amp; Token</h4>
+          <p>The tracker reads <code>data.json</code> from <code>github.com/fadicog/tasktracker</code> on load and writes back to it via the GitHub Contents API. Without a Personal Access Token (PAT), you can view but not save.</p>
+
+          <h5>One-time token setup</h5>
+          <div class="step"><strong>1.</strong> Go to <code>github.com/settings/tokens?type=beta</code> and create a fine-grained token.</div>
+          <div class="step"><strong>2.</strong> Repository access: <em>Only select repositories</em> → <code>fadicog/tasktracker</code>.</div>
+          <div class="step"><strong>3.</strong> Permissions: <em>Contents</em> → <strong>Read and write</strong>. Leave everything else.</div>
+          <div class="step"><strong>4.</strong> Generate the token, copy it.</div>
+          <div class="step"><strong>5.</strong> In the tracker, click <code>&#128273; Token</code> in the header, paste, click <em>Save token</em>.</div>
+
+          <div class="warn">&#9888; The token is stored in your browser's <code>localStorage</code> only. It never leaves your machine except in calls directly to <code>api.github.com</code>. To remove it, click <em>&#128273; Token → Remove token</em>.</div>
+
+          <h5>How saving works</h5>
+          <ul>
+            <li>Every edit triggers a debounced save after ~800 ms of inactivity</li>
+            <li>The header save-status pill shows: <em>Saving… → Saved ✓</em> (green) or <em>Failed ✗</em> (red)</li>
+            <li>Every save also bumps the <em>Last refreshed</em> banner to the current Dubai time</li>
+            <li>If two people edit at once, the second save will fail with a 409 conflict — the panel will warn you to refresh</li>
+          </ul>
+
+          <h5>If saving fails</h5>
+          <ol>
+            <li>Check your token is still valid (it may have expired)</li>
+            <li>Refresh the page to re-fetch the latest <code>data.json</code></li>
+            <li>Re-apply your change</li>
+          </ol>
+        </section>
+
+        <!-- 10. Snapshots -->
+        <section class="help-section" data-help="snapshots">
+          <h4>Snapshots &amp; History</h4>
+          <p>Snapshots are local-browser backups. Up to 8 are kept; oldest is dropped when you take a 9th.</p>
+
+          <h5>Take a snapshot</h5>
+          <div class="step"><strong>1.</strong> Click <em>Take Snapshot</em> in the header.</div>
+          <div class="step"><strong>2.</strong> Optionally label it (defaults to today's Dubai timestamp).</div>
+          <div class="step"><strong>3.</strong> The snapshot saves to your browser only — not to GitHub.</div>
+
+          <h5>Restore a snapshot</h5>
+          <div class="step"><strong>1.</strong> Click <em>History</em> in the header.</div>
+          <div class="step"><strong>2.</strong> Pick the snapshot you want to restore.</div>
+          <div class="step"><strong>3.</strong> Confirm. The current state is replaced and saved back to GitHub.</div>
+
+          <div class="warn">&#9888; Snapshots are <strong>browser-local</strong>. They won't be available on a different device or browser. Take one before any large change you might want to roll back.</div>
+
+          <h5>Reset to defaults</h5>
+          <p>The <em>Reset to defaults</em> button at the page footer wipes all customisations and re-seeds with the v1 dataset. <strong>Use with extreme care</strong> — it pushes the reset state to GitHub.</p>
+        </section>
+
+        <!-- 11. Export -->
+        <section class="help-section" data-help="export">
+          <h4>Export &amp; Sharing</h4>
+
+          <h5>Export to CSV</h5>
+          <p>Click <em>Export CSV</em> in the header. The CSV reflects the <strong>currently filtered &amp; expanded</strong> view, including:</p>
+          <ul>
+            <li>Slide #, name, category, sprint, status, target quarter / month</li>
+            <li>Committed flag, DDA flag, blocked flag</li>
+            <li>One row per sub-task with its task text, status, owner, due, last updated</li>
+          </ul>
+          <div class="tip">&#128161; Click <em>Expand all</em> first so every sub-task is in the export.</div>
+
+          <h5>Share a filtered URL</h5>
+          <p>Filters are written to the URL query string. Copy the URL from the address bar and paste anywhere — colleagues with the password will see exactly the same filtered slice.</p>
+
+          <h5>What's not exported</h5>
+          <ul>
+            <li>Snapshots (browser-local only)</li>
+            <li>The Personal Access Token</li>
+            <li>Your identity selection</li>
+          </ul>
+        </section>
+
+        <!-- 12. View vs Edit Mode -->
+        <section class="help-section" data-help="modes">
+          <h4>View vs Edit Mode</h4>
+          <p>Two modes share the same screen. The toggle is the first button in the header (<code>Mode: Edit</code> / <code>Mode: View</code>).</p>
+
+          <table class="help-tbl">
+            <thead><tr><th>Capability</th><th>View Mode</th><th>Edit Mode</th></tr></thead>
+            <tbody>
+              <tr><td>Read all data</td><td>✓</td><td>✓</td></tr>
+              <tr><td>Filter, search, expand</td><td>✓</td><td>✓</td></tr>
+              <tr><td>Take snapshots</td><td>✓</td><td>✓</td></tr>
+              <tr><td>Export CSV</td><td>✓</td><td>✓</td></tr>
+              <tr><td>Drag-to-reorder</td><td>—</td><td>✓</td></tr>
+              <tr><td>Click-to-edit fields</td><td>—</td><td>✓</td></tr>
+              <tr><td>Add features / sub-tasks / actions</td><td>—</td><td>✓</td></tr>
+              <tr><td>Delete</td><td>—</td><td>✓</td></tr>
+              <tr><td>Save to GitHub</td><td>—</td><td>✓ (token required)</td></tr>
+            </tbody>
+          </table>
+
+          <div class="tip">&#128161; Switch to <em>View</em> mode when sharing your screen on a TDRA call — it hides every edit button and looks calmer.</div>
+        </section>
+
+        <!-- 13. Tips & Troubleshooting -->
+        <section class="help-section" data-help="tips">
+          <h4>Tips &amp; Troubleshooting</h4>
+
+          <h5>Common issues</h5>
+          <table class="help-tbl">
+            <thead><tr><th>Symptom</th><th>Likely cause</th><th>Fix</th></tr></thead>
+            <tbody>
+              <tr><td>Edits don't persist after refresh</td><td>No GitHub token saved</td><td>Header → <code>&#128273; Token</code> → paste a fine-grained PAT</td></tr>
+              <tr><td>Save fails with red status</td><td>Token expired or 409 conflict</td><td>Refresh page; re-apply change; re-issue token if needed</td></tr>
+              <tr><td>Last refreshed banner stuck</td><td>Browser cache held an old <code>data.json</code></td><td>Hard refresh (<code>Ctrl+F5</code>)</td></tr>
+              <tr><td>Drag handle does nothing</td><td>You're in View mode</td><td>Click <code>Mode: View</code> to switch back to Edit</td></tr>
+              <tr><td>Can't see the +Add Feature button</td><td>You're in View mode</td><td>Switch to Edit mode</td></tr>
+              <tr><td>Times look wrong</td><td>Tracker uses <strong>Asia/Dubai</strong> timezone always</td><td>That's by design; it's not your local time</td></tr>
+            </tbody>
+          </table>
+
+          <h5>Productivity tips</h5>
+          <ul>
+            <li><strong>Click Status pill repeatedly</strong> to cycle through states — faster than picking from a menu</li>
+            <li><strong>Click Expand All</strong> before exporting CSV to capture every sub-task</li>
+            <li><strong>Take a snapshot</strong> before big sprint refreshes so you can roll back if something breaks</li>
+            <li><strong>Hover the freshness banner</strong> to see the exact Dubai timestamp</li>
+            <li><strong>Use chip filters together</strong>: e.g. Owner = Fadi + Status = In Progress = "what I'm actively driving"</li>
+          </ul>
+
+          <h5>Where to get help</h5>
+          <p>Source code: <code>github.com/fadicog/tasktracker</code> — file an issue or DM Fadi (<code>fadi.bataha@cognizant.com</code>).</p>
+        </section>
+
+      </div>
     </div>
   </div>
 </div>
@@ -2858,6 +3377,30 @@ async function bootApp() {
   });
   document.getElementById('history-btn').addEventListener('click', openHistoryPanel);
   document.getElementById('reset-btn').addEventListener('click', resetAll);
+
+  // Help modal
+  const helpModal = document.getElementById('help-modal');
+  const helpNav = document.getElementById('help-nav');
+  function openHelp(initialSection) {
+    helpModal.classList.add('active');
+    if (initialSection) switchHelpSection(initialSection);
+  }
+  function closeHelp() { helpModal.classList.remove('active'); }
+  function switchHelpSection(name) {
+    helpNav.querySelectorAll('button').forEach(b => b.classList.toggle('active', b.dataset.help === name));
+    document.querySelectorAll('.help-section').forEach(s => s.classList.toggle('active', s.dataset.help === name));
+    document.getElementById('help-content').scrollTop = 0;
+  }
+  document.getElementById('help-btn').addEventListener('click', () => openHelp());
+  document.getElementById('help-close').addEventListener('click', closeHelp);
+  helpModal.addEventListener('click', e => { if (e.target === helpModal) closeHelp(); });
+  helpNav.addEventListener('click', e => {
+    const btn = e.target.closest('button[data-help]');
+    if (btn) switchHelpSection(btn.dataset.help);
+  });
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && helpModal.classList.contains('active')) closeHelp();
+  });
 
   // PAT modal
   document.getElementById('pat-btn').addEventListener('click', openPatModal);
