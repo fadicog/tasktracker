@@ -769,6 +769,16 @@
       "due": "—",
       "updatedBy": "Fadi",
       "updatedAt": "29 Apr 2026 17:27"
+    },
+    {
+      "id": "oa-1777469253070",
+      "action": "New action",
+      "desc": "",
+      "status": "Open",
+      "owner": "—",
+      "due": "—",
+      "updatedBy": "",
+      "updatedAt": ""
     }
   ],
   "notes": {},
