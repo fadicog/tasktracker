@@ -385,9 +385,25 @@
     border-radius: 6px; padding: 10px 12px;
   }
   .notes-block h4 { font-size: 11px; color: #8d6e00; text-transform: uppercase; letter-spacing: .5px; margin-bottom: 8px; }
-  .notes-block .note { font-size: 12px; color: #5d4e00; margin-bottom: 6px; font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace; padding-bottom: 6px; border-bottom: 1px dashed #fff59d; }
+  .notes-block .note { font-size: 12px; color: #5d4e00; margin-bottom: 6px; font-family: ui-monospace, 'SF Mono', Menlo, Consolas, monospace; padding-bottom: 6px; border-bottom: 1px dashed #fff59d; position: relative; }
   .notes-block .note:last-of-type { border-bottom: 0; }
+  .notes-block .note .note-text { display: inline; }
   .notes-block .note .meta { color: #8d6e00; font-style: italic; margin-left: 6px; font-size: 10px; }
+  .notes-block .note .meta .edited { color: #b08400; }
+  .notes-block .note-actions { display: inline-flex; gap: 4px; margin-left: 8px; vertical-align: middle; }
+  .notes-block .note-action-btn {
+    padding: 2px 6px; font-size: 10px; line-height: 1.3; border: 1px solid #e6c97a;
+    border-radius: 3px; background: #fff8d6; color: #8d6e00; cursor: pointer;
+    font-family: inherit; font-weight: 500; align-self: auto;
+  }
+  .notes-block .note-action-btn:hover { background: #fff59d; }
+  .notes-block .note-action-btn.danger { color: #b71c1c; border-color: #f5b7b1; background: #fff5f5; }
+  .notes-block .note-action-btn.danger:hover { background: #fde0dc; }
+  .notes-block .note-edit-form { display: flex; gap: 6px; margin-top: 4px; }
+  .notes-block .note-edit-form textarea { min-height: 56px; }
+  .notes-block .note-edit-form .btns { display: flex; flex-direction: column; gap: 4px; }
+  .notes-block .note-edit-form .btns button { padding: 4px 10px; font-size: 11px; }
+  .notes-block .note-edit-form .btns button.cancel { background: #888; }
   .notes-block .note-input { display: flex; gap: 6px; margin-top: 6px; }
   .notes-block textarea {
     flex: 1; padding: 6px 8px; font-size: 12px; border: 1px solid #fff59d;
@@ -2459,13 +2475,21 @@ function renderSubtaskRow(f, s) {
 }
 
 function renderNotesBlock(fid, arr) {
+  const fidEsc = escapeHtml(fid);
+  const renderOne = (n, i) => {
+    const edited = n.editedTs ? ` <span class="edited">(edited ${escapeHtml(n.editedBy || '—')} · ${escapeHtml(n.editedTs)})</span>` : '';
+    return `
+      <div class="note" data-note-fid="${fidEsc}" data-note-idx="${i}">
+        <span class="note-text">${escapeHtml(n.text)}</span><span class="meta">— ${escapeHtml(n.author)} · ${escapeHtml(n.ts)}${edited}</span><span class="note-actions edit-only"><button class="note-action-btn" data-note-edit="${fidEsc}" data-idx="${i}">Edit</button><button class="note-action-btn danger" data-note-delete="${fidEsc}" data-idx="${i}">Delete</button></span>
+      </div>`;
+  };
   return `
     <div class="notes-block">
       <h4>Notes</h4>
-      ${arr.length ? arr.map(n => `<div class="note">${escapeHtml(n.text)}<span class="meta">— ${escapeHtml(n.author)} · ${escapeHtml(n.ts)}</span></div>`).join('') : '<div style="color:#8d6e00;font-size:12px;font-style:italic">No notes yet.</div>'}
+      ${arr.length ? arr.map(renderOne).join('') : '<div style="color:#8d6e00;font-size:12px;font-style:italic">No notes yet.</div>'}
       <div class="note-input edit-only">
-        <textarea maxlength="500" placeholder="Add a note (max 500 chars)…" data-note-input="${escapeHtml(fid)}"></textarea>
-        <button data-note-save="${escapeHtml(fid)}">Add</button>
+        <textarea maxlength="500" placeholder="Add a note (max 500 chars)…" data-note-input="${fidEsc}"></textarea>
+        <button data-note-save="${fidEsc}">Add</button>
       </div>
     </div>
   `;
@@ -2828,7 +2852,7 @@ function bindFeatureHandlers(f) {
     persist(); renderAll();
   });
 
-  // Notes
+  // Notes — add
   const noteInput = root.querySelector('[data-note-input]');
   const noteSave  = root.querySelector('[data-note-save]');
   if (noteSave && noteInput) {
@@ -2842,6 +2866,65 @@ function bindFeatureHandlers(f) {
       toast('Note added', 'success');
     });
   }
+
+  // Notes — edit
+  root.querySelectorAll('[data-note-edit]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const fid = btn.dataset.noteEdit;
+      const idx = parseInt(btn.dataset.idx, 10);
+      const note = (NOTES[fid] || [])[idx];
+      if (!note) return;
+      const wrap = btn.closest('.note');
+      if (!wrap || wrap.dataset.editing === '1') return;
+      wrap.dataset.editing = '1';
+      const orig = note.text;
+      wrap.innerHTML = `
+        <div class="note-edit-form">
+          <textarea maxlength="500" data-note-edit-input>${escapeHtml(orig)}</textarea>
+          <div class="btns">
+            <button data-note-edit-save>Save</button>
+            <button class="cancel" data-note-edit-cancel>Cancel</button>
+          </div>
+        </div>`;
+      const ta = wrap.querySelector('[data-note-edit-input]');
+      ta.focus();
+      ta.setSelectionRange(orig.length, orig.length);
+      wrap.querySelector('[data-note-edit-save]').addEventListener('click', (ev) => {
+        ev.stopPropagation();
+        const newText = ta.value.trim();
+        if (!newText) { toast('Note cannot be empty', 'error'); return; }
+        if (newText === orig) { renderAll(); return; }
+        note.text = newText;
+        note.editedBy = IDENTITY || '—';
+        note.editedTs = formatTs(new Date());
+        persist(); renderAll();
+        toast('Note updated', 'success');
+      });
+      wrap.querySelector('[data-note-edit-cancel]').addEventListener('click', (ev) => {
+        ev.stopPropagation();
+        renderAll();
+      });
+    });
+  });
+
+  // Notes — delete
+  root.querySelectorAll('[data-note-delete]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const fid = btn.dataset.noteDelete;
+      const idx = parseInt(btn.dataset.idx, 10);
+      const note = (NOTES[fid] || [])[idx];
+      if (!note) return;
+      const preview = note.text.length > 80 ? note.text.slice(0, 80) + '…' : note.text;
+      confirmDelete(`Delete this note?\n\n"${preview}"\n\nThis cannot be undone.`, () => {
+        NOTES[fid].splice(idx, 1);
+        if (NOTES[fid].length === 0) delete NOTES[fid];
+        persist(); renderAll();
+        toast('Note deleted', 'success');
+      });
+    });
+  });
 }
 
 /* =================================================================
