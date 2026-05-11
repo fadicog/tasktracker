@@ -37,10 +37,10 @@
           "id": "s-6-3",
           "task": "List of enhancements (part 1)",
           "due": "2026-04-29",
-          "status": "Started",
+          "status": "Completed",
           "owner": "—",
-          "updatedBy": "",
-          "updatedAt": ""
+          "updatedBy": "Fadi",
+          "updatedAt": "11 May 2026 14:19"
         },
         {
           "id": "s-6-4",
@@ -803,6 +803,6 @@
   ],
   "notes": {},
   "overrides": {},
-  "lastUpdated": "11 May 2026 09:00",
+  "lastUpdated": "11 May 2026 14:19",
   "version": 1
 }
