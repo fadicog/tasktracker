@@ -126,10 +126,10 @@
           "id": "s-7-3",
           "task": "Final ICP confirmation / DDA alignment",
           "due": "—",
-          "status": "Pending",
+          "status": "Started",
           "owner": "—",
-          "updatedBy": "",
-          "updatedAt": ""
+          "updatedBy": "Fadi",
+          "updatedAt": "11 May 2026 14:21"
         },
         {
           "id": "s-7-4",
@@ -811,6 +811,6 @@
     ]
   },
   "overrides": {},
-  "lastUpdated": "11 May 2026 14:20",
+  "lastUpdated": "11 May 2026 14:21",
   "version": 1
 }
