@@ -211,15 +211,6 @@
       "description": "Simplify the QR code generation logic and introduce a new way to trigger sharing requests to the user from the SP channel.",
       "sub": [
         {
-          "id": "s-9-1",
-          "task": "Internal discussion",
-          "due": "2026-04-06",
-          "status": "Pending",
-          "owner": "—",
-          "updatedBy": "",
-          "updatedAt": ""
-        },
-        {
           "id": "s-9-2",
           "task": "Link to OTC sharing review",
           "due": "—",
@@ -818,6 +809,6 @@
     ]
   },
   "overrides": {},
-  "lastUpdated": "11 May 2026 14:40",
+  "lastUpdated": "11 May 2026 14:44",
   "version": 1
 }
