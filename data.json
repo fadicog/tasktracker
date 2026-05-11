@@ -801,8 +801,16 @@
       "updatedAt": "11 May 2026 09:00"
     }
   ],
-  "notes": {},
+  "notes": {
+    "f-6": [
+      {
+        "text": "Two major enhancements captured in the weekly success rate increase tracker.",
+        "author": "Fadi",
+        "ts": "11 May 2026 14:20"
+      }
+    ]
+  },
   "overrides": {},
-  "lastUpdated": "11 May 2026 14:19",
+  "lastUpdated": "11 May 2026 14:20",
   "version": 1
 }
