@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>UAE PASS DV — 2026 Roadmap View</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+<style>
+:root {
+  --green:        #93c47d;
+  --green-dark:   #6aa84f;
+  --blue:         #9fc5e8;
+  --blue-dark:    #6fa8dc;
+  --navy:         #1a237e;
+  --navy-dark:    #121858;
+  --bg:           #f4f6fb;
+  --surface:      #ffffff;
+  --text:         #1f2633;
+  --muted:        #5b6476;
+  --border:       #e3e7ef;
+  --q-color:      #6a1b9a;
+  --shadow:       0 2px 6px rgba(20,30,60,.06);
+  --shadow-lg:    0 6px 20px rgba(20,30,60,.10);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+  padding: 16px 16px 40px;
+}
+body[dir="rtl"] { font-family: 'Cairo', sans-serif; }
+
+/* ---------------- Top bar ---------------- */
+.topbar {
+  max-width: 1280px;
+  margin: 0 auto 16px;
+  background: linear-gradient(135deg, var(--navy) 0%, #2a3597 100%);
+  color: #fff;
+  border-radius: 10px;
+  padding: 14px 22px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+  box-shadow: var(--shadow-lg);
+}
+.topbar h1 { font-size: 18px; font-weight: 700; }
+.topbar .sub { font-size: 12px; opacity: .85; margin-left: 4px; }
+.topbar .actions { margin-left: auto; display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.tbtn {
+  background: rgba(255,255,255,0.14);
+  color: #fff;
+  border: 1px solid rgba(255,255,255,0.28);
+  padding: 6px 14px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: inherit;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: background .15s;
+}
+.tbtn:hover { background: rgba(255,255,255,0.26); }
+.tbtn.primary { background: #fff; color: var(--navy); border-color: #fff; font-weight: 600; }
+.tbtn.primary:hover { background: #e8eaf6; }
+.lang-toggle {
+  display: flex;
+  border-radius: 6px;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.3);
+}
+.lang-toggle button {
+  padding: 5px 14px;
+  border: none;
+  background: rgba(255,255,255,0.14);
+  color: rgba(255,255,255,0.75);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+  transition: all .15s;
+}
+.lang-toggle button.active {
+  background: rgba(255,255,255,0.95);
+  color: var(--navy);
+}
+
+/* ---------------- Card ---------------- */
+.roadmap-card {
+  max-width: 1280px;
+  margin: 0 auto;
+  background: var(--surface);
+  border-radius: 12px;
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+}
+
+/* ---------------- Brand header ---------------- */
+.brand-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 28px 0;
+}
+.brand-row .uaepass {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+}
+.brand-row .uaepass .logo {
+  width: 22px; height: 22px;
+  border: 2px solid var(--muted);
+  border-radius: 50%;
+  display: inline-block;
+  position: relative;
+}
+.brand-row .uaepass .logo::before {
+  content: '';
+  position: absolute;
+  top: 3px; left: 5px;
+  width: 8px; height: 12px;
+  border: 1.5px solid var(--muted);
+  border-radius: 4px;
+  background: transparent;
+}
+[dir="rtl"] .brand-row .uaepass { flex-direction: row-reverse; }
+
+.roadmap-title {
+  padding: 4px 28px 18px;
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--green-dark);
+  letter-spacing: 0.2px;
+}
+[dir="ltr"] .roadmap-title { text-align: left; }
+[dir="rtl"] .roadmap-title { text-align: right; font-family: 'Cairo', sans-serif; }
+
+/* ---------------- Grid ---------------- */
+.grid-wrap { padding: 0 28px 28px; }
+
+.grid-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+/* Quarter header row */
+.grid-table tr.q-row th {
+  padding: 8px 4px 6px;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--q-color);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-align: center;
+  background: transparent;
+  border: none;
+  border-left: 1px solid #d8d4dd;
+}
+.grid-table tr.q-row th:first-child {
+  border-left: none;
+  text-align: left;
+  width: 120px;
+  min-width: 120px;
+  max-width: 120px;
+}
+[dir="rtl"] .grid-table tr.q-row th { border-left: none; border-right: 1px solid #d8d4dd; }
+[dir="rtl"] .grid-table tr.q-row th:first-child { border-right: none; text-align: right; }
+.grid-table tr.q-row th.q-empty { color: transparent; }
+
+/* Month header row */
+.grid-table tr.m-row th {
+  padding: 8px 4px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--muted);
+  text-align: center;
+  background: transparent;
+  letter-spacing: 0.5px;
+  border-bottom: 1px solid var(--border);
+}
+.grid-table tr.m-row th:first-child {
+  text-align: left;
+  width: 120px;
+  min-width: 120px;
+  max-width: 120px;
+  color: var(--text);
+  font-weight: 700;
+  font-size: 13px;
+  vertical-align: middle;
+  background: #fafbfd;
+  border-right: 1px solid var(--border);
+}
+[dir="rtl"] .grid-table tr.m-row th:first-child {
+  border-right: none;
+  border-left: 1px solid var(--border);
+  text-align: right;
+}
+
+/* Body rows */
+.grid-table td {
+  padding: 0;
+  height: 38px;
+  position: relative;
+  border-bottom: 1px dashed #eef0f5;
+  vertical-align: middle;
+}
+.grid-table td.month-divider { border-left: 1px dashed #eef0f5; }
+[dir="rtl"] .grid-table td.month-divider { border-left: none; border-right: 1px dashed #eef0f5; }
+
+.grid-table tr.feature-row td:first-child {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+  padding: 0 12px;
+  background: #fafbfd;
+  border-right: 1px solid var(--border);
+  vertical-align: middle;
+}
+[dir="rtl"] .grid-table tr.feature-row td:first-child {
+  border-right: none;
+  border-left: 1px solid var(--border);
+  text-align: right;
+}
+.grid-table tr.feature-row + tr.feature-row td:first-child {
+  /* keep "Features" label only in the first row via rowspan; this is a no-op safety net */
+}
+
+/* Bar */
+.bar {
+  position: absolute;
+  top: 5px;
+  bottom: 5px;
+  border-radius: 3px;
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
+  color: #1f2633;
+  font-size: 11.5px;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  z-index: 2;
+  min-width: 8px;
+  box-shadow: 0 1px 0 rgba(0,0,0,0.04);
+}
+.bar.green { background: var(--green); }
+.bar.blue  { background: var(--blue); }
+
+/* ---------------- Editor section ---------------- */
+.editor-section {
+  border-top: 1px solid var(--border);
+  background: #fafbfd;
+  padding: 16px 28px;
+  max-width: 1280px;
+  margin: 16px auto 0;
+  border-radius: 12px;
+  box-shadow: var(--shadow);
+}
+.editor-section.collapsed { display: none; }
+.editor-section h3 { font-size: 14px; color: var(--navy); margin-bottom: 10px; }
+.editor-table { width: 100%; border-collapse: collapse; margin-top: 8px; font-size: 12.5px; }
+.editor-table th {
+  text-align: left;
+  padding: 6px 8px;
+  font-weight: 600;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: .4px;
+  color: var(--muted);
+  border-bottom: 2px solid var(--border);
+}
+.editor-table td {
+  padding: 4px 6px;
+  border-bottom: 1px solid #eef0f5;
+  vertical-align: middle;
+}
+.editor-table input[type="text"],
+.editor-table input[type="date"],
+.editor-table select {
+  width: 100%;
+  padding: 5px 7px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  font-size: 12px;
+  font-family: inherit;
+  background: #fff;
+}
+.editor-table input[type="text"]:focus,
+.editor-table input[type="date"]:focus,
+.editor-table select:focus {
+  outline: none; border-color: var(--navy);
+  box-shadow: 0 0 0 2px rgba(26,35,126,.12);
+}
+.editor-table .swatch {
+  display: inline-block;
+  width: 16px; height: 16px;
+  border-radius: 3px;
+  vertical-align: middle;
+  margin-right: 4px;
+  border: 1px solid rgba(0,0,0,.1);
+}
+.btn-icon {
+  width: 26px; height: 26px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  border: 1px solid var(--border);
+  background: #fff;
+  cursor: pointer;
+  font-size: 13px;
+}
+.btn-icon:hover { border-color: #c62828; color: #c62828; }
+.editor-actions { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+.ebtn {
+  padding: 7px 14px;
+  border: 0;
+  border-radius: 6px;
+  background: var(--navy);
+  color: #fff;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: inherit;
+}
+.ebtn:hover { background: var(--navy-dark); }
+.ebtn.outline { background: transparent; color: var(--navy); border: 1px solid var(--navy); }
+.ebtn.outline:hover { background: rgba(26,35,126,0.08); }
+
+/* ---------------- Legend ---------------- */
+.legend { padding: 0 28px 18px; display: flex; gap: 20px; flex-wrap: wrap; align-items: center; font-size: 12px; color: var(--muted); }
+.legend .swatch { display: inline-block; width: 14px; height: 14px; border-radius: 3px; vertical-align: middle; margin-right: 6px; }
+
+/* ---------------- Save toast ---------------- */
+#save-toast {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background: var(--green-dark);
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: 999;
+  box-shadow: var(--shadow-lg);
+}
+
+/* ---------------- Password Gate ---------------- */
+#gate {
+  position: fixed; inset: 0;
+  background: linear-gradient(135deg, #0d1230 0%, #1a237e 100%);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 1000;
+}
+#gate .box {
+  background: #fff; border-radius: 16px;
+  padding: 40px 36px; width: min(400px, 92%);
+  box-shadow: 0 30px 80px rgba(0,0,0,.35);
+  text-align: center;
+}
+#gate h1 { font-size: 22px; color: var(--navy); margin-bottom: 8px; font-weight: 700; }
+#gate p  { color: var(--muted); font-size: 14px; margin-bottom: 22px; }
+#gate input {
+  width: 100%; padding: 12px 14px;
+  border: 1px solid var(--border); border-radius: 8px;
+  font-size: 15px; font-family: inherit; margin-bottom: 12px;
+  background: #fff;
+}
+#gate input:focus { outline: none; border-color: var(--navy); box-shadow: 0 0 0 3px rgba(26,35,126,.15); }
+#gate button {
+  width: 100%; padding: 12px; border: 0; border-radius: 8px;
+  background: var(--navy); color: #fff; font-size: 15px; font-weight: 600;
+  cursor: pointer;
+}
+#gate button:hover { background: var(--navy-dark); }
+#gate .err { color: #c62828; font-size: 13px; margin-top: 10px; min-height: 16px; }
+#gate .lock { font-size: 36px; margin-bottom: 12px; }
+
+#app { display: none; }
+
+/* ---------------- Responsive ---------------- */
+@media (max-width: 900px) {
+  body { padding: 8px; }
+  .roadmap-title { font-size: 22px; }
+  .grid-table tr.m-row th:first-child,
+  .grid-table tr.q-row th:first-child,
+  .grid-table tr.feature-row td:first-child { width: 90px; min-width: 90px; max-width: 90px; font-size: 11.5px; }
+  .bar { font-size: 10.5px; padding: 0 6px; }
+}
+</style>
+</head>
+<body>
+
+<!-- Password gate -->
+<div id="gate">
+  <div class="box">
+    <div class="lock">&#128274;</div>
+    <h1>UAE PASS DV — Roadmap View</h1>
+    <p>Enter password to view the 2026 roadmap.</p>
+    <form id="gate-form">
+      <input type="password" id="pwd" placeholder="Password" autofocus required />
+      <button type="submit">Open Roadmap</button>
+      <div class="err" id="gate-err"></div>
+    </form>
+  </div>
+</div>
+
+<div id="app">
+
+<div class="topbar">
+  <div>
+    <h1>UAE PASS DV — 2026 Roadmap View</h1>
+    <div class="sub">Read-only visual roadmap · Edit table below when changes are needed</div>
+  </div>
+  <div class="actions">
+    <div class="lang-toggle">
+      <button class="active" id="lang-en">EN</button>
+      <button id="lang-ar">AR</button>
+    </div>
+    <button class="tbtn" id="toggle-editor">&#9999;&#65039; Edit items</button>
+    <button class="tbtn" id="export-png">&#128247; Export PNG</button>
+    <a class="tbtn primary" href="index.html">&larr; Back to Tracker</a>
+  </div>
+</div>
+
+<div class="roadmap-card" id="roadmap-card">
+  <div class="brand-row">
+    <div></div>
+    <div class="uaepass">
+      <span id="brand-label-en">UAE PASS | <span style="font-family:'Cairo',sans-serif">الهوية الرقمية</span></span>
+      <span class="logo"></span>
+    </div>
+  </div>
+  <h2 class="roadmap-title" id="roadmap-title">UAE PASS Digital Identity Roadmap 2026</h2>
+
+  <div class="legend">
+    <span><span class="swatch" style="background:var(--green)"></span>Committed (TDRA)</span>
+    <span><span class="swatch" style="background:var(--blue)"></span>Planned</span>
+  </div>
+
+  <div class="grid-wrap" id="grid-wrap">
+    <!-- Grid rendered by JS -->
+  </div>
+</div>
+
+<!-- Editor section -->
+<div class="editor-section collapsed" id="editor-section">
+  <h3>Edit roadmap items</h3>
+  <table class="editor-table" id="editor-table">
+    <thead>
+      <tr>
+        <th style="width:30%">Name (EN)</th>
+        <th style="width:22%">Name (AR)</th>
+        <th style="width:12%">Start</th>
+        <th style="width:12%">End</th>
+        <th style="width:18%">Type</th>
+        <th style="width:6%"></th>
+      </tr>
+    </thead>
+    <tbody id="editor-tbody"></tbody>
+  </table>
+  <div class="editor-actions">
+    <button class="ebtn" id="add-item">+ Add item</button>
+    <button class="ebtn outline" id="save-local">&#128190; Save (browser)</button>
+    <button class="ebtn outline" id="reset-default">&#8634; Reset to defaults</button>
+  </div>
+  <div style="font-size:11.5px;color:var(--muted);margin-top:10px">
+    Items are saved to your browser only (localStorage). Use Export PNG to share a snapshot.
+  </div>
+</div>
+
+</div>
+
+<div id="save-toast">Saved &#10003;</div>
+
+<script>
+/* ============================================================
+   Password gate — SHA-256 of "TDRA2026"
+   ============================================================ */
+const PASSWORD_HASH = '9ba19f7bc294dca1ac7b621741441c63207445ac36e77ca90d58c6f2972f2d11';
+async function sha256(msg) {
+  const buf = new TextEncoder().encode(msg);
+  const hash = await crypto.subtle.digest('SHA-256', buf);
+  return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2,'0')).join('');
+}
+function showApp() {
+  document.getElementById('gate').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+  init();
+}
+function initGate() {
+  if (sessionStorage.getItem('dv_tracker_auth') === '1') { showApp(); return; }
+  document.getElementById('gate-form').addEventListener('submit', async e => {
+    e.preventDefault();
+    const pwd = document.getElementById('pwd').value;
+    const err = document.getElementById('gate-err');
+    err.textContent = '';
+    const h = await sha256(pwd);
+    if (h === PASSWORD_HASH) {
+      sessionStorage.setItem('dv_tracker_auth', '1');
+      showApp();
+    } else {
+      err.textContent = 'Incorrect password. Please try again.';
+      document.getElementById('pwd').value = '';
+      document.getElementById('pwd').focus();
+    }
+  });
+}
+
+/* ============================================================
+   Data & config
+   ============================================================ */
+const MONTHS_EN = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+const MONTHS_AR = ['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
+
+const COLORS = {
+  green: '#93c47d',
+  blue:  '#9fc5e8'
+};
+
+/* Items captured from the v1 visual roadmap (May 2026). 'type' = green | blue. */
+const DEFAULT_ITEMS = [
+  { nameEn: 'Status-based Reporting',
+    nameAr: 'إعداد التقارير حسب الحالة',
+    start: '2026-01-15', end: '2026-02-28', type: 'green' },
+  { nameEn: 'Special Citizenship',
+    nameAr: 'الجنسية الخاصة',
+    start: '2026-02-01', end: '2026-03-15', type: 'blue' },
+  { nameEn: 'Service Provider Offboarding',
+    nameAr: 'إلغاء تسجيل مزودي الخدمة',
+    start: '2026-02-15', end: '2026-03-31', type: 'green' },
+  { nameEn: 'QR Code Simplification & Direct Sharing',
+    nameAr: 'تبسيط رمز QR والمشاركة المباشرة',
+    start: '2026-02-01', end: '2026-04-15', type: 'blue' },
+  { nameEn: 'General Design Audit',
+    nameAr: 'مراجعة التصميم العامة',
+    start: '2026-03-01', end: '2026-04-15', type: 'green' },
+  { nameEn: 'Perpetual Consent & Document Auto-Population',
+    nameAr: 'الموافقة الدائمة والتعبئة التلقائية للمستندات',
+    start: '2026-04-15', end: '2026-06-30', type: 'blue' },
+  { nameEn: 'UX/UI Enhancements – Phase 1',
+    nameAr: 'تحسينات تجربة المستخدم – المرحلة الأولى',
+    start: '2026-04-15', end: '2026-05-31', type: 'blue' },
+  { nameEn: 'Form Filler Feature',
+    nameAr: 'تعبئة النماذج',
+    start: '2026-05-01', end: '2026-05-31', type: 'blue' },
+  { nameEn: 'Over-The-Counter Document Sharing Journeys',
+    nameAr: 'رحلات مشاركة المستندات عبر العداد',
+    start: '2026-05-15', end: '2026-07-15', type: 'blue' },
+  { nameEn: 'Enable Download for All Documents',
+    nameAr: 'إتاحة تنزيل جميع المستندات',
+    start: '2026-08-01', end: '2026-09-15', type: 'blue' },
+  { nameEn: 'UX/UI Enhancements – Phase 2',
+    nameAr: 'تحسينات تجربة المستخدم – المرحلة الثانية',
+    start: '2026-08-15', end: '2026-11-15', type: 'blue' }
+];
+
+const TITLE_EN = 'UAE PASS Digital Identity Roadmap 2026';
+const TITLE_AR = 'خارطة طريق (الهوية الرقمية) لعام 2026';
+
+const STORAGE_KEY = 'dv_roadmap_view_v1';
+let LANG = 'en';
+let ITEMS = [];
+
+/* ============================================================
+   Persistence
+   ============================================================ */
+function loadItems() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return null;
+    const data = JSON.parse(raw);
+    if (!data || !Array.isArray(data.items)) return null;
+    return data.items;
+  } catch (e) { return null; }
+}
+function saveItems() {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ items: ITEMS, savedAt: new Date().toISOString() }));
+    const t = document.getElementById('save-toast');
+    t.style.opacity = '1';
+    setTimeout(() => t.style.opacity = '0', 1500);
+  } catch (e) {
+    alert('Save failed: ' + e.message);
+  }
+}
+
+/* ============================================================
+   Render grid (single row per item, full 12-month grid)
+   ============================================================ */
+function escHtml(s) {
+  if (s == null) return '';
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function daysInMonth(y, m) { return new Date(y, m + 1, 0).getDate(); }
+
+function getBarLayout(item) {
+  const sd = new Date(item.start + 'T00:00:00');
+  const ed = new Date(item.end   + 'T00:00:00');
+  if (isNaN(sd) || isNaN(ed) || ed < sd) return null;
+  const startCol = sd.getMonth();
+  const endCol   = ed.getMonth();
+  const colspan  = endCol - startCol + 1;
+  const startFrac = (sd.getDate() - 1) / daysInMonth(sd.getFullYear(), sd.getMonth());
+  const endFrac   =  ed.getDate()      / daysInMonth(ed.getFullYear(), ed.getMonth());
+  const leftPct   = (startFrac / colspan) * 100;
+  const rightPct  = ((1 - endFrac) / colspan) * 100;
+  return { startCol, colspan, leftPct, rightPct };
+}
+
+function renderGrid() {
+  const wrap = document.getElementById('grid-wrap');
+  const isAr = LANG === 'ar';
+  const monthLabels = isAr ? MONTHS_AR : MONTHS_EN;
+  const labelCol = isAr ? 'الميزات' : 'Features';
+
+  // Sort items by start date for nicer display
+  const sorted = [...ITEMS].sort((a, b) => new Date(a.start) - new Date(b.start));
+
+  let html = `<table class="grid-table">`;
+
+  // Quarter row
+  html += `<thead><tr class="q-row">`;
+  html += `<th>&nbsp;</th>`;
+  // Q1 spans Feb (idx 1) — looks closest to image. We'll center under FEB / MAY / AUG / NOV.
+  for (let i = 0; i < 12; i++) {
+    let q = '';
+    if (i === 1) q = 'Q1';
+    else if (i === 4) q = 'Q2';
+    else if (i === 7) q = 'Q3';
+    else if (i === 10) q = 'Q4';
+    html += `<th class="${q ? '' : 'q-empty'}">${q || '·'}</th>`;
+  }
+  html += `</tr>`;
+
+  // Month row
+  html += `<tr class="m-row">`;
+  html += `<th>${labelCol}</th>`;
+  for (let i = 0; i < 12; i++) {
+    html += `<th>${monthLabels[i]}</th>`;
+  }
+  html += `</tr></thead>`;
+
+  // Body
+  html += `<tbody>`;
+  sorted.forEach(item => {
+    const layout = getBarLayout(item);
+    if (!layout) return;
+    const name = isAr ? (item.nameAr || item.nameEn) : item.nameEn;
+    const safeName = escHtml(name);
+
+    html += `<tr class="feature-row">`;
+    html += `<td>&nbsp;</td>`;
+
+    let c = 0;
+    while (c < 12) {
+      if (c === layout.startCol) {
+        const left = isAr ? layout.rightPct : layout.leftPct;
+        const right = isAr ? layout.leftPct : layout.rightPct;
+        html += `<td colspan="${layout.colspan}" class="${c > 0 ? 'month-divider' : ''}">`;
+        html += `<div class="bar ${item.type === 'green' ? 'green' : 'blue'}" style="left:${left.toFixed(1)}%;right:${right.toFixed(1)}%" title="${safeName}">${safeName}</div>`;
+        html += `</td>`;
+        c += layout.colspan;
+      } else {
+        html += `<td class="${c > 0 ? 'month-divider' : ''}"></td>`;
+        c++;
+      }
+    }
+    html += `</tr>`;
+  });
+  html += `</tbody></table>`;
+
+  wrap.innerHTML = html;
+}
+
+/* ============================================================
+   Editor table
+   ============================================================ */
+function renderEditor() {
+  const tbody = document.getElementById('editor-tbody');
+  tbody.innerHTML = ITEMS.map((item, idx) => `
+    <tr>
+      <td><input type="text" value="${escHtml(item.nameEn)}" data-idx="${idx}" data-field="nameEn"></td>
+      <td><input type="text" value="${escHtml(item.nameAr)}" data-idx="${idx}" data-field="nameAr" dir="rtl" style="font-family:'Cairo',sans-serif"></td>
+      <td><input type="date" value="${item.start}" data-idx="${idx}" data-field="start"></td>
+      <td><input type="date" value="${item.end}" data-idx="${idx}" data-field="end"></td>
+      <td>
+        <select data-idx="${idx}" data-field="type">
+          <option value="green" ${item.type === 'green' ? 'selected' : ''}>Committed (green)</option>
+          <option value="blue"  ${item.type === 'blue'  ? 'selected' : ''}>Planned (blue)</option>
+        </select>
+      </td>
+      <td><button class="btn-icon" data-action="remove" data-idx="${idx}" title="Delete">&times;</button></td>
+    </tr>
+  `).join('');
+}
+
+function bindEditorEvents() {
+  const tbody = document.getElementById('editor-tbody');
+  tbody.addEventListener('input', e => {
+    const t = e.target;
+    if (!t.dataset.idx) return;
+    const idx = +t.dataset.idx;
+    const field = t.dataset.field;
+    ITEMS[idx][field] = t.value;
+    renderGrid();
+  });
+  tbody.addEventListener('change', e => {
+    const t = e.target;
+    if (t.dataset.field === 'type') {
+      const idx = +t.dataset.idx;
+      ITEMS[idx].type = t.value;
+      renderGrid();
+    }
+  });
+  tbody.addEventListener('click', e => {
+    const btn = e.target.closest('button[data-action="remove"]');
+    if (!btn) return;
+    const idx = +btn.dataset.idx;
+    if (!confirm('Delete this item?')) return;
+    ITEMS.splice(idx, 1);
+    renderEditor();
+    renderGrid();
+  });
+
+  document.getElementById('add-item').addEventListener('click', () => {
+    ITEMS.push({
+      nameEn: 'New item',
+      nameAr: 'عنصر جديد',
+      start: '2026-01-01',
+      end: '2026-03-31',
+      type: 'blue'
+    });
+    renderEditor();
+    renderGrid();
+  });
+  document.getElementById('save-local').addEventListener('click', saveItems);
+  document.getElementById('reset-default').addEventListener('click', () => {
+    if (!confirm('Reset to default items? Your local edits will be lost.')) return;
+    ITEMS = DEFAULT_ITEMS.map(i => ({...i}));
+    localStorage.removeItem(STORAGE_KEY);
+    renderEditor();
+    renderGrid();
+  });
+}
+
+/* ============================================================
+   UI handlers
+   ============================================================ */
+function setLang(lang) {
+  LANG = lang;
+  const isAr = lang === 'ar';
+  document.body.setAttribute('dir', isAr ? 'rtl' : 'ltr');
+  document.getElementById('lang-en').classList.toggle('active', lang === 'en');
+  document.getElementById('lang-ar').classList.toggle('active', lang === 'ar');
+  document.getElementById('roadmap-title').textContent = isAr ? TITLE_AR : TITLE_EN;
+  document.getElementById('roadmap-title').style.fontFamily = isAr ? "'Cairo', sans-serif" : "'Inter', sans-serif";
+  renderGrid();
+}
+
+function toggleEditor() {
+  const sec = document.getElementById('editor-section');
+  sec.classList.toggle('collapsed');
+}
+
+async function exportPng() {
+  const card = document.getElementById('roadmap-card');
+  try {
+    const canvas = await html2canvas(card, {
+      scale: 2,
+      useCORS: true,
+      backgroundColor: '#ffffff',
+      logging: false
+    });
+    const link = document.createElement('a');
+    const safeTitle = (LANG === 'ar' ? 'roadmap_2026_ar' : 'roadmap_2026_en');
+    link.download = safeTitle + '.png';
+    link.href = canvas.toDataURL('image/png');
+    link.click();
+  } catch (err) {
+    alert('Export failed: ' + err.message);
+  }
+}
+
+/* ============================================================
+   Init
+   ============================================================ */
+function init() {
+  const saved = loadItems();
+  ITEMS = saved && saved.length ? saved : DEFAULT_ITEMS.map(i => ({...i}));
+
+  document.getElementById('lang-en').addEventListener('click', () => setLang('en'));
+  document.getElementById('lang-ar').addEventListener('click', () => setLang('ar'));
+  document.getElementById('toggle-editor').addEventListener('click', toggleEditor);
+  document.getElementById('export-png').addEventListener('click', exportPng);
+
+  renderEditor();
+  bindEditorEvents();
+  renderGrid();
+}
+
+initGate();
+</script>
+</body>
+</html>
