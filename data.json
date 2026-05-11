@@ -211,13 +211,13 @@
       "description": "Simplify the QR code generation logic and introduce a new way to trigger sharing requests to the user from the SP channel.",
       "sub": [
         {
-          "id": "s-9-2",
-          "task": "Link to OTC sharing review",
+          "id": "s-mp12shp3-1",
+          "task": "Development and Dilivery",
           "due": "—",
-          "status": "Pending",
-          "owner": "—",
-          "updatedBy": "",
-          "updatedAt": ""
+          "status": "Completed",
+          "owner": "Fadi",
+          "updatedBy": "Fadi",
+          "updatedAt": "11 May 2026 14:45"
         }
       ]
     },
@@ -809,6 +809,6 @@
     ]
   },
   "overrides": {},
-  "lastUpdated": "11 May 2026 14:44",
+  "lastUpdated": "11 May 2026 14:45",
   "version": 1
 }
