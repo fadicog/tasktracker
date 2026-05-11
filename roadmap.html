@@ -156,6 +156,11 @@ body[dir="rtl"] { font-family: 'Cairo', sans-serif; }
   table-layout: fixed;
 }
 
+/* Fixed left column width */
+.grid-table col.label-col { width: 260px; }
+@media (max-width: 1100px) { .grid-table col.label-col { width: 220px; } }
+@media (max-width: 900px)  { .grid-table col.label-col { width: 160px; } }
+
 /* Quarter header row */
 .grid-table tr.q-row th {
   padding: 8px 4px 6px;
@@ -172,9 +177,6 @@ body[dir="rtl"] { font-family: 'Cairo', sans-serif; }
 .grid-table tr.q-row th:first-child {
   border-left: none;
   text-align: left;
-  width: 120px;
-  min-width: 120px;
-  max-width: 120px;
 }
 [dir="rtl"] .grid-table tr.q-row th { border-left: none; border-right: 1px solid #d8d4dd; }
 [dir="rtl"] .grid-table tr.q-row th:first-child { border-right: none; text-align: right; }
@@ -193,26 +195,29 @@ body[dir="rtl"] { font-family: 'Cairo', sans-serif; }
 }
 .grid-table tr.m-row th:first-child {
   text-align: left;
-  width: 120px;
-  min-width: 120px;
-  max-width: 120px;
   color: var(--text);
   font-weight: 700;
-  font-size: 13px;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
   vertical-align: middle;
   background: #fafbfd;
   border-right: 1px solid var(--border);
+  padding-left: 12px;
 }
 [dir="rtl"] .grid-table tr.m-row th:first-child {
   border-right: none;
   border-left: 1px solid var(--border);
   text-align: right;
+  padding-right: 12px;
+  padding-left: 4px;
 }
 
 /* Body rows */
 .grid-table td {
   padding: 0;
-  height: 38px;
+  min-height: 44px;
+  height: auto;
   position: relative;
   border-bottom: 1px dashed #eef0f5;
   vertical-align: middle;
@@ -221,38 +226,31 @@ body[dir="rtl"] { font-family: 'Cairo', sans-serif; }
 [dir="rtl"] .grid-table td.month-divider { border-left: none; border-right: 1px dashed #eef0f5; }
 
 .grid-table tr.feature-row td:first-child {
-  font-size: 13px;
-  font-weight: 700;
+  font-size: 12.5px;
+  font-weight: 600;
   color: var(--text);
-  padding: 0 12px;
+  padding: 8px 12px;
   background: #fafbfd;
   border-right: 1px solid var(--border);
   vertical-align: middle;
+  white-space: normal;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+  line-height: 1.35;
 }
 [dir="rtl"] .grid-table tr.feature-row td:first-child {
   border-right: none;
   border-left: 1px solid var(--border);
   text-align: right;
-}
-.grid-table tr.feature-row + tr.feature-row td:first-child {
-  /* keep "Features" label only in the first row via rowspan; this is a no-op safety net */
+  font-family: 'Cairo', sans-serif;
 }
 
 /* Bar */
 .bar {
   position: absolute;
-  top: 5px;
-  bottom: 5px;
+  top: 8px;
+  bottom: 8px;
   border-radius: 3px;
-  display: flex;
-  align-items: center;
-  padding: 0 10px;
-  color: #1f2633;
-  font-size: 11.5px;
-  font-weight: 600;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
   z-index: 2;
   min-width: 8px;
   box-shadow: 0 1px 0 rgba(0,0,0,0.04);
@@ -631,17 +629,21 @@ function renderGrid() {
   const wrap = document.getElementById('grid-wrap');
   const isAr = LANG === 'ar';
   const monthLabels = isAr ? MONTHS_AR : MONTHS_EN;
-  const labelCol = isAr ? 'الميزات' : 'Features';
+  const labelCol = isAr ? 'الميزة' : 'Feature';
 
   // Sort items by start date for nicer display
   const sorted = [...ITEMS].sort((a, b) => new Date(a.start) - new Date(b.start));
 
   let html = `<table class="grid-table">`;
+  // Column group: fixed left label column + 12 month columns
+  html += `<colgroup><col class="label-col">`;
+  for (let i = 0; i < 12; i++) html += `<col>`;
+  html += `</colgroup>`;
 
   // Quarter row
   html += `<thead><tr class="q-row">`;
   html += `<th>&nbsp;</th>`;
-  // Q1 spans Feb (idx 1) — looks closest to image. We'll center under FEB / MAY / AUG / NOV.
+  // Centre Q labels under FEB / MAY / AUG / NOV
   for (let i = 0; i < 12; i++) {
     let q = '';
     if (i === 1) q = 'Q1';
@@ -669,7 +671,7 @@ function renderGrid() {
     const safeName = escHtml(name);
 
     html += `<tr class="feature-row">`;
-    html += `<td>&nbsp;</td>`;
+    html += `<td title="${safeName}">${safeName}</td>`;
 
     let c = 0;
     while (c < 12) {
@@ -677,7 +679,7 @@ function renderGrid() {
         const left = isAr ? layout.rightPct : layout.leftPct;
         const right = isAr ? layout.leftPct : layout.rightPct;
         html += `<td colspan="${layout.colspan}" class="${c > 0 ? 'month-divider' : ''}">`;
-        html += `<div class="bar ${item.type === 'green' ? 'green' : 'blue'}" style="left:${left.toFixed(1)}%;right:${right.toFixed(1)}%" title="${safeName}">${safeName}</div>`;
+        html += `<div class="bar ${item.type === 'green' ? 'green' : 'blue'}" style="left:${left.toFixed(1)}%;right:${right.toFixed(1)}%" title="${safeName}"></div>`;
         html += `</td>`;
         c += layout.colspan;
       } else {
