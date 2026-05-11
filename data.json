@@ -170,10 +170,10 @@
           "id": "s-8-1",
           "task": "Set up meeting between Ops and SP team to discuss way forward",
           "due": "2026-04-27",
-          "status": "Started",
+          "status": "Completed",
           "owner": "Fadi",
           "updatedBy": "Fadi",
-          "updatedAt": "11 May 2026 14:31"
+          "updatedAt": "11 May 2026 14:39"
         },
         {
           "id": "s-8-3",
@@ -818,6 +818,6 @@
     ]
   },
   "overrides": {},
-  "lastUpdated": "11 May 2026 14:31",
+  "lastUpdated": "11 May 2026 14:39",
   "version": 1
 }
