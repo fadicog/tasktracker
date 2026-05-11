@@ -789,10 +789,20 @@
       "due": "—",
       "updatedBy": "Fadi",
       "updatedAt": "29 Apr 2026 17:28"
+    },
+    {
+      "id": "oa-1778930400000",
+      "action": "Request Ops report on EID add rate for newly onboarded users",
+      "desc": "Measure success of the post-onboarding nudge that guides new UAE PASS users to add their Emirates ID as their first document in DV. Report should show: total newly onboarded users (last 30–60 days), how many added EID at/right after onboarding vs not, and conversion %.",
+      "status": "Open",
+      "owner": "Fadi",
+      "due": "—",
+      "updatedBy": "Fadi",
+      "updatedAt": "11 May 2026 09:00"
     }
   ],
   "notes": {},
   "overrides": {},
-  "lastUpdated": "29 Apr 2026 17:28",
+  "lastUpdated": "11 May 2026 09:00",
   "version": 1
 }
