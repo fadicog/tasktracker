@@ -179,10 +179,10 @@
           "id": "s-8-3",
           "task": "Finalise offboarding approach/process for SPs and Issuers",
           "due": "2026-04-25",
-          "status": "Pending",
+          "status": "In Progress",
           "owner": "Jeffrey",
           "updatedBy": "Fadi",
-          "updatedAt": "23 Apr 2026 09:00"
+          "updatedAt": "11 May 2026 14:40"
         },
         {
           "id": "s-8-2",
@@ -818,6 +818,6 @@
     ]
   },
   "overrides": {},
-  "lastUpdated": "11 May 2026 14:39",
+  "lastUpdated": "11 May 2026 14:40",
   "version": 1
 }
