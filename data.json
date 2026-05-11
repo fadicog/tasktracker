@@ -806,9 +806,16 @@
         "author": "Fadi",
         "ts": "11 May 2026 14:23"
       }
+    ],
+    "f-8": [
+      {
+        "text": "Ops have demoed the new SP offboarding flow and shared the updated workflow + documentation incorporating feedback from Madee and Malak (reviewed last week). Next step: secure Surbhi's approval on the updated flow, after which we proceed with the TDRA discussion and approval.",
+        "author": "Fadi",
+        "ts": "11 May 2026 14:48"
+      }
     ]
   },
   "overrides": {},
-  "lastUpdated": "11 May 2026 14:45",
+  "lastUpdated": "11 May 2026 14:48",
   "version": 1
 }
