@@ -327,10 +327,10 @@
           "id": "s-12-2",
           "task": "Schedule a meeting to review the findings + SP team",
           "due": "2026-04-30",
-          "status": "Pending",
+          "status": "Started",
           "owner": "Fadi",
           "updatedBy": "Fadi",
-          "updatedAt": "24 Apr 2026 09:00"
+          "updatedAt": "12 May 2026 10:30"
         }
       ]
     },
@@ -816,6 +816,6 @@
     ]
   },
   "overrides": {},
-  "lastUpdated": "11 May 2026 14:55",
+  "lastUpdated": "12 May 2026 10:30",
   "version": 1
 }
