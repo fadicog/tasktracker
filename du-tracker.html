@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Du Success Rate Boost — Tracker</title>
+<style>
+  :root {
+    --navy: #2c3a55;
+    --gold: #a89030;
+    --green: #11a56f;
+    --teal: #3fcaa7;
+    --danger: #b71c1c;
+    --warn: #d68b00;
+    --muted: #6b7280;
+    --border: #e5e7eb;
+    --bg: #f7f8fa;
+    --card: #ffffff;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: var(--bg); color: #1f2937; }
+  a { color: var(--navy); }
+
+  header {
+    background: var(--navy); color: #fff; padding: 14px 24px;
+    display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+  }
+  header h1 { margin: 0; font-size: 18px; font-weight: 600; }
+  header .sub { font-size: 11px; color: #c4d0e4; }
+  header nav { margin-left: auto; display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  header nav a, header nav button {
+    color: #fff; background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2);
+    padding: 6px 12px; border-radius: 6px; font-size: 12px; cursor: pointer;
+    text-decoration: none; font-family: inherit;
+  }
+  header nav a:hover, header nav button:hover { background: rgba(255,255,255,.2); }
+  #save-status { font-size: 11px; color: #90caf9; font-style: italic; min-width: 180px; text-align: right; }
+
+  main { padding: 18px 24px 60px; max-width: 1400px; margin: 0 auto; }
+
+  .summary-bar {
+    background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+    padding: 14px 18px; margin-bottom: 16px; display: flex; gap: 18px; flex-wrap: wrap; align-items: center;
+  }
+  .summary-bar .stat { display: flex; flex-direction: column; gap: 2px; }
+  .summary-bar .stat .v { font-size: 22px; font-weight: 700; line-height: 1; }
+  .summary-bar .stat .l { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; }
+  .summary-bar .divider { width: 1px; height: 30px; background: var(--border); }
+  .summary-bar .stale-warn { color: var(--warn); }
+  .summary-bar .blocked-warn { color: var(--danger); }
+  .summary-bar .actions { margin-left: auto; display: flex; gap: 6px; }
+  .summary-bar .actions button {
+    padding: 6px 14px; font-size: 12px; border: 1px solid var(--border); border-radius: 6px;
+    background: #fff; cursor: pointer; font-family: inherit;
+  }
+  .summary-bar .actions button:hover { background: #f3f4f6; }
+  .summary-bar .actions button.primary { background: var(--navy); color: #fff; border-color: var(--navy); }
+  .summary-bar .actions button.primary:hover { background: #1e2a40; }
+
+  .filters {
+    background: var(--card); border: 1px solid var(--border); border-radius: 10px;
+    padding: 12px 14px; margin-bottom: 14px; display: flex; flex-wrap: wrap; gap: 10px; align-items: center;
+  }
+  .filters .group { display: flex; align-items: center; gap: 6px; }
+  .filters label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; font-weight: 600; }
+  .pill-row { display: flex; gap: 4px; flex-wrap: wrap; }
+  .pill {
+    padding: 4px 10px; font-size: 11px; border-radius: 999px; cursor: pointer;
+    border: 1px solid var(--border); background: #fff; user-select: none;
+  }
+  .pill.active { background: var(--navy); color: #fff; border-color: var(--navy); }
+  .filters select {
+    padding: 4px 8px; font-size: 12px; border: 1px solid var(--border); border-radius: 6px;
+    background: #fff; font-family: inherit;
+  }
+
+  table.it { width: 100%; border-collapse: collapse; background: var(--card); border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+  table.it th { background: #f3f4f6; padding: 10px 12px; text-align: left; font-size: 11px; text-transform: uppercase; letter-spacing: .5px; color: var(--muted); font-weight: 600; border-bottom: 1px solid var(--border); }
+  table.it td { padding: 12px; vertical-align: top; border-bottom: 1px solid var(--border); font-size: 13px; }
+  table.it tr.summary { cursor: pointer; }
+  table.it tr.summary:hover { background: #fafbfc; }
+  table.it tr.details { background: #f9fafb; display: none; }
+  table.it tr.details.open { display: table-row; }
+  table.it tr.summary td:first-child { width: 32px; color: var(--muted); font-weight: 600; }
+  table.it .ititle { font-weight: 600; color: var(--navy); }
+  table.it .owner { color: var(--muted); font-size: 12px; }
+  table.it .stale-dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--warn); margin-left: 6px; vertical-align: middle; }
+  table.it .ts { font-size: 11px; color: var(--muted); }
+  table.it .expand-arrow { font-size: 11px; color: var(--muted); transition: transform .15s; display: inline-block; }
+  table.it tr.summary.open .expand-arrow { transform: rotate(90deg); }
+
+  .status-pill {
+    display: inline-block; padding: 3px 10px; font-size: 11px; font-weight: 600;
+    border-radius: 999px; cursor: pointer; user-select: none; white-space: nowrap;
+  }
+  .status-pill.ns { background: #e5e7eb; color: #4b5563; }
+  .status-pill.ip { background: #dbeafe; color: #1e40af; }
+  .status-pill.oh { background: #fef3c7; color: #92400e; }
+  .status-pill.bl { background: #fee2e2; color: #991b1b; }
+  .status-pill.dn { background: #d1fae5; color: #065f46; }
+
+  body.view-mode .edit-only { display: none !important; }
+  body.view-mode .status-pill { cursor: default; }
+
+  .details-panel { padding: 14px 16px 16px 16px; }
+  .details-panel .section { margin-bottom: 14px; }
+  .details-panel .section h4 { margin: 0 0 6px 0; font-size: 11px; text-transform: uppercase; letter-spacing: .5px; color: var(--muted); font-weight: 600; }
+  .details-panel .section .body { font-size: 13px; line-height: 1.5; white-space: pre-wrap; color: #374151; }
+  .details-panel .section .body.empty { color: #9ca3af; font-style: italic; }
+
+  .updates-block { background: #fffbe6; border: 1px solid #fde68a; border-radius: 8px; padding: 12px 14px; }
+  .updates-block h4 { margin: 0 0 8px 0; font-size: 11px; text-transform: uppercase; letter-spacing: .5px; color: #92400e; font-weight: 600; }
+  .update { font-size: 12px; color: #4b5563; padding: 8px 0; border-bottom: 1px dashed #fde68a; position: relative; }
+  .update:last-of-type { border-bottom: 0; }
+  .update .week { display: inline-block; background: #fef3c7; color: #92400e; padding: 1px 6px; border-radius: 4px; font-size: 10px; font-weight: 600; margin-right: 8px; }
+  .update .text { display: inline; line-height: 1.5; }
+  .update .meta { color: #92400e; font-style: italic; font-size: 10px; margin-left: 8px; }
+  .update .actions { display: inline-flex; gap: 4px; margin-left: 8px; vertical-align: middle; }
+  .update .actions button {
+    padding: 2px 6px; font-size: 10px; line-height: 1.3; border: 1px solid #fde68a;
+    border-radius: 3px; background: #fff8d6; color: #92400e; cursor: pointer; font-family: inherit;
+  }
+  .update .actions button:hover { background: #fde68a; }
+  .update .actions button.danger { color: var(--danger); border-color: #fecaca; background: #fff5f5; }
+  .update .actions button.danger:hover { background: #fee2e2; }
+  .update-edit-form { display: flex; gap: 6px; margin-top: 6px; }
+  .update-edit-form textarea { flex: 1; min-height: 56px; padding: 6px 8px; font-size: 12px; border: 1px solid #fde68a; border-radius: 4px; font-family: inherit; resize: vertical; }
+  .update-edit-form .btns { display: flex; flex-direction: column; gap: 4px; }
+  .update-edit-form .btns button { padding: 4px 10px; font-size: 11px; border: 0; border-radius: 4px; background: var(--navy); color: #fff; cursor: pointer; font-family: inherit; font-weight: 600; }
+  .update-edit-form .btns button.cancel { background: #888; }
+
+  .add-update {
+    margin-top: 10px; display: flex; gap: 6px;
+  }
+  .add-update textarea {
+    flex: 1; padding: 6px 8px; font-size: 12px; border: 1px solid #fde68a;
+    border-radius: 4px; font-family: inherit; min-height: 40px; background: #fff; resize: vertical;
+  }
+  .add-update button {
+    padding: 6px 14px; font-size: 12px; border: 0; border-radius: 4px;
+    background: var(--navy); color: #fff; cursor: pointer; font-weight: 600; align-self: flex-end; font-family: inherit;
+  }
+
+  .meta-edit { display: inline-block; }
+  .meta-edit input, .meta-edit select { font-size: 12px; padding: 3px 6px; border: 1px solid var(--border); border-radius: 4px; font-family: inherit; }
+
+  /* PAT modal — same shape as index.html */
+  .modal-backdrop {
+    display: none; position: fixed; inset: 0; background: rgba(0,0,0,.5); z-index: 1000;
+    align-items: center; justify-content: center;
+  }
+  .modal-backdrop.active { display: flex; }
+  .modal {
+    background: #fff; border-radius: 10px; padding: 22px; max-width: 520px; width: 90%;
+    max-height: 90vh; overflow: auto;
+  }
+  .modal h3 { margin-top: 0; }
+  .modal input[type=text], .modal input[type=password] {
+    width: 100%; padding: 8px 10px; font-size: 13px; border: 1px solid var(--border); border-radius: 6px; font-family: inherit;
+  }
+  .modal .actions { margin-top: 14px; display: flex; gap: 8px; justify-content: flex-end; }
+  .modal button { padding: 8px 14px; font-size: 13px; border: 1px solid var(--border); border-radius: 6px; background: #fff; cursor: pointer; font-family: inherit; }
+  .modal button.primary { background: var(--navy); color: #fff; border-color: var(--navy); }
+  .modal button.danger { background: var(--danger); color: #fff; border-color: var(--danger); }
+  .modal .status { font-size: 12px; margin-top: 8px; min-height: 16px; }
+  .modal .warn { font-size: 11px; color: var(--warn); margin-top: 8px; padding: 8px; background: #fff8e1; border-radius: 6px; }
+
+  .toast-container { position: fixed; top: 20px; right: 20px; z-index: 2000; display: flex; flex-direction: column; gap: 8px; }
+  .toast { padding: 10px 16px; border-radius: 6px; color: #fff; font-size: 13px; min-width: 200px; box-shadow: 0 4px 12px rgba(0,0,0,.15); }
+  .toast.success { background: var(--green); }
+  .toast.error { background: var(--danger); }
+  .toast.info { background: var(--navy); }
+
+  .empty-state { text-align: center; padding: 40px; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>Du Success Rate Boost — Tracker</h1>
+    <div class="sub">Independent weekly tracker · imported from Du Success Rate boost -Tracker.xlsx</div>
+  </div>
+  <nav>
+    <a href="index.html">← Main Tracker</a>
+    <a href="roadmap.html">Roadmap</a>
+    <span id="identity-pill" style="font-size: 11px; padding: 4px 10px; background: rgba(255,255,255,.15); border-radius: 999px;">Not set</span>
+    <button id="mode-btn" title="Toggle edit/view mode">✏️ Edit</button>
+    <button id="token-btn">🔑 Token</button>
+    <span id="save-status">⏳ Loading…</span>
+  </nav>
+</header>
+
+<main>
+  <div class="summary-bar">
+    <div class="stat"><span class="v" id="stat-total">—</span><span class="l">Total</span></div>
+    <div class="divider"></div>
+    <div class="stat blocked-warn"><span class="v" id="stat-blocked">—</span><span class="l">Blocked</span></div>
+    <div class="stat" style="color:#92400e"><span class="v" id="stat-onhold">—</span><span class="l">On Hold</span></div>
+    <div class="stat" style="color:#1e40af"><span class="v" id="stat-inprogress">—</span><span class="l">In Progress</span></div>
+    <div class="stat" style="color:#4b5563"><span class="v" id="stat-notstarted">—</span><span class="l">Not Started</span></div>
+    <div class="stat" style="color:#065f46"><span class="v" id="stat-done">—</span><span class="l">Done</span></div>
+    <div class="divider"></div>
+    <div class="stat stale-warn"><span class="v" id="stat-stale">—</span><span class="l">Stale (14d+)</span></div>
+    <div class="actions">
+      <button id="snapshot-btn" title="Generate weekly snapshot markdown">📋 Weekly Snapshot</button>
+    </div>
+  </div>
+
+  <div class="filters">
+    <div class="group">
+      <label>Status:</label>
+      <div class="pill-row" id="status-filter">
+        <span class="pill active" data-status="all">All</span>
+        <span class="pill" data-status="Blocked">Blocked</span>
+        <span class="pill" data-status="On Hold">On Hold</span>
+        <span class="pill" data-status="In Progress">In Progress</span>
+        <span class="pill" data-status="Not Started">Not Started</span>
+        <span class="pill" data-status="Done">Done</span>
+      </div>
+    </div>
+    <div class="group" style="margin-left:auto">
+      <label>Owner:</label>
+      <select id="owner-filter"><option value="all">All owners</option></select>
+    </div>
+    <div class="group">
+      <label>Stale only:</label>
+      <input type="checkbox" id="stale-filter">
+    </div>
+  </div>
+
+  <table class="it">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Initiative</th>
+        <th style="width:14%">Owner</th>
+        <th style="width:12%">Status</th>
+        <th style="width:14%">Last Update</th>
+        <th style="width:30px"></th>
+      </tr>
+    </thead>
+    <tbody id="rows"></tbody>
+  </table>
+</main>
+
+<!-- PAT Modal -->
+<div class="modal-backdrop" id="pat-modal">
+  <div class="modal">
+    <h3>🔑 GitHub Token</h3>
+    <p style="font-size:13px;color:#555;line-height:1.5">
+      The Du tracker reads <code>du-data.json</code> from <code>github.com/fadicog/tasktracker</code> and writes back via the GitHub Contents API. It shares the same token as the main tracker (stored in your browser's localStorage).
+    </p>
+    <input type="password" id="pat-input" placeholder="github_pat_… (fine-grained PAT with Contents: Write)">
+    <div class="status" id="pat-status"></div>
+    <div class="warn">⚠ The token is stored in your browser's localStorage only. It never leaves your machine except in calls directly to api.github.com.</div>
+    <div class="actions">
+      <button class="danger" id="pat-remove">Remove token</button>
+      <button id="pat-cancel">Cancel</button>
+      <button class="primary" id="pat-save">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- Identity Modal -->
+<div class="modal-backdrop" id="id-modal">
+  <div class="modal">
+    <h3>👤 Who are you?</h3>
+    <p style="font-size:13px;color:#555">Used to stamp updates so the team knows who wrote what.</p>
+    <input type="text" id="id-input" placeholder="Your name (e.g. Fadi)">
+    <div class="actions">
+      <button id="id-cancel">Cancel</button>
+      <button class="primary" id="id-save">Save</button>
+    </div>
+  </div>
+</div>
+
+<!-- Snapshot Modal -->
+<div class="modal-backdrop" id="snap-modal">
+  <div class="modal" style="max-width: 760px">
+    <h3>📋 Weekly Snapshot</h3>
+    <p style="font-size:12px;color:#555">Copy-paste this into your WSR email or status update.</p>
+    <textarea id="snap-text" style="width:100%;height:50vh;font-family:ui-monospace, Menlo, Consolas, monospace;font-size:12px;padding:10px;border:1px solid var(--border);border-radius:6px"></textarea>
+    <div class="actions">
+      <button id="snap-copy" class="primary">Copy to clipboard</button>
+      <button id="snap-close">Close</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast-container" id="toast-host"></div>
+
+<script>
+'use strict';
+
+/* ===== Config ===== */
+const GH = {
+  owner: 'fadicog', repo: 'tasktracker', file: 'du-data.json', branch: 'main',
+  get apiUrl() { return `https://api.github.com/repos/${this.owner}/${this.repo}/contents/${this.file}`; }
+};
+const LS = {
+  identity: 'dv_tracker_identity',   // shared with main tracker
+  pat:      'dv_tracker_pat',        // shared with main tracker
+  mode:     'du_tracker_mode'        // separate so view/edit toggles don't fight
+};
+const STATUS_CYCLE = ['Not Started', 'In Progress', 'On Hold', 'Blocked', 'Done'];
+const STATUS_CLASS = { 'Not Started': 'ns', 'In Progress': 'ip', 'On Hold': 'oh', 'Blocked': 'bl', 'Done': 'dn' };
+const STALE_DAYS = 14;
+
+/* ===== State ===== */
+let DATA = { initiatives: [], lastUpdated: '', version: 1 };
+let IDENTITY = '';
+let EDIT_MODE = true;
+let _sha = null;
+let _saveTimer = null;
+let FILTER_STATUS = 'all';
+let FILTER_OWNER = 'all';
+let FILTER_STALE = false;
+
+/* ===== Utils ===== */
+function lsGet(k, f) { try { const v = localStorage.getItem(k); return v === null ? f : JSON.parse(v); } catch(e) { return f; } }
+function lsSet(k, v) { localStorage.setItem(k, JSON.stringify(v)); }
+function lsDel(k) { localStorage.removeItem(k); }
+function escapeHtml(s) { return String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+function formatTs(d) {
+  const mo = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const parts = new Intl.DateTimeFormat('en-GB', { timeZone: 'Asia/Dubai', day:'numeric', month:'numeric', year:'numeric', hour:'2-digit', minute:'2-digit', hour12:false }).formatToParts(d);
+  const get = t => parts.find(p => p.type === t).value;
+  const pad = n => String(n).padStart(2,'0');
+  return `${parseInt(get('day'))} ${mo[parseInt(get('month'))-1]} ${get('year')} ${pad(get('hour'))}:${pad(get('minute'))}`;
+}
+function parseTs(ts) {
+  if (!ts) return null;
+  const m = ts.match(/^(\d+)\s+([A-Za-z]{3})\s+(\d{4})\s+(\d{2}):(\d{2})$/);
+  if (!m) return null;
+  const months = { Jan:0,Feb:1,Mar:2,Apr:3,May:4,Jun:5,Jul:6,Aug:7,Sep:8,Oct:9,Nov:10,Dec:11 };
+  return new Date(Date.UTC(parseInt(m[3]), months[m[2]], parseInt(m[1]), parseInt(m[4])-4, parseInt(m[5])));
+}
+function mondayOf(d) {
+  const day = d.getUTCDay();
+  const diff = (day === 0 ? -6 : 1 - day);
+  const m = new Date(d); m.setUTCDate(d.getUTCDate() + diff);
+  return `${m.getUTCFullYear()}-${String(m.getUTCMonth()+1).padStart(2,'0')}-${String(m.getUTCDate()).padStart(2,'0')}`;
+}
+function isStale(it) {
+  if (it.status === 'Done') return false;
+  const latest = (it.weeklyUpdates || []).slice(-1)[0];
+  const ref = latest ? parseTs(latest.ts) : parseTs(it.lastUpdatedAt);
+  if (!ref) return true;
+  return (Date.now() - ref.getTime()) > STALE_DAYS * 86400000;
+}
+function toast(msg, kind) {
+  const t = document.createElement('div');
+  t.className = 'toast ' + (kind || 'info');
+  t.textContent = msg;
+  document.getElementById('toast-host').appendChild(t);
+  setTimeout(() => t.remove(), 3500);
+}
+function setSaveStatus(state, msg) {
+  const el = document.getElementById('save-status');
+  el.textContent = msg;
+  el.style.color = state === 'ok' ? '#a5d6a7'
+                 : state === 'error' ? '#ef9a9a'
+                 : state === 'warn' ? '#ffe082'
+                 : '#90caf9';
+}
+
+/* ===== Load / Save ===== */
+async function loadData() {
+  IDENTITY = lsGet(LS.identity, '') || '';
+  const mode = sessionStorage.getItem(LS.mode);
+  EDIT_MODE = mode === null ? true : (mode === 'edit');
+  applyModeClass();
+  setSaveStatus('loading', '⏳ Loading…');
+  try {
+    const pat = lsGet(LS.pat, '');
+    const headers = { 'Accept': 'application/vnd.github.v3+json' };
+    if (pat) headers['Authorization'] = `token ${pat}`;
+    const res = await fetch(`${GH.apiUrl}?t=${Date.now()}`, { headers });
+    if (!res.ok) throw new Error(`GitHub ${res.status}`);
+    const meta = await res.json();
+    _sha = meta.sha;
+    const json = JSON.parse(decodeURIComponent(escape(atob(meta.content.replace(/\n/g,'')))));
+    DATA = json;
+    DATA.initiatives = DATA.initiatives || [];
+    setSaveStatus('ok', `✓ Loaded · ${DATA.lastUpdated || ''}`);
+    refreshOwnerFilter();
+    render();
+  } catch (err) {
+    setSaveStatus('error', `✗ Load failed: ${err.message}`);
+    console.error(err);
+  }
+}
+
+function persist() {
+  DATA.lastUpdated = formatTs(new Date());
+  clearTimeout(_saveTimer);
+  _saveTimer = setTimeout(commitToGitHub, 800);
+}
+
+async function commitToGitHub() {
+  const pat = lsGet(LS.pat, '');
+  if (!pat) {
+    setSaveStatus('warn', '⚠ No token — changes not saved. Click 🔑 Token.');
+    return;
+  }
+  setSaveStatus('saving', '⏳ Saving…');
+  try {
+    const content = btoa(unescape(encodeURIComponent(JSON.stringify(DATA, null, 2))));
+    const body = {
+      message: `Du tracker: update — ${DATA.lastUpdated} by ${IDENTITY || 'unknown'}`,
+      content, branch: GH.branch
+    };
+    if (_sha) body.sha = _sha;
+    const res = await fetch(GH.apiUrl, {
+      method: 'PUT',
+      headers: { 'Authorization': `token ${pat}`, 'Content-Type': 'application/json' },
+      body: JSON.stringify(body)
+    });
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      // SHA conflict — re-fetch and let user retry
+      if (res.status === 409 || /sha/i.test(err.message || '')) {
+        setSaveStatus('warn', '⚠ Remote changed — reloading…');
+        await loadData();
+        toast('Tracker reloaded — your last edit may need to be redone', 'error');
+        return;
+      }
+      throw new Error(err.message || `HTTP ${res.status}`);
+    }
+    const data = await res.json();
+    _sha = data.content.sha;
+    setSaveStatus('ok', `✓ Saved · ${DATA.lastUpdated}`);
+  } catch (err) {
+    setSaveStatus('error', `✗ Save failed: ${err.message}`);
+    console.error(err);
+  }
+}
+
+/* ===== Render ===== */
+function applyModeClass() {
+  document.body.classList.toggle('view-mode', !EDIT_MODE);
+  document.getElementById('mode-btn').textContent = EDIT_MODE ? '✏️ Edit' : '👁 View';
+  const pill = document.getElementById('identity-pill');
+  pill.textContent = IDENTITY ? `👤 ${IDENTITY}` : 'Set name';
+  pill.style.cursor = 'pointer';
+}
+
+function refreshOwnerFilter() {
+  const sel = document.getElementById('owner-filter');
+  const owners = [...new Set(DATA.initiatives.map(i => i.owner || '—'))].sort();
+  const current = sel.value;
+  sel.innerHTML = '<option value="all">All owners</option>' + owners.map(o => `<option value="${escapeHtml(o)}">${escapeHtml(o)}</option>`).join('');
+  if ([...sel.options].some(o => o.value === current)) sel.value = current;
+}
+
+function statusOrder(s) { return ['Blocked','On Hold','In Progress','Not Started','Done'].indexOf(s); }
+
+function visibleItems() {
+  return DATA.initiatives
+    .filter(it => FILTER_STATUS === 'all' || it.status === FILTER_STATUS)
+    .filter(it => FILTER_OWNER === 'all' || (it.owner || '—') === FILTER_OWNER)
+    .filter(it => !FILTER_STALE || isStale(it))
+    .sort((a, b) => {
+      const so = statusOrder(a.status) - statusOrder(b.status);
+      if (so !== 0) return so;
+      return a.num - b.num;
+    });
+}
+
+function renderSummary() {
+  const all = DATA.initiatives;
+  const by = s => all.filter(i => i.status === s).length;
+  document.getElementById('stat-total').textContent = all.length;
+  document.getElementById('stat-blocked').textContent = by('Blocked');
+  document.getElementById('stat-onhold').textContent = by('On Hold');
+  document.getElementById('stat-inprogress').textContent = by('In Progress');
+  document.getElementById('stat-notstarted').textContent = by('Not Started');
+  document.getElementById('stat-done').textContent = by('Done');
+  document.getElementById('stat-stale').textContent = all.filter(isStale).length;
+}
+
+function renderRows() {
+  const tbody = document.getElementById('rows');
+  const items = visibleItems();
+  if (!items.length) {
+    tbody.innerHTML = '<tr><td colspan="6" class="empty-state">No initiatives match the current filters.</td></tr>';
+    return;
+  }
+  tbody.innerHTML = items.map(it => {
+    const stale = isStale(it);
+    const lastUp = (it.weeklyUpdates || []).slice(-1)[0];
+    const lastUpText = lastUp ? `<span class="ts">${escapeHtml(lastUp.ts)}</span>` : (it.lastUpdatedAt ? `<span class="ts">${escapeHtml(it.lastUpdatedAt)}</span>` : '<span class="ts" style="color:#d68b00">— never —</span>');
+    return `
+      <tr class="summary" data-id="${escapeHtml(it.id)}">
+        <td>${it.num}</td>
+        <td>
+          <div class="ititle">${escapeHtml(it.initiative)}</div>
+        </td>
+        <td><span class="owner">${escapeHtml(it.owner || '—')}</span></td>
+        <td><span class="status-pill ${STATUS_CLASS[it.status] || 'ns'}" data-status-pill="${escapeHtml(it.id)}">${escapeHtml(it.status)}</span></td>
+        <td>${lastUpText}${stale ? '<span class="stale-dot" title="Stale: no update in '+STALE_DAYS+'+ days"></span>' : ''}</td>
+        <td><span class="expand-arrow">▶</span></td>
+      </tr>
+      <tr class="details" data-details="${escapeHtml(it.id)}">
+        <td colspan="6">${renderDetails(it)}</td>
+      </tr>
+    `;
+  }).join('');
+  bindRowEvents();
+}
+
+function renderDetails(it) {
+  const updates = (it.weeklyUpdates || []).slice().reverse(); // newest first
+  return `
+    <div class="details-panel">
+      <div class="section">
+        <h4>Owner <span class="edit-only" style="font-weight:normal;text-transform:none;letter-spacing:0;font-size:10px;color:var(--muted)">· click to edit</span></h4>
+        <div class="body editable-meta" data-edit-field="owner" data-id="${escapeHtml(it.id)}">${escapeHtml(it.owner || '—')}</div>
+      </div>
+      <div class="section">
+        <h4>Next Action <span class="edit-only" style="font-weight:normal;text-transform:none;letter-spacing:0;font-size:10px;color:var(--muted)">· click to edit</span></h4>
+        <div class="body editable-meta ${!it.nextAction ? 'empty' : ''}" data-edit-field="nextAction" data-id="${escapeHtml(it.id)}">${it.nextAction ? escapeHtml(it.nextAction) : '(none)'}</div>
+      </div>
+      <div class="section">
+        <h4>Remarks <span class="edit-only" style="font-weight:normal;text-transform:none;letter-spacing:0;font-size:10px;color:var(--muted)">· click to edit</span></h4>
+        <div class="body editable-meta ${!it.remarks ? 'empty' : ''}" data-edit-field="remarks" data-id="${escapeHtml(it.id)}">${it.remarks ? escapeHtml(it.remarks) : '(none)'}</div>
+      </div>
+      <div class="updates-block">
+        <h4>Weekly Updates</h4>
+        ${updates.length ? updates.map(u => {
+          const realIdx = it.weeklyUpdates.indexOf(u);
+          const edited = u.editedTs ? ` <span style="color:#b08400">(edited ${escapeHtml(u.editedBy || '—')} · ${escapeHtml(u.editedTs)})</span>` : '';
+          return `
+            <div class="update">
+              <span class="week">${escapeHtml(u.weekOf || '—')}</span><span class="text">${escapeHtml(u.text)}</span><span class="meta">— ${escapeHtml(u.author)} · ${escapeHtml(u.ts)}${edited}</span>
+              <span class="actions edit-only">
+                <button data-update-edit="${escapeHtml(it.id)}" data-idx="${realIdx}">Edit</button>
+                <button class="danger" data-update-delete="${escapeHtml(it.id)}" data-idx="${realIdx}">Delete</button>
+              </span>
+            </div>`;
+        }).join('') : '<div style="color:#92400e;font-size:12px;font-style:italic">No weekly updates yet.</div>'}
+        <div class="add-update edit-only">
+          <textarea data-update-input="${escapeHtml(it.id)}" maxlength="800" placeholder="This week's update for ${escapeHtml(it.initiative.slice(0,40))}…"></textarea>
+          <button data-update-add="${escapeHtml(it.id)}">Add</button>
+        </div>
+      </div>
+    </div>
+  `;
+}
+
+function render() {
+  renderSummary();
+  renderRows();
+}
+
+/* ===== Row event binding ===== */
+function bindRowEvents() {
+  document.querySelectorAll('tr.summary').forEach(tr => {
+    tr.addEventListener('click', (e) => {
+      if (e.target.closest('.status-pill')) return; // pill has its own handler
+      const id = tr.dataset.id;
+      const det = document.querySelector(`tr.details[data-details="${CSS.escape(id)}"]`);
+      const open = tr.classList.toggle('open');
+      if (det) det.classList.toggle('open', open);
+    });
+  });
+
+  document.querySelectorAll('[data-status-pill]').forEach(p => {
+    p.addEventListener('click', (e) => {
+      if (!EDIT_MODE) return;
+      e.stopPropagation();
+      const id = p.dataset.statusPill;
+      const it = DATA.initiatives.find(x => x.id === id);
+      if (!it) return;
+      const idx = STATUS_CYCLE.indexOf(it.status);
+      it.status = STATUS_CYCLE[(idx + 1) % STATUS_CYCLE.length];
+      it.lastUpdatedBy = IDENTITY || '—';
+      it.lastUpdatedAt = formatTs(new Date());
+      persist(); render();
+    });
+  });
+
+  // Editable meta fields (owner, nextAction, remarks)
+  document.querySelectorAll('.editable-meta').forEach(el => {
+    el.addEventListener('click', (e) => {
+      if (!EDIT_MODE) return;
+      e.stopPropagation();
+      if (el.dataset.editing === '1') return;
+      el.dataset.editing = '1';
+      const id = el.dataset.id;
+      const field = el.dataset.editField;
+      const it = DATA.initiatives.find(x => x.id === id);
+      if (!it) return;
+      const orig = it[field] || '';
+      const isShort = field === 'owner';
+      const inp = document.createElement(isShort ? 'input' : 'textarea');
+      inp.value = orig;
+      inp.style.cssText = 'width:100%;padding:6px 8px;font-size:13px;border:1px solid var(--border);border-radius:4px;font-family:inherit;' + (isShort ? '' : 'min-height:60px;resize:vertical');
+      const save = document.createElement('button');
+      save.textContent = 'Save'; save.style.cssText = 'margin-top:4px;margin-right:4px;padding:4px 10px;font-size:11px;border:0;border-radius:4px;background:var(--navy);color:#fff;cursor:pointer;font-family:inherit';
+      const cancel = document.createElement('button');
+      cancel.textContent = 'Cancel'; cancel.style.cssText = save.style.cssText.replace('var(--navy)','#888');
+      el.innerHTML = ''; el.appendChild(inp); el.appendChild(document.createElement('br')); el.appendChild(save); el.appendChild(cancel);
+      inp.focus();
+      save.addEventListener('click', (ev) => {
+        ev.stopPropagation();
+        it[field] = inp.value.trim();
+        it.lastUpdatedBy = IDENTITY || '—';
+        it.lastUpdatedAt = formatTs(new Date());
+        persist(); render();
+        if (field === 'owner') refreshOwnerFilter();
+      });
+      cancel.addEventListener('click', (ev) => { ev.stopPropagation(); render(); });
+    });
+  });
+
+  // Weekly updates — add
+  document.querySelectorAll('[data-update-add]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const id = btn.dataset.updateAdd;
+      const ta = document.querySelector(`[data-update-input="${CSS.escape(id)}"]`);
+      const text = ta.value.trim();
+      if (!text) return;
+      const it = DATA.initiatives.find(x => x.id === id);
+      if (!it) return;
+      it.weeklyUpdates = it.weeklyUpdates || [];
+      it.weeklyUpdates.push({
+        weekOf: mondayOf(new Date()),
+        text, author: IDENTITY || '—', ts: formatTs(new Date())
+      });
+      it.lastUpdatedBy = IDENTITY || '—';
+      it.lastUpdatedAt = formatTs(new Date());
+      persist(); render();
+      // Re-open the row that was just updated
+      setTimeout(() => {
+        const row = document.querySelector(`tr.summary[data-id="${CSS.escape(id)}"]`);
+        const det = document.querySelector(`tr.details[data-details="${CSS.escape(id)}"]`);
+        if (row && det) { row.classList.add('open'); det.classList.add('open'); }
+      }, 0);
+      toast('Update added', 'success');
+    });
+  });
+
+  // Weekly updates — edit
+  document.querySelectorAll('[data-update-edit]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const id = btn.dataset.updateEdit;
+      const idx = parseInt(btn.dataset.idx, 10);
+      const it = DATA.initiatives.find(x => x.id === id);
+      const u = it?.weeklyUpdates?.[idx];
+      if (!u) return;
+      const wrap = btn.closest('.update');
+      const orig = u.text;
+      wrap.innerHTML = `
+        <span class="week">${escapeHtml(u.weekOf || '—')}</span>
+        <div class="update-edit-form">
+          <textarea maxlength="800">${escapeHtml(orig)}</textarea>
+          <div class="btns">
+            <button class="save">Save</button>
+            <button class="cancel">Cancel</button>
+          </div>
+        </div>`;
+      const ta = wrap.querySelector('textarea');
+      ta.focus(); ta.setSelectionRange(orig.length, orig.length);
+      wrap.querySelector('.save').addEventListener('click', (ev) => {
+        ev.stopPropagation();
+        const newText = ta.value.trim();
+        if (!newText) { toast('Update cannot be empty', 'error'); return; }
+        if (newText !== orig) {
+          u.text = newText;
+          u.editedBy = IDENTITY || '—';
+          u.editedTs = formatTs(new Date());
+          it.lastUpdatedBy = IDENTITY || '—';
+          it.lastUpdatedAt = formatTs(new Date());
+          persist();
+        }
+        render();
+        setTimeout(() => {
+          const row = document.querySelector(`tr.summary[data-id="${CSS.escape(id)}"]`);
+          const det = document.querySelector(`tr.details[data-details="${CSS.escape(id)}"]`);
+          if (row && det) { row.classList.add('open'); det.classList.add('open'); }
+        }, 0);
+      });
+      wrap.querySelector('.cancel').addEventListener('click', (ev) => {
+        ev.stopPropagation(); render();
+        setTimeout(() => {
+          const row = document.querySelector(`tr.summary[data-id="${CSS.escape(id)}"]`);
+          const det = document.querySelector(`tr.details[data-details="${CSS.escape(id)}"]`);
+          if (row && det) { row.classList.add('open'); det.classList.add('open'); }
+        }, 0);
+      });
+    });
+  });
+
+  // Weekly updates — delete
+  document.querySelectorAll('[data-update-delete]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const id = btn.dataset.updateDelete;
+      const idx = parseInt(btn.dataset.idx, 10);
+      const it = DATA.initiatives.find(x => x.id === id);
+      const u = it?.weeklyUpdates?.[idx];
+      if (!u) return;
+      if (!confirm(`Delete this weekly update?\n\n"${u.text.slice(0,100)}${u.text.length>100?'…':''}"\n\nThis cannot be undone.`)) return;
+      it.weeklyUpdates.splice(idx, 1);
+      it.lastUpdatedBy = IDENTITY || '—';
+      it.lastUpdatedAt = formatTs(new Date());
+      persist(); render();
+      setTimeout(() => {
+        const row = document.querySelector(`tr.summary[data-id="${CSS.escape(id)}"]`);
+        const det = document.querySelector(`tr.details[data-details="${CSS.escape(id)}"]`);
+        if (row && det) { row.classList.add('open'); det.classList.add('open'); }
+      }, 0);
+      toast('Update deleted', 'success');
+    });
+  });
+}
+
+/* ===== Filters ===== */
+document.addEventListener('click', (e) => {
+  const p = e.target.closest('#status-filter .pill');
+  if (p) {
+    document.querySelectorAll('#status-filter .pill').forEach(x => x.classList.remove('active'));
+    p.classList.add('active');
+    FILTER_STATUS = p.dataset.status;
+    renderRows();
+  }
+});
+document.getElementById('owner-filter').addEventListener('change', (e) => {
+  FILTER_OWNER = e.target.value;
+  renderRows();
+});
+document.getElementById('stale-filter').addEventListener('change', (e) => {
+  FILTER_STALE = e.target.checked;
+  renderRows();
+});
+
+/* ===== Mode + Identity + Token ===== */
+document.getElementById('mode-btn').addEventListener('click', () => {
+  EDIT_MODE = !EDIT_MODE;
+  sessionStorage.setItem(LS.mode, EDIT_MODE ? 'edit' : 'view');
+  applyModeClass();
+  render();
+});
+document.getElementById('identity-pill').addEventListener('click', () => {
+  document.getElementById('id-input').value = IDENTITY || '';
+  document.getElementById('id-modal').classList.add('active');
+  document.getElementById('id-input').focus();
+});
+document.getElementById('id-save').addEventListener('click', () => {
+  const v = document.getElementById('id-input').value.trim();
+  if (!v) { toast('Please enter a name', 'error'); return; }
+  IDENTITY = v; lsSet(LS.identity, v);
+  applyModeClass();
+  document.getElementById('id-modal').classList.remove('active');
+  toast('Identity set: ' + v, 'success');
+});
+document.getElementById('id-cancel').addEventListener('click', () => document.getElementById('id-modal').classList.remove('active'));
+
+document.getElementById('token-btn').addEventListener('click', () => {
+  const existing = lsGet(LS.pat, '');
+  document.getElementById('pat-input').value = existing || '';
+  const st = document.getElementById('pat-status');
+  st.textContent = existing ? '✓ Token is set' : 'No token stored yet';
+  st.style.color = existing ? 'green' : '#888';
+  document.getElementById('pat-modal').classList.add('active');
+});
+document.getElementById('pat-cancel').addEventListener('click', () => document.getElementById('pat-modal').classList.remove('active'));
+document.getElementById('pat-save').addEventListener('click', async () => {
+  const pat = document.getElementById('pat-input').value.trim();
+  const st = document.getElementById('pat-status');
+  if (!pat) { st.textContent = 'Please enter a token'; st.style.color = 'red'; return; }
+  st.textContent = '⏳ Validating…'; st.style.color = '#555';
+  try {
+    const res = await fetch(GH.apiUrl, { headers: { 'Authorization': `token ${pat}` } });
+    if (res.status === 401) throw new Error('Token rejected (401)');
+    if (res.status === 404) throw new Error('Repo/file not found');
+    lsSet(LS.pat, pat);
+    const meta = await res.json();
+    _sha = meta.sha;
+    st.textContent = '✓ Token valid'; st.style.color = 'green';
+    setTimeout(() => document.getElementById('pat-modal').classList.remove('active'), 700);
+  } catch (err) {
+    st.textContent = '✗ ' + err.message; st.style.color = 'red';
+  }
+});
+document.getElementById('pat-remove').addEventListener('click', () => {
+  lsDel(LS.pat);
+  document.getElementById('pat-status').textContent = 'Token removed';
+  document.getElementById('pat-status').style.color = '#888';
+  document.getElementById('pat-input').value = '';
+});
+
+/* ===== Snapshot export ===== */
+document.getElementById('snapshot-btn').addEventListener('click', () => {
+  const today = new Date();
+  const monday = mondayOf(today);
+  let md = `# Du Success Rate Boost — Weekly Snapshot\n\n**Week of ${monday}** · generated ${formatTs(today)}\n\n`;
+  const groups = ['Blocked','On Hold','In Progress','Not Started','Done'];
+  groups.forEach(g => {
+    const items = DATA.initiatives.filter(i => i.status === g);
+    if (!items.length) return;
+    md += `## ${g} (${items.length})\n\n`;
+    items.forEach(it => {
+      const latest = (it.weeklyUpdates || []).slice(-1)[0];
+      const upTxt = latest ? `${latest.text} _(${latest.weekOf})_` : '_no update_';
+      md += `- **${it.num}. ${it.initiative}** — ${it.owner || '—'}\n  - ${upTxt}\n`;
+      if (it.nextAction) md += `  - **Next:** ${it.nextAction.replace(/\n/g,' ')}\n`;
+    });
+    md += '\n';
+  });
+  const stale = DATA.initiatives.filter(isStale);
+  if (stale.length) {
+    md += `## ⚠ Stale items (no update in ${STALE_DAYS}+ days)\n\n`;
+    stale.forEach(it => md += `- ${it.num}. ${it.initiative} (${it.status})\n`);
+  }
+  document.getElementById('snap-text').value = md;
+  document.getElementById('snap-modal').classList.add('active');
+});
+document.getElementById('snap-close').addEventListener('click', () => document.getElementById('snap-modal').classList.remove('active'));
+document.getElementById('snap-copy').addEventListener('click', async () => {
+  try {
+    await navigator.clipboard.writeText(document.getElementById('snap-text').value);
+    toast('Copied to clipboard', 'success');
+  } catch (e) { toast('Copy failed — select manually', 'error'); }
+});
+
+/* ===== Boot ===== */
+loadData();
+</script>
+</body>
+</html>
