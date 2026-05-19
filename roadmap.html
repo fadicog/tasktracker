@@ -237,6 +237,23 @@ body[dir="rtl"] { font-family: 'Cairo', sans-serif; }
   word-break: break-word;
   overflow-wrap: anywhere;
   line-height: 1.35;
+  cursor: text;
+  transition: background .15s;
+}
+.grid-table tr.feature-row td:first-child:hover {
+  background: #f0f3fa;
+  outline: 1px dashed var(--navy);
+  outline-offset: -2px;
+}
+.grid-table tr.feature-row td:first-child input {
+  width: 100%;
+  padding: 4px 6px;
+  font-size: 12.5px;
+  font-family: inherit;
+  border: 1px solid var(--navy);
+  border-radius: 4px;
+  background: #fff;
+  box-shadow: 0 0 0 2px rgba(26,35,126,.12);
 }
 [dir="rtl"] .grid-table tr.feature-row td:first-child {
   border-right: none;
@@ -461,7 +478,7 @@ body[dir="rtl"] { font-family: 'Cairo', sans-serif; }
 </div>
 
 <!-- Editor section -->
-<div class="editor-section collapsed" id="editor-section">
+<div class="editor-section" id="editor-section">
   <h3>Edit roadmap items</h3>
   <table class="editor-table" id="editor-table">
     <thead>
@@ -670,8 +687,9 @@ function renderGrid() {
     const name = isAr ? (item.nameAr || item.nameEn) : item.nameEn;
     const safeName = escHtml(name);
 
+    const origIdx = ITEMS.indexOf(item);
     html += `<tr class="feature-row">`;
-    html += `<td title="${safeName}">${safeName}</td>`;
+    html += `<td title="Click to edit" data-edit-name="${origIdx}">${safeName}</td>`;
 
     let c = 0;
     while (c < 12) {
@@ -817,7 +835,45 @@ function init() {
 
   renderEditor();
   bindEditorEvents();
+  bindGridInlineEdit();
   renderGrid();
+}
+
+function bindGridInlineEdit() {
+  const wrap = document.getElementById('grid-wrap');
+  wrap.addEventListener('click', e => {
+    const cell = e.target.closest('td[data-edit-name]');
+    if (!cell || cell.querySelector('input')) return;
+    const idx = +cell.dataset.editName;
+    if (isNaN(idx) || !ITEMS[idx]) return;
+    const isAr = LANG === 'ar';
+    const field = isAr ? 'nameAr' : 'nameEn';
+    const current = ITEMS[idx][field] || '';
+    const inp = document.createElement('input');
+    inp.type = 'text';
+    inp.value = current;
+    if (isAr) { inp.dir = 'rtl'; inp.style.fontFamily = "'Cairo', sans-serif"; }
+    cell.innerHTML = '';
+    cell.appendChild(inp);
+    inp.focus();
+    inp.select();
+    let saved = false;
+    const finish = (commit) => {
+      if (saved) return;
+      saved = true;
+      if (commit) {
+        ITEMS[idx][field] = inp.value.trim();
+        saveItems();
+      }
+      renderEditor();
+      renderGrid();
+    };
+    inp.addEventListener('blur', () => finish(true));
+    inp.addEventListener('keydown', ev => {
+      if (ev.key === 'Enter') { ev.preventDefault(); inp.blur(); }
+      if (ev.key === 'Escape') { saved = true; renderGrid(); }
+    });
+  });
 }
 
 initGate();
