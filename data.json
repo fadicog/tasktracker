@@ -829,9 +829,16 @@
         "author": "Fadi",
         "ts": "19 May 2026 12:18"
       }
+    ],
+    "f-12": [
+      {
+        "text": "Identify the different packages different values/ issuers \n\nValidate the concept – how those packages are mapped to services\n\nDeck – feature, benefit, UX/ details of the requirements",
+        "author": "Fadi",
+        "ts": "19 May 2026 12:30"
+      }
     ]
   },
   "overrides": {},
-  "lastUpdated": "19 May 2026 12:25",
+  "lastUpdated": "19 May 2026 12:30",
   "version": 1
 }
