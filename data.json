@@ -201,7 +201,7 @@
       "name": "QR Code Simplification",
       "category": "Technical",
       "quarter": "Q1",
-      "status": "Started",
+      "status": "Completed",
       "dda": false,
       "sprint": null,
       "blocked": false,
@@ -236,15 +236,6 @@
       "targetMonth": "",
       "description": "UI/UX designer reviews current screens to identify room for improvement and biggest pain points. Output is a prioritized backlog with recommended fixes.",
       "sub": [
-        {
-          "id": "s-10-1",
-          "task": "DV related review meeting 13/04 (Ahmad to schedule)",
-          "due": "2026-04-13",
-          "status": "Pending",
-          "owner": "Ahmad",
-          "updatedBy": "Fadi",
-          "updatedAt": "24 Apr 2026 09:00"
-        },
         {
           "id": "s-10-2",
           "task": "Capture feedback from the review",
@@ -841,6 +832,6 @@
     ]
   },
   "overrides": {},
-  "lastUpdated": "19 May 2026 12:20",
+  "lastUpdated": "19 May 2026 12:21",
   "version": 1
 }
