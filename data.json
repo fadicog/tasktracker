@@ -808,6 +808,11 @@
         "text": "Notes from Malak :1.Doc not available: Multiple document detection behavior\nRequests with one doc mandatory vs requests with multiple doc\n2.document type\n3. retry once failure request occurs – so that its counted as one request – duplicate request\n4. agree on the status shown for sample data – summary\n5. list down the possible reasons between every steps\n6. comparison of the percentages – based on use case/ sp, doc types\n7. when p1,p2 – recorded  request failure\n8. user behavior tools exploratio",
         "author": "Fadi",
         "ts": "19 May 2026 12:10"
+      },
+      {
+        "text": "[08/05] Load testing in progress , batch issue fix to be deployed [check status] \n[15/05] Bulk data issue to be tested today.",
+        "author": "Fadi",
+        "ts": "19 May 2026 12:11"
       }
     ],
     "f-7": [
@@ -826,6 +831,6 @@
     ]
   },
   "overrides": {},
-  "lastUpdated": "19 May 2026 12:10",
+  "lastUpdated": "19 May 2026 12:11",
   "version": 1
 }
