@@ -235,26 +235,7 @@
       "committed": true,
       "targetMonth": "",
       "description": "UI/UX designer reviews current screens to identify room for improvement and biggest pain points. Output is a prioritized backlog with recommended fixes.",
-      "sub": [
-        {
-          "id": "s-10-4",
-          "task": "DDA audit — plan with DDA",
-          "due": "—",
-          "status": "Not started",
-          "owner": "—",
-          "updatedBy": "",
-          "updatedAt": ""
-        },
-        {
-          "id": "s-10-5",
-          "task": "Create a backlog of design items",
-          "due": "—",
-          "status": "Not started",
-          "owner": "Ahmad",
-          "updatedBy": "",
-          "updatedAt": ""
-        }
-      ]
+      "sub": []
     },
     {
       "slide": 11,
