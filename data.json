@@ -832,10 +832,15 @@
         "text": "Two weeks ago, the new SP offboarding flow was first reviewed with feedback from Fadi and Malak. Last week, Najjar reviewed the updated version and shared his feedback. Ops have now circulated the further-updated workflow and documentation incorporating that input. Next step: secure Surbhi's approval on the updated flow, after which we proceed with the TDRA discussion and approval.",
         "author": "Fadi",
         "ts": "11 May 2026 14:55"
+      },
+      {
+        "text": "Jeffrey to schedule a final review meeting to close this.",
+        "author": "Fadi",
+        "ts": "19 May 2026 12:18"
       }
     ]
   },
   "overrides": {},
-  "lastUpdated": "19 May 2026 12:17",
+  "lastUpdated": "19 May 2026 12:18",
   "version": 1
 }
