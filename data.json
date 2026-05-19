@@ -237,24 +237,6 @@
       "description": "UI/UX designer reviews current screens to identify room for improvement and biggest pain points. Output is a prioritized backlog with recommended fixes.",
       "sub": [
         {
-          "id": "s-10-2",
-          "task": "Capture feedback from the review",
-          "due": "—",
-          "status": "Not started",
-          "owner": "—",
-          "updatedBy": "",
-          "updatedAt": ""
-        },
-        {
-          "id": "s-10-3",
-          "task": "Have a plan for DV audit screens",
-          "due": "—",
-          "status": "Not started",
-          "owner": "—",
-          "updatedBy": "",
-          "updatedAt": ""
-        },
-        {
           "id": "s-10-4",
           "task": "DDA audit — plan with DDA",
           "due": "—",
