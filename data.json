@@ -240,6 +240,15 @@
           "id": "s-mpcd79m5-2",
           "task": "Prepare the final Audit report including DV and DDA screens",
           "due": "—",
+          "status": "In Progress",
+          "owner": "Ahmad",
+          "updatedBy": "Fadi",
+          "updatedAt": "19 May 2026 12:22"
+        },
+        {
+          "id": "s-mpcd7x1v-3",
+          "task": "Schedule an internal review meeting to discuss the audit findings",
+          "due": "—",
           "status": "Pending",
           "owner": "Ahmad",
           "updatedBy": "Fadi",
