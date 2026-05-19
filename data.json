@@ -798,6 +798,11 @@
         "text": "Two major enhancements captured in the weekly success rate increase tracker.",
         "author": "Fadi",
         "ts": "11 May 2026 14:20"
+      },
+      {
+        "text": "Current list of enhancements:\n- Extra sharing requests (Sharing requests created if sharing failed originally for a single transaction ) detection and analysis \n- P1/P2 reporting (exclusion) in the new status model",
+        "author": "Fadi",
+        "ts": "19 May 2026 12:08"
       }
     ],
     "f-7": [
@@ -816,6 +821,6 @@
     ]
   },
   "overrides": {},
-  "lastUpdated": "12 May 2026 10:30",
+  "lastUpdated": "19 May 2026 12:08",
   "version": 1
 }
