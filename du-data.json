@@ -11,9 +11,16 @@
       "rawStatus": "In Progress",
       "nextAction": "*Further analysis and improvement (Done)\n*Include UX/UI fixes in September release (Done)\n*Observe the Impact of the check box introduction on the consent success rate\nOps team to provide the report of the consent given percentage as part of the WSR meeting\n*in the next release and enhancment targeting the users who don't request any of the missing documents in the sharing request is introduced.\n[08/08/2025][Avinash]: to prepare a tracking method for the improvment in the percentage. Due Date: [26/09/2025]\n[26/09/2025][Avinash] to provide update on this point next week \n[17/10/2025] [OPS/Product/Backend] ensure time tracking is done correctly in the funnel chart \nDeploy in QA by 6th of Nov (SOD)\nTargert release 11th Nov\nOPs team to include the new flag in the time based analysis for the document addition pop up in the sharing request. [Next Week]\n[12-Dec] - Waiting for Fadi's comment based on the report shared on 21st Nov\n[16-01] New reporting system is being developed as part of Sprint 72 \n[06-02] A plan for the way forward needed [Target 13th of Feb]\n[20-02] Analysis is in progress - Plan to be provided on 27th of Feb. \n[27-2] Plan shared but needs to be discussed, to be discussed next week with Jeffry \n[06/03] Plan provided - Funnel targeting mid March \n[13/03] In Progress - on track [Mid March]\n[27/03] QA in progress - in QA env\n[10/04] backend release blocked by AECERT - targeting next week - waiting for updated QA report \n[17/04] Backend planned for 21st of April - To follow up with Satyaki next week on the reporting system status \n[24/04] Defect resolution in progress - targeting to close 24th.\n[08/05] Load testing in progress , batch issue fix to be deployed [check status] \n[15/05] Bulk data issue to be tested today.",
       "remarks": "Improve consent conversion\nreduce the no action taken (Users not requesting missing documents )\nDaily report requested from Ops team\n-Enhanced Sharing Consent button is in production\n*Report of the consent impact was generated and minor enhancment was obsereved, we've added the version success rate report to WSR deck.",
-      "weeklyUpdates": [],
-      "lastUpdatedBy": "",
-      "lastUpdatedAt": ""
+      "weeklyUpdates": [
+        {
+          "weekOf": "2026-05-18",
+          "text": "Test report",
+          "author": "Fadi",
+          "ts": "22 May 2026 10:05"
+        }
+      ],
+      "lastUpdatedBy": "Fadi",
+      "lastUpdatedAt": "22 May 2026 10:05"
     },
     {
       "id": "du-2",
@@ -211,6 +218,6 @@
       "lastUpdatedAt": ""
     }
   ],
-  "lastUpdated": "11 May 2026 15:30",
+  "lastUpdated": "22 May 2026 10:05",
   "version": 1
 }
