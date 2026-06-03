@@ -826,6 +826,16 @@
       "due": "—",
       "updatedBy": "Fadi",
       "updatedAt": "11 May 2026 09:00"
+    },
+    {
+      "id": "oa-1780473856081",
+      "action": "New action",
+      "desc": "",
+      "status": "Open",
+      "owner": "—",
+      "due": "—",
+      "updatedBy": "",
+      "updatedAt": ""
     }
   ],
   "notes": {
@@ -884,6 +894,6 @@
     ]
   },
   "overrides": {},
-  "lastUpdated": "19 May 2026 12:43",
+  "lastUpdated": "3 Jun 2026 12:04",
   "version": 1
 }
