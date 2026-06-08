@@ -802,7 +802,7 @@
           <button class="hbtn" id="export-csv">Export CSV</button>
           <button class="hbtn" id="snapshot-btn">Take Snapshot</button>
           <button class="hbtn" id="history-btn">History</button>
-          <button class="hbtn" id="pat-btn" title="Configure GitHub token">&#128273; Token</button>
+          <button class="hbtn" id="pat-btn" title="Configure GitHub token" style="display:none">&#128273; Token</button>
           <a class="hbtn" href="roadmap.html" target="_blank" rel="noopener" title="Open 2026 visual roadmap in a new tab" style="text-decoration:none;display:inline-flex;align-items:center">&#128197; Roadmap</a>
           <a class="hbtn" href="du-tracker.html" target="_blank" rel="noopener" title="Open Du Success Rate Boost tracker in a new tab" style="text-decoration:none;display:inline-flex;align-items:center">&#128202; Du Tracker</a>
           <button class="hbtn" id="help-btn" title="Open user manual">&#10067; Help</button>
@@ -1367,34 +1367,102 @@
    ================================================================= */
 const PASSWORD_HASH = '9ba19f7bc294dca1ac7b621741441c63207445ac36e77ca90d58c6f2972f2d11';
 
+/* sessionStorage keys */
+const SS_AUTH = 'dv_tracker_auth';
+const SS_PAT  = 'dv_tracker_pat_sess';   // decrypted PAT, session-only
+
 async function sha256(msg) {
   const buf = new TextEncoder().encode(msg);
   const hash = await crypto.subtle.digest('SHA-256', buf);
   return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2,'0')).join('');
 }
+
+/* Decrypt token.enc using the gate password (AES-GCM, key from PBKDF2) */
+async function fetchAndDecryptToken(password) {
+  const res = await fetch('token.enc?_=' + Date.now(), { cache: 'no-store' });
+  if (!res.ok) {
+    if (res.status === 404) throw new Error('token.enc not found in repo — encrypted token has not been committed yet');
+    throw new Error('Could not fetch token.enc (HTTP ' + res.status + ')');
+  }
+  const blob = await res.json();
+  if (blob.v !== 1) throw new Error('Unsupported token.enc version: ' + blob.v);
+
+  const b64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+  const salt = b64(blob.salt);
+  const iv   = b64(blob.iv);
+  const ct   = b64(blob.ct);
+
+  const enc = new TextEncoder();
+  const baseKey = await crypto.subtle.importKey('raw', enc.encode(password), 'PBKDF2', false, ['deriveKey']);
+  const key = await crypto.subtle.deriveKey(
+    { name: 'PBKDF2', salt, iterations: 250000, hash: 'SHA-256' },
+    baseKey,
+    { name: 'AES-GCM', length: 256 },
+    false,
+    ['decrypt']
+  );
+
+  let plain;
+  try {
+    plain = await crypto.subtle.decrypt({ name: 'AES-GCM', iv }, key, ct);
+  } catch (e) {
+    throw new Error('Could not decrypt token — password may not match the one used to encrypt token.enc');
+  }
+  return new TextDecoder().decode(plain);
+}
+
 function showApp() {
   document.getElementById('gate').style.display = 'none';
   document.getElementById('app').style.display  = 'block';
   bootApp();   // async — fetches GitHub data then renders
 }
+
 function initGate() {
-  if (sessionStorage.getItem('dv_tracker_auth') === '1') {
+  /* Clean up legacy localStorage-stored PAT (no longer used) */
+  try { localStorage.removeItem('dv_tracker_pat'); } catch (e) {}
+
+  /* Skip gate only if we have BOTH auth flag and a session PAT */
+  const hasAuth = sessionStorage.getItem(SS_AUTH) === '1';
+  const hasPat  = !!sessionStorage.getItem(SS_PAT);
+  if (hasAuth && hasPat) {
     showApp();
     return;
   }
+  /* Either is missing — clear both so we get a clean re-auth */
+  sessionStorage.removeItem(SS_AUTH);
+  sessionStorage.removeItem(SS_PAT);
+
   document.getElementById('gate-form').addEventListener('submit', async (e) => {
     e.preventDefault();
     const pwd = document.getElementById('pwd').value;
     const errEl = document.getElementById('gate-err');
+    errEl.style.color = '';
     errEl.textContent = '';
+
     const hash = await sha256(pwd);
-    if (hash === PASSWORD_HASH) {
-      sessionStorage.setItem('dv_tracker_auth', '1');
-      showApp();
-    } else {
+    if (hash !== PASSWORD_HASH) {
       errEl.textContent = 'Incorrect password. Please try again.';
       document.getElementById('pwd').value = '';
       document.getElementById('pwd').focus();
+      return;
+    }
+
+    /* Password OK — try to decrypt token.enc */
+    errEl.style.color = '#5b6476';
+    errEl.textContent = 'Loading token…';
+    try {
+      const pat = await fetchAndDecryptToken(pwd);
+      sessionStorage.setItem(SS_AUTH, '1');
+      sessionStorage.setItem(SS_PAT, pat);
+      showApp();
+    } catch (err) {
+      /* Still let the user in (read-only) so they can browse — save will warn */
+      sessionStorage.setItem(SS_AUTH, '1');
+      sessionStorage.removeItem(SS_PAT);
+      console.warn('Token decryption failed:', err);
+      errEl.style.color = '#e65100';
+      errEl.textContent = 'Logged in, but saves disabled: ' + err.message;
+      setTimeout(showApp, 1500);
     }
   });
 }
@@ -1571,7 +1639,7 @@ async function loadModel() {
   setSaveStatus('loading', '⏳ Loading data from GitHub…');
   try {
     // Use API endpoint (not raw) so we get the SHA for later writes
-    const pat = lsGet(LS.pat, '');
+    const pat = sessionStorage.getItem(SS_PAT) || '';
     const headers = { 'Accept': 'application/vnd.github.v3+json' };
     if (pat) headers['Authorization'] = `token ${pat}`;
 
@@ -1615,9 +1683,9 @@ function persist() {
 }
 
 async function commitToGitHub() {
-  const pat = lsGet(LS.pat, '');
+  const pat = sessionStorage.getItem(SS_PAT) || '';
   if (!pat) {
-    setSaveStatus('warn', '⚠ No GitHub token — changes not saved. Click 🔑 Token to add one.');
+    setSaveStatus('warn', '⚠ No decrypted token — saves disabled. Reload and re-enter password, or commit token.enc.');
     return;
   }
   setSaveStatus('saving', '⏳ Saving…');
@@ -3502,10 +3570,10 @@ async function bootApp() {
     if (e.target === document.getElementById('pat-modal')) closePatModal();
   });
 
-  // Prompt for token if not set and in edit mode
-  if (EDIT_MODE && !lsGet(LS.pat, '')) {
+  // Warn if no decrypted PAT available (token.enc missing or decryption failed)
+  if (EDIT_MODE && !sessionStorage.getItem(SS_PAT)) {
     setTimeout(() => {
-      setSaveStatus('warn', '⚠ No GitHub token yet — click 🔑 Token to enable saving');
+      setSaveStatus('warn', '⚠ Token unavailable — saves disabled. Make sure token.enc exists in the repo.');
     }, 1500);
   }
 

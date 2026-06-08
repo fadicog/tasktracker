@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Encrypt Token — UAE PASS DV Tracker</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 660px; margin: 32px auto; padding: 24px; color: #1f2633; line-height: 1.55; background: #f4f6fb; }
+  .card { background: #fff; border-radius: 12px; box-shadow: 0 4px 14px rgba(20,30,60,.08); padding: 28px; }
+  h1 { color: #1a237e; font-size: 22px; margin-bottom: 4px; }
+  .sub { color: #5b6476; font-size: 13px; margin-bottom: 18px; }
+  .warn { background: #fff8e1; border-left: 3px solid #fbc02d; padding: 10px 14px; margin: 14px 0; border-radius: 0 4px 4px 0; font-size: 13px; color: #6a4f00; }
+  .ok-block { background: #e8f5e9; border-left: 3px solid #2e7d32; padding: 10px 14px; margin: 14px 0; border-radius: 0 4px 4px 0; font-size: 13px; color: #1b5e20; }
+  label { display: block; font-size: 11px; font-weight: 600; text-transform: uppercase; color: #5b6476; margin: 18px 0 5px; letter-spacing: .5px; }
+  input { width: 100%; padding: 10px 12px; border: 1px solid #e3e7ef; border-radius: 6px; font-size: 14px; font-family: 'Consolas', 'Monaco', monospace; background: #fff; }
+  input:focus { outline: none; border-color: #1a237e; box-shadow: 0 0 0 3px rgba(26,35,126,.12); }
+  button { background: #1a237e; color: #fff; border: 0; padding: 10px 22px; border-radius: 6px; font-size: 14px; font-weight: 600; cursor: pointer; margin-top: 18px; font-family: inherit; }
+  button:hover { background: #121858; }
+  button.copy { background: #2e7d32; margin-left: 8px; }
+  button.copy:hover { background: #1b5e20; }
+  .output { background: #f4f6fb; border: 1px solid #e3e7ef; border-radius: 8px; padding: 14px; margin-top: 14px; font-family: 'Consolas', 'Monaco', monospace; font-size: 11.5px; word-break: break-all; min-height: 60px; white-space: pre-wrap; color: #1f2633; }
+  .err { color: #c62828; font-size: 13px; margin-top: 8px; }
+  .ok { color: #2e7d32; font-size: 13px; margin-top: 8px; font-weight: 600; }
+  h3 { font-size: 14px; color: #1a237e; margin-top: 24px; margin-bottom: 8px; }
+  ol { padding-left: 24px; font-size: 13px; line-height: 1.75; }
+  code { background: #eef1f7; padding: 1px 6px; border-radius: 3px; font-family: 'Consolas','Monaco',monospace; font-size: 12px; color: #121858; }
+</style>
+</head>
+<body>
+<div class="card">
+  <h1>🔒 Encrypt Token</h1>
+  <div class="sub">One-time tool — encrypts your GitHub PAT with the tracker password so it can be safely committed to the repo. Everything runs locally in your browser; nothing is sent anywhere.</div>
+
+  <div class="warn">⚠ Verify you're on the legitimate <code>fadicog/tasktracker</code> page (or open this file locally). Never paste your PAT into an untrusted page.</div>
+
+  <label>GitHub Personal Access Token (fine-grained, write access)</label>
+  <input type="password" id="pat" placeholder="github_pat_..." autocomplete="off" />
+
+  <label>Tracker password (must match the gate password — currently <code>TDRA2026</code>)</label>
+  <input type="password" id="pwd" placeholder="TDRA2026" autocomplete="off" />
+
+  <div>
+    <button onclick="encryptIt()">🔒 Encrypt</button>
+    <button class="copy" onclick="copyOut()" id="copy-btn" style="display:none">📋 Copy output</button>
+  </div>
+
+  <label>Encrypted output — save this as <code>token.enc</code> in the repo root</label>
+  <div class="output" id="out">(empty)</div>
+  <div id="msg"></div>
+
+  <h3>After you have the output:</h3>
+  <ol>
+    <li>Click <strong>Copy output</strong></li>
+    <li>Open <a href="https://github.com/fadicog/tasktracker" target="_blank">github.com/fadicog/tasktracker</a></li>
+    <li>Click <strong>Add file → Create new file</strong> (or edit if it exists)</li>
+    <li>Name it <code>token.enc</code></li>
+    <li>Paste the JSON content, scroll down, click <strong>Commit changes</strong></li>
+    <li>Done — open the tracker on any device, enter <code>TDRA2026</code>, edits will save automatically</li>
+  </ol>
+
+  <h3>To rotate the token later:</h3>
+  <ol>
+    <li>Generate a new fine-grained PAT on github.com/settings/tokens</li>
+    <li>Re-open this tool, re-encrypt, replace <code>token.enc</code></li>
+    <li>All users pick up the new token on their next page load — they do nothing</li>
+  </ol>
+</div>
+
+<script>
+async function encryptIt() {
+  const pat = document.getElementById('pat').value.trim();
+  const pwd = document.getElementById('pwd').value;
+  const out = document.getElementById('out');
+  const msg = document.getElementById('msg');
+  const copyBtn = document.getElementById('copy-btn');
+  msg.innerHTML = '';
+  out.textContent = '(empty)';
+  copyBtn.style.display = 'none';
+
+  if (!pat) { msg.innerHTML = '<div class="err">Token is required</div>'; return; }
+  if (!pwd) { msg.innerHTML = '<div class="err">Password is required</div>'; return; }
+
+  try {
+    const enc = new TextEncoder();
+    const salt = crypto.getRandomValues(new Uint8Array(16));
+    const iv = crypto.getRandomValues(new Uint8Array(12));
+
+    const baseKey = await crypto.subtle.importKey(
+      'raw', enc.encode(pwd), 'PBKDF2', false, ['deriveKey']
+    );
+    const key = await crypto.subtle.deriveKey(
+      { name: 'PBKDF2', salt, iterations: 250000, hash: 'SHA-256' },
+      baseKey,
+      { name: 'AES-GCM', length: 256 },
+      false,
+      ['encrypt']
+    );
+
+    const ct = await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, key, enc.encode(pat));
+
+    const b64 = arr => btoa(String.fromCharCode(...new Uint8Array(arr)));
+    const blob = {
+      v: 1,
+      alg: 'AES-GCM-256/PBKDF2-SHA256-250k',
+      salt: b64(salt),
+      iv: b64(iv),
+      ct: b64(ct)
+    };
+    out.textContent = JSON.stringify(blob, null, 2);
+    copyBtn.style.display = 'inline-block';
+    msg.innerHTML = '<div class="ok">✓ Encrypted. Copy the output above and save it as token.enc in the repo.</div>';
+  } catch (e) {
+    msg.innerHTML = '<div class="err">Encryption failed: ' + e.message + '</div>';
+  }
+}
+
+async function copyOut() {
+  const text = document.getElementById('out').textContent;
+  if (text === '(empty)') return;
+  try {
+    await navigator.clipboard.writeText(text);
+    document.getElementById('msg').innerHTML = '<div class="ok">✓ Copied to clipboard</div>';
+  } catch (e) {
+    document.getElementById('msg').innerHTML = '<div class="err">Copy failed — select the text manually</div>';
+  }
+}
+</script>
+</body>
+</html>
