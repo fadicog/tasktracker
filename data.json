@@ -927,6 +927,16 @@
     },
     {
       "id": "oa-1781599759486",
+      "action": "Discussion of the design audit possible quick wins items",
+      "desc": "",
+      "status": "Open",
+      "owner": "—",
+      "due": "—",
+      "updatedBy": "Fadi",
+      "updatedAt": "16 Jun 2026 12:50"
+    },
+    {
+      "id": "oa-1781599843865",
       "action": "New action",
       "desc": "",
       "status": "Open",
@@ -1021,6 +1031,6 @@
     ]
   },
   "overrides": {},
-  "lastUpdated": "16 Jun 2026 12:49",
+  "lastUpdated": "16 Jun 2026 12:50",
   "version": 1
 }
