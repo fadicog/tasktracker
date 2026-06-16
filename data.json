@@ -350,6 +350,15 @@
           "owner": "Fadi",
           "updatedBy": "Fadi",
           "updatedAt": "16 Jun 2026 12:30"
+        },
+        {
+          "id": "s-mqge06w9-3",
+          "task": "Align on the deliverables of 2026 and 2027 for this item",
+          "due": "—",
+          "status": "Pending",
+          "owner": "Fadi, Malak, Najjar",
+          "updatedBy": "Fadi",
+          "updatedAt": "16 Jun 2026 12:35"
         }
       ]
     },
@@ -985,6 +994,6 @@
     ]
   },
   "overrides": {},
-  "lastUpdated": "16 Jun 2026 12:31",
+  "lastUpdated": "16 Jun 2026 12:35",
   "version": 1
 }
