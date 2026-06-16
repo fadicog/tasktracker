@@ -840,12 +840,12 @@
     {
       "id": "oa-1781597228296",
       "action": "Schedule UAT meeting for the new status based model on 6th of July",
-      "desc": "",
+      "desc": "Status Based Model",
       "status": "Open",
       "owner": "—",
       "due": "—",
       "updatedBy": "Fadi",
-      "updatedAt": "16 Jun 2026 12:07"
+      "updatedAt": "16 Jun 2026 12:09"
     },
     {
       "id": "oa-1781597340545",
@@ -903,6 +903,11 @@
         "text": "Follow up with Shri on the 1st of June to check the status with ICP",
         "author": "Fadi",
         "ts": "19 May 2026 12:15"
+      },
+      {
+        "text": "Shri to follow up with ICP",
+        "author": "Fadi",
+        "ts": "16 Jun 2026 12:10"
       }
     ],
     "f-8": [
@@ -931,6 +936,6 @@
     ]
   },
   "overrides": {},
-  "lastUpdated": "16 Jun 2026 12:09",
+  "lastUpdated": "16 Jun 2026 12:10",
   "version": 1
 }
