@@ -249,7 +249,7 @@
           "id": "s-mpcd7x1v-3",
           "task": "Schedule an internal review meeting to discuss the audit findings and identify the action items (excel format)",
           "due": "—",
-          "status": "In Progress",
+          "status": "Completed",
           "owner": "Ahmad",
           "updatedBy": "Fadi",
           "updatedAt": "16 Jun 2026 12:24"
@@ -259,9 +259,9 @@
           "task": "Schedule a meeting with DDA to align on the changes and collaboration format moving forward.",
           "due": "—",
           "status": "Pending",
-          "owner": "Ahmad",
+          "owner": "Malak",
           "updatedBy": "Fadi",
-          "updatedAt": "19 May 2026 12:24"
+          "updatedAt": "16 Jun 2026 12:24"
         },
         {
           "id": "s-mpcdbt2u-5",
