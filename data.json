@@ -63,11 +63,11 @@
         {
           "id": "s-6-6",
           "task": "SP communication module (early warning)",
-          "due": "2026-06-24",
+          "due": "2026-07-31",
           "status": "Not started",
           "owner": "—",
-          "updatedBy": "",
-          "updatedAt": ""
+          "updatedBy": "Fadi",
+          "updatedAt": "16 Jun 2026 11:56"
         },
         {
           "id": "s-6-7",
@@ -899,6 +899,6 @@
     ]
   },
   "overrides": {},
-  "lastUpdated": "16 Jun 2026 11:55",
+  "lastUpdated": "16 Jun 2026 11:56",
   "version": 1
 }
