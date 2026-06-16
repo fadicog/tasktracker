@@ -256,12 +256,12 @@
         },
         {
           "id": "s-mpcd9rmv-4",
-          "task": "Schedule a meeting with DDA to align on the changes and collaboration format moving forward.",
+          "task": "Share the Audit results with DDA for thier feedback and possible future discussion",
           "due": "—",
           "status": "Pending",
           "owner": "Malak",
           "updatedBy": "Fadi",
-          "updatedAt": "16 Jun 2026 12:24"
+          "updatedAt": "16 Jun 2026 12:25"
         },
         {
           "id": "s-mpcdbt2u-5",
@@ -946,6 +946,6 @@
     ]
   },
   "overrides": {},
-  "lastUpdated": "16 Jun 2026 12:24",
+  "lastUpdated": "16 Jun 2026 12:25",
   "version": 1
 }
