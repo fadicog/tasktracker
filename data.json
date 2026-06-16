@@ -839,13 +839,13 @@
     },
     {
       "id": "oa-1781597228296",
-      "action": "New action",
+      "action": "Schedule UAT meeting for the new status based model on 6th of July",
       "desc": "",
       "status": "Open",
       "owner": "—",
       "due": "—",
-      "updatedBy": "",
-      "updatedAt": ""
+      "updatedBy": "Fadi",
+      "updatedAt": "16 Jun 2026 12:07"
     }
   ],
   "notes": {
