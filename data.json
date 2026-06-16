@@ -473,7 +473,17 @@
       "committed": true,
       "targetMonth": "",
       "description": "Second bundle of UI/UX improvements based on design audit, design system update and accessibility findings.",
-      "sub": []
+      "sub": [
+        {
+          "id": "s-mqgegymy-4",
+          "task": "Design for the revamped document addition - design feedback session",
+          "due": "2026-06-17",
+          "status": "Pending",
+          "owner": "Fadi, Malak, Ahmad",
+          "updatedBy": "Fadi",
+          "updatedAt": "16 Jun 2026 12:48"
+        }
+      ]
     },
     {
       "slide": 16,
@@ -1001,6 +1011,6 @@
     ]
   },
   "overrides": {},
-  "lastUpdated": "16 Jun 2026 12:38",
+  "lastUpdated": "16 Jun 2026 12:48",
   "version": 1
 }
