@@ -866,9 +866,11 @@
         "ts": "11 Jun 2026 10:40"
       },
       {
-        "text": "Updated target from the team is 3rd of July",
+        "text": "Updated release target from the team along with the deployment of the reported fixes is 3rd of July",
         "author": "Fadi",
-        "ts": "16 Jun 2026 11:57"
+        "ts": "16 Jun 2026 11:57",
+        "editedBy": "Fadi",
+        "editedTs": "16 Jun 2026 11:57"
       }
     ],
     "f-7": [
