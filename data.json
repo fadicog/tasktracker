@@ -947,13 +947,13 @@
     },
     {
       "id": "oa-1781600155312",
-      "action": "New action",
+      "action": "Get the updates from Shir on the technical items",
       "desc": "",
       "status": "Open",
       "owner": "—",
       "due": "—",
-      "updatedBy": "",
-      "updatedAt": ""
+      "updatedBy": "Fadi",
+      "updatedAt": "16 Jun 2026 12:56"
     }
   ],
   "notes": {
@@ -1048,6 +1048,6 @@
     ]
   },
   "overrides": {},
-  "lastUpdated": "16 Jun 2026 12:55",
+  "lastUpdated": "16 Jun 2026 12:56",
   "version": 1
 }
