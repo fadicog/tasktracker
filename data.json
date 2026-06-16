@@ -856,6 +856,16 @@
       "due": "—",
       "updatedBy": "Fadi",
       "updatedAt": "16 Jun 2026 12:09"
+    },
+    {
+      "id": "oa-1781597454149",
+      "action": "Shri to Follow up with ICP on the Special citizenship update",
+      "desc": "",
+      "status": "Open",
+      "owner": "—",
+      "due": "—",
+      "updatedBy": "Fadi",
+      "updatedAt": "16 Jun 2026 12:11"
     }
   ],
   "notes": {
@@ -936,6 +946,6 @@
     ]
   },
   "overrides": {},
-  "lastUpdated": "16 Jun 2026 12:10",
+  "lastUpdated": "16 Jun 2026 12:11",
   "version": 1
 }
