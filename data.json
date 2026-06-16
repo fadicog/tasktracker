@@ -1028,9 +1028,16 @@
         "author": "Fadi",
         "ts": "16 Jun 2026 12:36"
       }
+    ],
+    "f-16": [
+      {
+        "text": "Fadi to follow up on this with Najjar",
+        "author": "Fadi",
+        "ts": "16 Jun 2026 12:53"
+      }
     ]
   },
   "overrides": {},
-  "lastUpdated": "16 Jun 2026 12:51",
+  "lastUpdated": "16 Jun 2026 12:53",
   "version": 1
 }
