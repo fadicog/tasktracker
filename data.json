@@ -288,7 +288,17 @@
       "committed": true,
       "targetMonth": "",
       "description": "Placeholder to implement outcomes of design audit and design system epics. Improves documents list view so users can find, filter, and act on documents faster.",
-      "sub": []
+      "sub": [
+        {
+          "id": "s-mqgdqg3m-1",
+          "task": "Document the UI updates that were done as part of the first two releases and document them under this item",
+          "due": "—",
+          "status": "Pending",
+          "owner": "Fadi",
+          "updatedBy": "Fadi",
+          "updatedAt": "16 Jun 2026 12:27"
+        }
+      ]
     },
     {
       "slide": 12,
@@ -946,6 +956,6 @@
     ]
   },
   "overrides": {},
-  "lastUpdated": "16 Jun 2026 12:25",
+  "lastUpdated": "16 Jun 2026 12:27",
   "version": 1
 }
