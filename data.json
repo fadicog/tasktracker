@@ -937,13 +937,13 @@
     },
     {
       "id": "oa-1781599843865",
-      "action": "New action",
+      "action": "Bug-iOS/ check android when user copies the text the toast message is in english even if the app language is in arabic",
       "desc": "",
       "status": "Open",
       "owner": "—",
       "due": "—",
-      "updatedBy": "",
-      "updatedAt": ""
+      "updatedBy": "Fadi",
+      "updatedAt": "16 Jun 2026 12:51"
     }
   ],
   "notes": {
@@ -1031,6 +1031,6 @@
     ]
   },
   "overrides": {},
-  "lastUpdated": "16 Jun 2026 12:50",
+  "lastUpdated": "16 Jun 2026 12:51",
   "version": 1
 }
