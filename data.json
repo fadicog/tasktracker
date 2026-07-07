@@ -957,13 +957,13 @@
     },
     {
       "id": "oa-1783412302824",
-      "action": "New action",
+      "action": "No action taken- request the team to provide an percentage view of the no action taken over the releases and over the quarters",
       "desc": "",
       "status": "Open",
       "owner": "—",
       "due": "—",
-      "updatedBy": "",
-      "updatedAt": ""
+      "updatedBy": "Fadi",
+      "updatedAt": "7 Jul 2026 12:19"
     }
   ],
   "notes": {
@@ -1063,6 +1063,6 @@
     ]
   },
   "overrides": {},
-  "lastUpdated": "7 Jul 2026 12:18",
+  "lastUpdated": "7 Jul 2026 12:19",
   "version": 1
 }
