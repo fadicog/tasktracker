@@ -355,10 +355,10 @@
           "id": "s-mqgdu5er-2",
           "task": "Schedule a requirements analysis discussion",
           "due": "—",
-          "status": "Pending",
+          "status": "Started",
           "owner": "Fadi",
           "updatedBy": "Fadi",
-          "updatedAt": "16 Jun 2026 12:30"
+          "updatedAt": "28 Jul 2026 12:24"
         },
         {
           "id": "s-mqge06w9-3",
@@ -1077,6 +1077,6 @@
     ]
   },
   "overrides": {},
-  "lastUpdated": "28 Jul 2026 12:13",
+  "lastUpdated": "28 Jul 2026 12:24",
   "version": 1
 }
