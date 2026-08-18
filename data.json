@@ -1018,6 +1018,11 @@
         "text": "Team came up with a proposed fix for the reporting issue which include obtaining new hardware - currently under review from Shrikanth and Ahmed",
         "author": "Fadi",
         "ts": "28 Jul 2026 11:04"
+      },
+      {
+        "text": "Short term solution fix started by the team. Target timeline:  26th of August, conclude development - next sprint QA starts",
+        "author": "Fadi",
+        "ts": "18 Aug 2026 13:18"
       }
     ],
     "f-7": [
@@ -1082,6 +1087,6 @@
     ]
   },
   "overrides": {},
-  "lastUpdated": "28 Jul 2026 12:27",
+  "lastUpdated": "18 Aug 2026 13:18",
   "version": 1
 }
