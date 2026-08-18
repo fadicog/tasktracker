@@ -1072,6 +1072,11 @@
         "text": "Meeting re-scheduled Wed 17th of June.",
         "author": "Fadi",
         "ts": "16 Jun 2026 11:58"
+      },
+      {
+        "text": "Final round of review and TDRA review planned",
+        "author": "Fadi",
+        "ts": "18 Aug 2026 13:29"
       }
     ],
     "f-12": [
@@ -1102,6 +1107,6 @@
     ]
   },
   "overrides": {},
-  "lastUpdated": "18 Aug 2026 13:27",
+  "lastUpdated": "18 Aug 2026 13:29",
   "version": 1
 }
