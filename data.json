@@ -1050,6 +1050,11 @@
         "text": "Shri to follow up with ICP",
         "author": "Fadi",
         "ts": "16 Jun 2026 12:10"
+      },
+      {
+        "text": "Still pending",
+        "author": "Fadi",
+        "ts": "18 Aug 2026 13:21"
       }
     ],
     "f-8": [
@@ -1097,6 +1102,6 @@
     ]
   },
   "overrides": {},
-  "lastUpdated": "18 Aug 2026 13:19",
+  "lastUpdated": "18 Aug 2026 13:21",
   "version": 1
 }
