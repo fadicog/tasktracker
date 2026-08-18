@@ -382,10 +382,10 @@
           "id": "s-msyh85jj-2",
           "task": "Schedule a meeting with Ahmed to discuss the UI/UX",
           "due": "—",
-          "status": "Pending",
+          "status": "Started",
           "owner": "—",
           "updatedBy": "Fadi",
-          "updatedAt": "18 Aug 2026 13:44"
+          "updatedAt": "18 Aug 2026 13:49"
         }
       ]
     },
@@ -1125,6 +1125,6 @@
     ]
   },
   "overrides": {},
-  "lastUpdated": "18 Aug 2026 13:44",
+  "lastUpdated": "18 Aug 2026 13:49",
   "version": 1
 }
