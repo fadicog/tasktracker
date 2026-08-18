@@ -407,11 +407,11 @@
         {
           "id": "s-13-1",
           "task": "Legal discussion with TDRA",
-          "due": "2026-05-01 to 2026-07-31",
+          "due": "2026-09-08",
           "status": "Pending",
           "owner": "Najjar",
-          "updatedBy": "",
-          "updatedAt": ""
+          "updatedBy": "Fadi",
+          "updatedAt": "18 Aug 2026 13:52"
         },
         {
           "id": "s-mpcdqarq-7",
@@ -1135,6 +1135,6 @@
     ]
   },
   "overrides": {},
-  "lastUpdated": "18 Aug 2026 13:50",
+  "lastUpdated": "18 Aug 2026 13:52",
   "version": 1
 }
