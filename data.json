@@ -973,6 +973,16 @@
       "due": "—",
       "updatedBy": "Fadi",
       "updatedAt": "7 Jul 2026 12:31"
+    },
+    {
+      "id": "oa-1787044728107",
+      "action": "New action",
+      "desc": "",
+      "status": "Open",
+      "owner": "—",
+      "due": "—",
+      "updatedBy": "",
+      "updatedAt": ""
     }
   ],
   "notes": {
