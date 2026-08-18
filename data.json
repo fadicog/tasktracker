@@ -187,11 +187,11 @@
         {
           "id": "s-mpcd1qpq-1",
           "task": "Obtain TDRA approval",
-          "due": "2026-08-06",
+          "due": "2026-08-20",
           "status": "Pending",
           "owner": "—",
           "updatedBy": "Fadi",
-          "updatedAt": "28 Jul 2026 12:11"
+          "updatedAt": "18 Aug 2026 13:26"
         },
         {
           "id": "s-ms4dp83x-1",
@@ -1102,6 +1102,6 @@
     ]
   },
   "overrides": {},
-  "lastUpdated": "18 Aug 2026 13:21",
+  "lastUpdated": "18 Aug 2026 13:26",
   "version": 1
 }
