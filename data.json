@@ -425,11 +425,11 @@
         {
           "id": "s-mpcdqtsv-8",
           "task": "Design the UX of one time consent",
-          "due": "—",
-          "status": "Completed",
+          "due": "2026-09-03",
+          "status": "Not started",
           "owner": "Ahmad",
           "updatedBy": "Fadi",
-          "updatedAt": "18 Aug 2026 13:56"
+          "updatedAt": "18 Aug 2026 13:57"
         },
         {
           "id": "s-mpcdr2z3-9",
@@ -1135,6 +1135,6 @@
     ]
   },
   "overrides": {},
-  "lastUpdated": "18 Aug 2026 13:56",
+  "lastUpdated": "18 Aug 2026 13:57",
   "version": 1
 }
