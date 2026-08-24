@@ -11,7 +11,7 @@
       "sprint": 76,
       "blocked": false,
       "ddaStatus": "Not Submitted",
-      "committed": true,
+      "committed": false,
       "targetMonth": "",
       "description": "Implement a consistent status model and status history for sharing requests to enable end-to-end reporting, diagnostics, and analytics.",
       "sub": [
@@ -1145,6 +1145,6 @@
     ]
   },
   "overrides": {},
-  "lastUpdated": "24 Aug 2026 09:54",
+  "lastUpdated": "24 Aug 2026 14:20",
   "version": 1
 }
