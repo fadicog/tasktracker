@@ -95,7 +95,7 @@
       "name": "Dual Citizenship",
       "category": "Product",
       "quarter": "Q1-Q2",
-      "status": "In Progress",
+      "status": "Completed",
       "dda": false,
       "sprint": 72,
       "blocked": false,
@@ -1145,6 +1145,6 @@
     ]
   },
   "overrides": {},
-  "lastUpdated": "18 Aug 2026 13:58",
+  "lastUpdated": "24 Aug 2026 09:54",
   "version": 1
 }
