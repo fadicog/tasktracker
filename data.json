@@ -409,9 +409,9 @@
           "task": "Legal discussion with TDRA",
           "due": "2026-09-08",
           "status": "Pending",
-          "owner": "Ali",
-          "updatedBy": "Fadi",
-          "updatedAt": "18 Aug 2026 13:52"
+          "owner": "Ali H",
+          "updatedBy": "Ali H",
+          "updatedAt": "2 Sep 2026 09:14"
         },
         {
           "id": "s-mpcdqarq-7",
@@ -1145,6 +1145,6 @@
     ]
   },
   "overrides": {},
-  "lastUpdated": "24 Aug 2026 14:20",
+  "lastUpdated": "2 Sep 2026 09:14",
   "version": 1
 }
