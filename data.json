@@ -1134,6 +1134,11 @@
         "text": "Fadi to follow up with Najjar.",
         "author": "Fadi",
         "ts": "16 Jun 2026 12:36"
+      },
+      {
+        "text": "Ali to follow up on the status with TDRA legal",
+        "author": "Fadi",
+        "ts": "8 Sep 2026 12:34"
       }
     ],
     "f-16": [
@@ -1152,6 +1157,6 @@
     ]
   },
   "overrides": {},
-  "lastUpdated": "8 Sep 2026 12:32",
+  "lastUpdated": "8 Sep 2026 12:34",
   "version": 1
 }
