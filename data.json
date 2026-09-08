@@ -1080,6 +1080,11 @@
         "text": "Short term solution fix started by the team. Target timeline:  26th of August, conclude development - next sprint QA starts",
         "author": "Fadi",
         "ts": "18 Aug 2026 13:18"
+      },
+      {
+        "text": "Double check if there is any changes needed from frontend side.",
+        "author": "Fadi",
+        "ts": "8 Sep 2026 13:05"
       }
     ],
     "f-7": [
@@ -1166,6 +1171,6 @@
     ]
   },
   "overrides": {},
-  "lastUpdated": "8 Sep 2026 12:35",
+  "lastUpdated": "8 Sep 2026 13:05",
   "version": 1
 }
