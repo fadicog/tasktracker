@@ -1180,6 +1180,11 @@
         "text": "Fadi to follow up on this with Najjar",
         "author": "Fadi",
         "ts": "16 Jun 2026 12:53"
+      },
+      {
+        "text": "Identified HCT as candidate issuer to enable download of their documents",
+        "author": "Fadi",
+        "ts": "8 Sep 2026 14:06"
       }
     ],
     "f-10": [
@@ -1203,6 +1208,6 @@
     ]
   },
   "overrides": {},
-  "lastUpdated": "8 Sep 2026 13:58",
+  "lastUpdated": "8 Sep 2026 14:06",
   "version": 1
 }
