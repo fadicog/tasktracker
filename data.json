@@ -558,7 +558,7 @@
       "sprint": null,
       "blocked": false,
       "ddaStatus": "Not Submitted",
-      "committed": true,
+      "committed": false,
       "targetMonth": "",
       "description": "Redesign the DV home page to prioritize top tasks and reduce navigation friction.",
       "sub": [
@@ -1213,6 +1213,6 @@
     ]
   },
   "overrides": {},
-  "lastUpdated": "8 Sep 2026 14:13",
+  "lastUpdated": "8 Sep 2026 14:14",
   "version": 1
 }
