@@ -474,6 +474,15 @@
           "owner": "Malak",
           "updatedBy": "Fadi",
           "updatedAt": "23 Apr 2026 09:30"
+        },
+        {
+          "id": "s-mtsez945-1",
+          "task": "Finalize the design discussions",
+          "due": "2026-09-09",
+          "status": "Pending",
+          "owner": "Ahmad",
+          "updatedBy": "Fadi",
+          "updatedAt": "8 Sep 2026 12:35"
         }
       ]
     },
@@ -1148,6 +1157,6 @@
     ]
   },
   "overrides": {},
-  "lastUpdated": "8 Sep 2026 12:34",
+  "lastUpdated": "8 Sep 2026 12:35",
   "version": 1
 }
