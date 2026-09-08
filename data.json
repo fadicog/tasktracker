@@ -564,12 +564,12 @@
       "sub": [
         {
           "id": "s-17-1",
-          "task": "Plan enhancements to last year's designs",
+          "task": "Development",
           "due": "—",
           "status": "Pending",
           "owner": "Ahmad",
-          "updatedBy": "",
-          "updatedAt": ""
+          "updatedBy": "Fadi",
+          "updatedAt": "8 Sep 2026 14:13"
         }
       ]
     },
@@ -1213,6 +1213,6 @@
     ]
   },
   "overrides": {},
-  "lastUpdated": "8 Sep 2026 14:12",
+  "lastUpdated": "8 Sep 2026 14:13",
   "version": 1
 }
