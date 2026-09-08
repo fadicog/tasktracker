@@ -483,6 +483,15 @@
           "owner": "Ahmad",
           "updatedBy": "Fadi",
           "updatedAt": "8 Sep 2026 12:35"
+        },
+        {
+          "id": "s-mtsezxih-2",
+          "task": "Finalize the requirements documentation",
+          "due": "2026-09-14",
+          "status": "Pending",
+          "owner": "Fadi",
+          "updatedBy": "Fadi",
+          "updatedAt": "8 Sep 2026 12:35"
         }
       ]
     },
