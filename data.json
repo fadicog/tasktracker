@@ -1168,6 +1168,11 @@
         "text": "TDRA management and legal still to update -still no update from legal - Ali to follow up again",
         "author": "Fadi",
         "ts": "8 Sep 2026 13:48"
+      },
+      {
+        "text": "To discuss the it in the claude brainstorming session to pickup the design and business requirements while waiting for the legal approval.",
+        "author": "Fadi",
+        "ts": "8 Sep 2026 13:58"
       }
     ],
     "f-16": [
@@ -1198,6 +1203,6 @@
     ]
   },
   "overrides": {},
-  "lastUpdated": "8 Sep 2026 13:48",
+  "lastUpdated": "8 Sep 2026 13:58",
   "version": 1
 }
