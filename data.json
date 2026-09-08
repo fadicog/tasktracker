@@ -1053,13 +1053,13 @@
     },
     {
       "id": "oa-1788862602096",
-      "action": "New action",
+      "action": "Provide benchmark feedback to OPs team on the offboarding deck",
       "desc": "",
       "status": "Open",
       "owner": "—",
       "due": "—",
-      "updatedBy": "",
-      "updatedAt": ""
+      "updatedBy": "Fadi",
+      "updatedAt": "8 Sep 2026 14:17"
     }
   ],
   "notes": {
@@ -1240,6 +1240,6 @@
     ]
   },
   "overrides": {},
-  "lastUpdated": "8 Sep 2026 14:16",
+  "lastUpdated": "8 Sep 2026 14:17",
   "version": 1
 }
