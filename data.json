@@ -553,7 +553,7 @@
       "name": "Home Page Revamp",
       "category": "UX",
       "quarter": "—",
-      "status": "Pending",
+      "status": "Completed",
       "dda": false,
       "sprint": null,
       "blocked": false,
@@ -1220,6 +1220,6 @@
     ]
   },
   "overrides": {},
-  "lastUpdated": "8 Sep 2026 14:14",
+  "lastUpdated": "8 Sep 2026 14:15",
   "version": 1
 }
