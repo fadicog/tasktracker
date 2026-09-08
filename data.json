@@ -553,7 +553,7 @@
       "name": "Home Page Revamp",
       "category": "UX",
       "quarter": "—",
-      "status": "Completed",
+      "status": "Not started",
       "dda": false,
       "sprint": null,
       "blocked": false,
@@ -1040,6 +1040,16 @@
       "due": "—",
       "updatedBy": "Fadi",
       "updatedAt": "8 Sep 2026 13:43"
+    },
+    {
+      "id": "oa-1788862589034",
+      "action": "New action",
+      "desc": "",
+      "status": "Open",
+      "owner": "—",
+      "due": "—",
+      "updatedBy": "",
+      "updatedAt": ""
     }
   ],
   "notes": {
@@ -1220,6 +1230,6 @@
     ]
   },
   "overrides": {},
-  "lastUpdated": "8 Sep 2026 14:15",
+  "lastUpdated": "8 Sep 2026 14:16",
   "version": 1
 }
