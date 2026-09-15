@@ -311,10 +311,10 @@
           "id": "s-mqgdqg3m-1",
           "task": "Document the UI updates that were done as part of the first two releases and document them under this item",
           "due": "—",
-          "status": "Not started",
+          "status": "Completed",
           "owner": "Fadi",
-          "updatedBy": "Ali H",
-          "updatedAt": "2 Sep 2026 09:16"
+          "updatedBy": "Fadi",
+          "updatedAt": "15 Sep 2026 12:50"
         }
       ]
     },
@@ -1255,6 +1255,6 @@
     ]
   },
   "overrides": {},
-  "lastUpdated": "15 Sep 2026 12:49",
+  "lastUpdated": "15 Sep 2026 12:50",
   "version": 1
 }
