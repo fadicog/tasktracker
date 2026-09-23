@@ -1103,13 +1103,13 @@
     },
     {
       "id": "oa-1790149238962",
-      "action": "Points to discuss : adding a go back to documents home",
+      "action": "Points to discuss : adding a go back to documents home after the QR code navigation",
       "desc": "",
       "status": "Open",
       "owner": "—",
       "due": "—",
       "updatedBy": "Fadi",
-      "updatedAt": "23 Sep 2026 11:41"
+      "updatedAt": "23 Sep 2026 11:42"
     }
   ],
   "notes": {
@@ -1295,6 +1295,6 @@
     ]
   },
   "overrides": {},
-  "lastUpdated": "23 Sep 2026 11:41",
+  "lastUpdated": "23 Sep 2026 11:42",
   "version": 1
 }
