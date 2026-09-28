@@ -514,7 +514,7 @@
           "id": "s-mqgegymy-4",
           "task": "Design for the revamped document addition - design feedback session",
           "due": "2026-06-17",
-          "status": "Started",
+          "status": "In Progress",
           "owner": "Fadi, Malak, Ahmad",
           "updatedBy": "Fadi",
           "updatedAt": "28 Sep 2026 10:51"
@@ -1289,6 +1289,11 @@
         "text": "Accessibility and Home page revamp to be included in the Bundle 2 - to reflect the same on the roadmap",
         "author": "Fadi",
         "ts": "8 Sep 2026 13:36"
+      },
+      {
+        "text": "To be part of the Q3 release",
+        "author": "Fadi",
+        "ts": "28 Sep 2026 10:51"
       }
     ],
     "f-17": [
