@@ -46,10 +46,10 @@
           "id": "s-6-4",
           "task": "Release fixes",
           "due": "2026-10-01",
-          "status": "Not started",
+          "status": "Pending",
           "owner": "Fadi",
           "updatedBy": "Fadi",
-          "updatedAt": "15 Sep 2026 12:47"
+          "updatedAt": "28 Sep 2026 10:46"
         },
         {
           "id": "s-6-5",
@@ -1295,6 +1295,6 @@
     ]
   },
   "overrides": {},
-  "lastUpdated": "23 Sep 2026 11:42",
+  "lastUpdated": "28 Sep 2026 10:46",
   "version": 1
 }
