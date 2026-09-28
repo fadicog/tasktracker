@@ -373,7 +373,7 @@
           "id": "s-mqge06w9-3",
           "task": "Align on the deliverables of 2026 and 2027 for this item",
           "due": "—",
-          "status": "In Progress",
+          "status": "Completed",
           "owner": "Fadi, Malak, Najjar",
           "updatedBy": "Fadi",
           "updatedAt": "28 Sep 2026 10:47"
@@ -408,10 +408,10 @@
           "id": "s-13-1",
           "task": "Legal discussion with TDRA",
           "due": "2026-09-08",
-          "status": "Pending",
+          "status": "In Progress",
           "owner": "Ali H",
-          "updatedBy": "Ali H",
-          "updatedAt": "2 Sep 2026 09:14"
+          "updatedBy": "Fadi",
+          "updatedAt": "28 Sep 2026 10:48"
         },
         {
           "id": "s-mpcdqarq-7",
@@ -1295,6 +1295,6 @@
     ]
   },
   "overrides": {},
-  "lastUpdated": "28 Sep 2026 10:47",
+  "lastUpdated": "28 Sep 2026 10:48",
   "version": 1
 }
