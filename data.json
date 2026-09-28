@@ -186,12 +186,12 @@
         },
         {
           "id": "s-mpcd1qpq-1",
-          "task": "Walkthrough with Khawla",
+          "task": "Final meeting with Khawla",
           "due": "2026-08-20",
           "status": "Pending",
           "owner": "—",
           "updatedBy": "Fadi",
-          "updatedAt": "18 Aug 2026 13:27"
+          "updatedAt": "28 Sep 2026 11:35"
         },
         {
           "id": "s-ms4dp83x-1",
@@ -1315,6 +1315,6 @@
     ]
   },
   "overrides": {},
-  "lastUpdated": "28 Sep 2026 11:34",
+  "lastUpdated": "28 Sep 2026 11:35",
   "version": 1
 }
