@@ -407,11 +407,11 @@
         {
           "id": "s-13-1",
           "task": "Legal discussion with TDRA",
-          "due": "2026-09-08",
+          "due": "2026-10-06",
           "status": "In Progress",
           "owner": "Ali H",
           "updatedBy": "Fadi",
-          "updatedAt": "28 Sep 2026 10:48"
+          "updatedAt": "28 Sep 2026 10:49"
         },
         {
           "id": "s-mpcdqarq-7",
@@ -1295,6 +1295,6 @@
     ]
   },
   "overrides": {},
-  "lastUpdated": "28 Sep 2026 10:48",
+  "lastUpdated": "28 Sep 2026 10:49",
   "version": 1
 }
