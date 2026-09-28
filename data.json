@@ -1197,6 +1197,11 @@
         "text": "Still pending",
         "author": "Fadi",
         "ts": "18 Aug 2026 13:21"
+      },
+      {
+        "text": "Fadi to follow up with Ali --> Hamad to push for an answer from ICP ASAP",
+        "author": "Fadi",
+        "ts": "28 Sep 2026 11:27"
       }
     ],
     "f-8": [
@@ -1310,6 +1315,6 @@
     ]
   },
   "overrides": {},
-  "lastUpdated": "28 Sep 2026 11:24",
+  "lastUpdated": "28 Sep 2026 11:27",
   "version": 1
 }
