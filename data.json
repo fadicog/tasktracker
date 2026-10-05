@@ -1175,6 +1175,11 @@
         "text": "Shri, to make sure that the implementation has a quick switch off capability in place incase we need to switch it off post release",
         "author": "Fadi",
         "ts": "28 Sep 2026 11:24"
+      },
+      {
+        "text": "Shri, confirmed that it is designed to be disabled and enabled from backend.",
+        "author": "Fadi",
+        "ts": "5 Oct 2026 11:18"
       }
     ],
     "f-7": [
@@ -1315,6 +1320,6 @@
     ]
   },
   "overrides": {},
-  "lastUpdated": "28 Sep 2026 11:35",
+  "lastUpdated": "5 Oct 2026 11:18",
   "version": 1
 }
