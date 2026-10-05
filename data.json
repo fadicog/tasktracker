@@ -1278,6 +1278,11 @@
         "text": "Development started for the in app logic - UX needs to be finalized by the end of this sprint for it to be picked up in the next sprint",
         "author": "Fadi",
         "ts": "28 Sep 2026 10:50"
+      },
+      {
+        "text": "Malak to share the response to Suliman today",
+        "author": "Fadi",
+        "ts": "5 Oct 2026 11:44"
       }
     ],
     "f-16": [
@@ -1335,6 +1340,6 @@
     ]
   },
   "overrides": {},
-  "lastUpdated": "5 Oct 2026 11:34",
+  "lastUpdated": "5 Oct 2026 11:44",
   "version": 1
 }
