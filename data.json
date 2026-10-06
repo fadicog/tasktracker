@@ -518,6 +518,15 @@
           "owner": "Fadi, Malak, Ahmad",
           "updatedBy": "Fadi",
           "updatedAt": "28 Sep 2026 10:51"
+        },
+        {
+          "id": "s-muwi70bn-1",
+          "task": "Accessibility to be released in Q3",
+          "due": "—",
+          "status": "Pending",
+          "owner": "—",
+          "updatedBy": "Fadi",
+          "updatedAt": "6 Oct 2026 13:55"
         }
       ]
     },
@@ -1407,6 +1416,6 @@
     ]
   },
   "overrides": {},
-  "lastUpdated": "6 Oct 2026 13:51",
+  "lastUpdated": "6 Oct 2026 13:55",
   "version": 1
 }
