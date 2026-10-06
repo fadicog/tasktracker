@@ -1133,7 +1133,7 @@
       "id": "oa-1791185650530",
       "action": "Fadi to schedule design audit review meetings with Malak",
       "desc": "",
-      "status": "In Progress",
+      "status": "Done",
       "owner": "—",
       "due": "—",
       "updatedBy": "Fadi",
@@ -1143,11 +1143,11 @@
       "id": "oa-1791277854661",
       "action": "Setup a meeting with OPs team to discuss the progress of the status based reporting and check if any clarification is required",
       "desc": "",
-      "status": "Open",
+      "status": "In Progress",
       "owner": "—",
       "due": "—",
       "updatedBy": "Fadi",
-      "updatedAt": "6 Oct 2026 13:11"
+      "updatedAt": "6 Oct 2026 16:01"
     },
     {
       "id": "oa-1791278567950",
@@ -1455,6 +1455,6 @@
     ]
   },
   "overrides": {},
-  "lastUpdated": "6 Oct 2026 15:58",
+  "lastUpdated": "6 Oct 2026 16:01",
   "version": 1
 }
