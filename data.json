@@ -527,6 +527,15 @@
           "owner": "—",
           "updatedBy": "Fadi",
           "updatedAt": "6 Oct 2026 13:55"
+        },
+        {
+          "id": "s-muwi7t9c-2",
+          "task": "Waiting for the build to be shared with essential documents from DDA",
+          "due": "2026-10-20",
+          "status": "Pending",
+          "owner": "—",
+          "updatedBy": "Fadi",
+          "updatedAt": "6 Oct 2026 13:56"
         }
       ]
     },
@@ -1416,6 +1425,6 @@
     ]
   },
   "overrides": {},
-  "lastUpdated": "6 Oct 2026 13:55",
+  "lastUpdated": "6 Oct 2026 13:56",
   "version": 1
 }
