@@ -1133,13 +1133,13 @@
     },
     {
       "id": "oa-1791278567950",
-      "action": "New action",
+      "action": "Set up a meeting Ahmed to go through the audit deck and agree on the way forward",
       "desc": "",
       "status": "Open",
       "owner": "—",
       "due": "—",
-      "updatedBy": "",
-      "updatedAt": ""
+      "updatedBy": "Fadi",
+      "updatedAt": "6 Oct 2026 13:23"
     }
   ],
   "notes": {
@@ -1365,6 +1365,6 @@
     ]
   },
   "overrides": {},
-  "lastUpdated": "6 Oct 2026 13:22",
+  "lastUpdated": "6 Oct 2026 13:23",
   "version": 1
 }
