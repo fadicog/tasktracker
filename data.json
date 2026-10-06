@@ -72,11 +72,11 @@
         {
           "id": "s-6-7",
           "task": "TDRA demo to showcase achievement",
-          "due": "—",
+          "due": "2026-11-15",
           "status": "Not started",
           "owner": "—",
           "updatedBy": "Fadi",
-          "updatedAt": "15 Sep 2026 12:49"
+          "updatedAt": "6 Oct 2026 13:16"
         },
         {
           "id": "s-6-8",
@@ -1350,6 +1350,6 @@
     ]
   },
   "overrides": {},
-  "lastUpdated": "6 Oct 2026 13:15",
+  "lastUpdated": "6 Oct 2026 13:16",
   "version": 1
 }
