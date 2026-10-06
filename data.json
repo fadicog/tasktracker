@@ -1113,7 +1113,7 @@
       "id": "oa-1790070498613",
       "action": "UX lab/ form filler , meeting on monday /update plan to release form filler",
       "desc": "",
-      "status": "Pending",
+      "status": "Done",
       "owner": "—",
       "due": "—",
       "updatedBy": "Fadi",
@@ -1133,11 +1133,11 @@
       "id": "oa-1791185650530",
       "action": "Fadi to schedule design audit review meetings with Malak",
       "desc": "",
-      "status": "Open",
+      "status": "In Progress",
       "owner": "—",
       "due": "—",
       "updatedBy": "Fadi",
-      "updatedAt": "5 Oct 2026 11:34"
+      "updatedAt": "6 Oct 2026 15:58"
     },
     {
       "id": "oa-1791277854661",
@@ -1455,6 +1455,6 @@
     ]
   },
   "overrides": {},
-  "lastUpdated": "6 Oct 2026 15:55",
+  "lastUpdated": "6 Oct 2026 15:58",
   "version": 1
 }
