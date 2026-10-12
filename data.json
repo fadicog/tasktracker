@@ -179,10 +179,10 @@
           "id": "s-8-3",
           "task": "Meeting with Ali for Approval - Highlight the steps that can be automated",
           "due": "2026-09-29",
-          "status": "In Progress",
+          "status": "Completed",
           "owner": "Jeffrey",
-          "updatedBy": "Fadi",
-          "updatedAt": "28 Sep 2026 11:34"
+          "updatedBy": "Ali H",
+          "updatedAt": "12 Oct 2026 11:36"
         },
         {
           "id": "s-mpcd1qpq-1",
@@ -1460,6 +1460,6 @@
     ]
   },
   "overrides": {},
-  "lastUpdated": "12 Oct 2026 11:33",
+  "lastUpdated": "12 Oct 2026 11:36",
   "version": 1
 }
