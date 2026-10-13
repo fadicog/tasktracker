@@ -1219,13 +1219,13 @@
     },
     {
       "id": "oa-1791281139839",
-      "action": "Start working on the UAT presentation",
+      "action": "Start working on the UAT presentation - feature , planned date, actual, definition of done",
       "desc": "",
       "status": "Open",
       "owner": "—",
       "due": "—",
       "updatedBy": "Fadi",
-      "updatedAt": "6 Oct 2026 14:05"
+      "updatedAt": "13 Oct 2026 13:52"
     },
     {
       "id": "oa-1791281184512",
@@ -1485,6 +1485,6 @@
     ]
   },
   "overrides": {},
-  "lastUpdated": "13 Oct 2026 13:32",
+  "lastUpdated": "13 Oct 2026 13:52",
   "version": 1
 }
