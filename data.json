@@ -1429,6 +1429,11 @@
         "text": "Fadi to set up a meeting with technical team to discuss - Final Alignment -",
         "author": "Fadi",
         "ts": "6 Oct 2026 13:38"
+      },
+      {
+        "text": "To continue the discussion around what is needed from issuers side, and discussing how to deliver this feature through phases",
+        "author": "Fadi",
+        "ts": "19 Oct 2026 11:52"
       }
     ],
     "f-16": [
@@ -1500,6 +1505,6 @@
     ]
   },
   "overrides": {},
-  "lastUpdated": "19 Oct 2026 11:20",
+  "lastUpdated": "19 Oct 2026 11:52",
   "version": 1
 }
