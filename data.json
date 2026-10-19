@@ -1311,6 +1311,11 @@
         "text": "Fadi had a meeting with the QA team along with OPs to validate the testing approach and database reflection",
         "author": "Fadi",
         "ts": "12 Oct 2026 11:33"
+      },
+      {
+        "text": "To reschedule the early review meeting with the OPs team this week (week of 19th of Oct)",
+        "author": "Fadi",
+        "ts": "19 Oct 2026 11:17"
       }
     ],
     "f-7": [
@@ -1485,6 +1490,6 @@
     ]
   },
   "overrides": {},
-  "lastUpdated": "13 Oct 2026 13:52",
+  "lastUpdated": "19 Oct 2026 11:17",
   "version": 1
 }
