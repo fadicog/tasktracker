@@ -1375,6 +1375,11 @@
         "text": "Final round of review and TDRA review planned",
         "author": "Fadi",
         "ts": "18 Aug 2026 13:29"
+      },
+      {
+        "text": "Onboarding team meeting took place - target to be closed this week",
+        "author": "Fadi",
+        "ts": "19 Oct 2026 11:20"
       }
     ],
     "f-12": [
@@ -1495,6 +1500,6 @@
     ]
   },
   "overrides": {},
-  "lastUpdated": "19 Oct 2026 11:19",
+  "lastUpdated": "19 Oct 2026 11:20",
   "version": 1
 }
