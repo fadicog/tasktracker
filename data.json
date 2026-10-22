@@ -1249,13 +1249,13 @@
     },
     {
       "id": "oa-1792662344685",
-      "action": "work on highlighting",
+      "action": "work on highlighting the added value of the sharing request new reports",
       "desc": "",
       "status": "Open",
       "owner": "—",
       "due": "—",
       "updatedBy": "Fadi",
-      "updatedAt": "22 Oct 2026 13:46"
+      "updatedAt": "22 Oct 2026 13:47"
     }
   ],
   "notes": {
@@ -1525,6 +1525,6 @@
     ]
   },
   "overrides": {},
-  "lastUpdated": "22 Oct 2026 13:46",
+  "lastUpdated": "22 Oct 2026 13:47",
   "version": 1
 }
