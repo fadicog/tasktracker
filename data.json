@@ -558,6 +558,20 @@
       ]
     },
     {
+      "id": "f-mvyzlg7c-1",
+      "slide": 34,
+      "name": "iPhone Duo Support",
+      "category": "Product",
+      "quarter": "—",
+      "status": "In Progress",
+      "dda": true,
+      "sprint": null,
+      "ddaStatus": "Not Submitted",
+      "blocked": false,
+      "sub": [],
+      "committed": true
+    },
+    {
       "slide": 16,
       "id": "f-16",
       "name": "Enable Download of All Issued Documents",
@@ -874,20 +888,6 @@
       "targetMonth": "",
       "description": "Automate incident report generation and operational tasks.",
       "sub": []
-    },
-    {
-      "id": "f-mvyzlg7c-1",
-      "slide": 34,
-      "name": "iPhone Duo Support",
-      "category": "Product",
-      "quarter": "—",
-      "status": "In Progress",
-      "dda": true,
-      "sprint": null,
-      "ddaStatus": "Not Submitted",
-      "blocked": false,
-      "sub": [],
-      "committed": true
     }
   ],
   "otherActions": [
