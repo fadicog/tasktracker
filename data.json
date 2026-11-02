@@ -565,7 +565,7 @@
       "quarter": "—",
       "status": "In Progress",
       "dda": true,
-      "sprint": null,
+      "sprint": 1,
       "ddaStatus": "Not Submitted",
       "blocked": false,
       "sub": [],
