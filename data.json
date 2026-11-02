@@ -886,7 +886,8 @@
       "sprint": null,
       "ddaStatus": "Not Submitted",
       "blocked": false,
-      "sub": []
+      "sub": [],
+      "committed": true
     }
   ],
   "otherActions": [
