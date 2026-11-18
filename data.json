@@ -1293,13 +1293,13 @@
     },
     {
       "id": "oa-1794986871405",
-      "action": "New action",
+      "action": "onetime consent in documents tab (study if it should be dismiss -close button- or hide and unhide instaed",
       "desc": "",
       "status": "Open",
       "owner": "—",
       "due": "—",
-      "updatedBy": "",
-      "updatedAt": ""
+      "updatedBy": "Fadi",
+      "updatedAt": "18 Nov 2026 11:28"
     }
   ],
   "notes": {
@@ -1574,6 +1574,6 @@
     ]
   },
   "overrides": {},
-  "lastUpdated": "18 Nov 2026 11:27",
+  "lastUpdated": "18 Nov 2026 11:28",
   "version": 1
 }
